@@ -41,12 +41,13 @@ probably move them to a file server where they can be publicly accessed.
 git clone git@[PRIVATE GIT HOST]:dlts/dlts-readium-js-viewer-snapshots.git
 ```
 
-Copy or symlink the files from this newly cloned snapshots repo into `snapshots/`:
+Copy or symlink the files from this newly cloned snapshots repo into `snapshots/`.
+Assuming that the snapshots repo is in the same directory as this one:
 
 ```bash
 # Back inside this repo, dlts-readium-js-viewer
 cd snapshots
-for snapshot in [CLONED SNAPSHOT REPO]/*.tar.bz2
+for snapshot in ../../dlts-readium-js-viewer-snapshots/*.tar.bz2
 do
     ln -s $snapshot .
 done
