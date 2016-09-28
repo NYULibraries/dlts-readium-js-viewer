@@ -30,6 +30,27 @@ git clone [TODO]
 cd dlts-readium-js-viewer
 npm install
 ```
+Get the ReadiumJS viewer snapshots (see [Notes on build][#notes-on-build]).  Note
+that due to Github's file size restrictions we are unable to host our snapshot files
+there.  For the time being we have them in a git repo hosted on our private
+git host.  The files themselves do not have to be private.  Eventually we will
+probably move them to a file server where they can be publicly accessed.
+
+```bash
+# Somewhere else
+git clone git@[PRIVATE GIT HOST]:dlts/dlts-readium-js-viewer-snapshots.git
+```
+
+Copy or symlink the files from this newly cloned snapshots repo into `snapshots/`:
+
+```bash
+# Back inside this repo, dlts-readium-js-viewer
+cd snapshots
+for snapshot in [CLONED SNAPSHOT REPO]/*.tar.bz2
+do
+    ln -s $snapshot .
+done
+```
 
 ### Building the production ReadiumJS viewer
 
