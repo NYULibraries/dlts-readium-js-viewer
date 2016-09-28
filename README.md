@@ -26,7 +26,7 @@ NPM v3 which seems to have bugs related to the new flat module dependencies)
 ### Installation and setup
 
 ```bash
-git clone [TODO]
+git clone git@github.com:NYULibraries/dlts-readium-js-viewer.git
 cd dlts-readium-js-viewer
 npm install
 ```
