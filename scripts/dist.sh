@@ -86,6 +86,8 @@ fi
 
 cd $READIUM_JS_VIEWER
 
+# TODO: see if https://github.com/readium/readium-cfi-js/commit/bb13853a2f359d446d8ffb571ea90bc22087e6ae
+# makes this no longer necessary.
 echo 'gitdir: ../.git/modules/readium-js' > readium-js/.git
 echo 'gitdir: ../../.git/modules/readium-js/modules/readium-shared-js' > readium-js/readium-shared-js/.git
 echo 'gitdir: ../../../.git/modules/readium-js/modules/readium-shared-js/modules/readium-cfi-js' > readium-js/readium-shared-js/readium-cfi-js/.git
