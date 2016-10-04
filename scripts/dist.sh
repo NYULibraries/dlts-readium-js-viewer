@@ -91,7 +91,6 @@ cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/readium-shared-js/readium-cfi-js/.g
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
-git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
 # Early exit if clone failed.
 if [ ! -d $DLTS_PLUGIN_DIR/.git ]
@@ -99,6 +98,8 @@ then
     echo >&2 "ERROR: clone of $DLTS_PLUGIN_GITHUB_REPO failed."
     exit 1
 fi
+
+git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
 cd $READIUM_JS_VIEWER
 
