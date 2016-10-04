@@ -78,7 +78,7 @@ mv readium-js-viewer $READIUM_JS_VIEWER
 
 cd $READIUM_JS_VIEWER
 
-if [ $? -ne  ] || [ $(pwd) != "${READIUM_JS_VIEWER}" ]
+if [ $(pwd) != "${READIUM_JS_VIEWER}" ]
 then
     echo >&2 "ERROR: could not cd to $READIUM_JS_VIEWER."
     exit 1
