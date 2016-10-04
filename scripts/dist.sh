@@ -41,14 +41,16 @@ git checkout master && git submodule foreach --recursive "git checkout master"
 
 git reset --hard $READIUM_JS_VIEWER_COMMIT
 
+# Branches for sub-modules need to be detached HEADs to get exact match with expected
+# cloud-reader version info.
 cd readium-js/
-git reset --hard $READIUM_JS_COMMIT
+git checkout $READIUM_JS_COMMIT
 
 cd readium-shared-js/
-git reset --hard $READIUM_SHARED_JS_COMMIT
+git checkout $READIUM_SHARED_JS_COMMIT
 
 cd readium-cfi-js
-git reset --hard $READIUM_CFI_JS_COMMIT
+git checkout $READIUM_CFI_JS_COMMIT
 
 # Rename
 cd $ROOT
