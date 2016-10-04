@@ -26,7 +26,6 @@ function diff_readium_file() {
     local format_command="$3"
     local version_string="$4"
     local sed_command_replace_timestamp="$5"
-    local sed_command_print_readiumJs_block="$6"
 
     local file_basename=$( basename $source_readium_file_expected )
 
@@ -47,13 +46,6 @@ function diff_readium_file() {
         sed $'s/,/\\\n/g' > $tmp_version_info_file_expected
     grep "$version_string" $tmp_readium_file_got | \
         sed $'s/,/\\\n/g' > $tmp_version_info_file_got
-
-    # Create separate expected and got files containing only the version info for readiumJs submodule.
-    tmp_readiumJs_version_info_file_expected=$TMP/expected-readiumJs-version-info_${file_basename}
-    tmp_readiumJs_version_info_file_got=$TMP/got-readiumJs-version-info_${file_basename}
-
-    sed -n $sed_command_print_readiumJs_block $tmp_version_info_file_expected > $tmp_readiumJs_version_info_file_expected
-    sed -n $sed_command_print_readiumJs_block $tmp_version_info_file_got > $tmp_readiumJs_version_info_file_got
 
     # Remove version info from the Readium file.
     grep -v "$version_string" $tmp_readium_file_expected > ${tmp_readium_file_expected}.tmp
@@ -80,18 +72,11 @@ function diff_readium_file() {
         sed $REMOVE_LINE_NUMBERS_SED_COMMAND \
     )
 
-    # Diff of readiumJs version object only.
-    version_info_readiumJs_diff=$( \
-        diff $tmp_readiumJs_version_info_file_expected $tmp_readiumJs_version_info_file_got | \
-        sed $REMOVE_LINE_NUMBERS_SED_COMMAND \
-    )
-
-    # If there are differences between expected and got version info other than
-    # the differences in the readiumJs submodule version info block, fail.
-    if [ "$version_info_full_diff" != "$version_info_readiumJs_diff" ]
+    if [ ! -z "$version_info_full_diff" ]
     then
         echo >&2 "FAIL: ${file_basename} version differences detected:"
-        diff -r $tmp_version_info_file_expected $tmp_version_info_file_got
+        diff $tmp_version_info_file_expected $tmp_version_info_file_got | \
+            sed $REMOVE_LINE_NUMBERS_SED_COMMAND
 
         exit 1
     fi
@@ -100,28 +85,24 @@ function diff_readium_file() {
 function verify_readium_js_file() {
     local grep_pattern_version_info="return '{\"readiumJsViewer\":"
     local sed_command_replace_timestamp='s/"timestamp":[0-9]{13}/"timestamp":0000000000000/g'
-    local sed_command_print_readiumJs_block='/readiumJs"/,/timestamp/p'
     diff_readium_file                    \
         $READIUM_FILE_EXPECTED           \
         $READIUM_FILE_GOT                \
         "$JS_BEAUTIFY"                   \
         "$grep_pattern_version_info"     \
-        "$sed_command_replace_timestamp" \
-        "$sed_command_print_readiumJs_block"
-}
+        "$sed_command_replace_timestamp"
+    }
 
 function verify_readium_js_source_map_file() {
     local grep_pattern_version_info="define('text\!version.json'"
     local sed_command_replace_timestamp='s/\\"timestamp\\":[0-9]{13}/"timestamp":0000000000000/g'
-    local sed_command_print_readiumJs_block='/readiumJs\\"/,/timestamp/p'
     diff_readium_file                    \
         $READIUM_SOURCE_MAP_EXPECTED     \
         $READIUM_SOURCE_MAP_GOT          \
         "$JSON_BEAUTIFY"                 \
         "$grep_pattern_version_info"     \
-        "$sed_command_replace_timestamp" \
-        "$sed_command_print_readiumJs_block"
-}
+        "$sed_command_replace_timestamp"
+    }
 
 function verify_epub_content_symlink() {
     expected_epub_content_link=$( readlink $CLOUD_READER_EXPECTED/epub_content )
