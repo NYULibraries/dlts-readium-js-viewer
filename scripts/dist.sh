@@ -14,8 +14,6 @@ READIUM_JS_COMMIT=1db51c5c5852df2250df8091a6931c008741153a
 READIUM_SHARED_JS_COMMIT=71df2031ba26c81ac50d2214b2f45072b9f92b39
 READIUM_CFI_JS_COMMIT=74c9eb365460fd28a884a639a4a039d09a931f70
 
-READIUM_JS_YOUTUBE_FIX_COMMIT=317b926959a664759994831b6e20358a48109792
-
 READIUM_JS_VIEWER_SNAPSHOT=${READIUM_JS_VIEWER_COMMIT}-with-patch
 
 DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
@@ -45,8 +43,6 @@ git reset --hard $READIUM_JS_VIEWER_COMMIT
 
 cd readium-js/
 git reset --hard $READIUM_JS_COMMIT
-git checkout -b nyup-101_incorporate-readium-fix-for-iframing-youtube-videos-into-oa-books
-git cherry-pick $READIUM_JS_YOUTUBE_FIX_COMMIT
 
 cd readium-shared-js/
 git reset --hard $READIUM_SHARED_JS_COMMIT
