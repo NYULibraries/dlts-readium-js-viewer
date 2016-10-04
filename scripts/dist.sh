@@ -55,6 +55,7 @@ cd $ROOT
 mv $READIUM_JS_VIEWER $READIUM_JS_VIEWER_CLONE
 
 # Get the snapshot.
+cd $TMP
 cp -p ${SNAPSHOT_DIR}/${READIUM_JS_VIEWER_SNAPSHOT}.tar.bz2 .
 
 if [ $? -ne 0 ]
