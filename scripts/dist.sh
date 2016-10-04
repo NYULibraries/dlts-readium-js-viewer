@@ -99,6 +99,7 @@ then
     exit 1
 fi
 
+cd $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
 cd $READIUM_JS_VIEWER
