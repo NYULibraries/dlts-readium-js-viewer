@@ -39,6 +39,8 @@ function diff_readium_file() {
         sed -E $sed_command_replace_timestamp > $tmp_readium_file_got
 
     # Create separate expected and got files containing only the version info.
+    # If there are version info differences they will be a lot easier to analyze
+    # in these files, which break out each piece of info into their own lines.
     tmp_version_info_file_expected=$TMP/expected-version-info_${file_basename}
     tmp_version_info_file_got=$TMP/got-version-info_${file_basename}
 
