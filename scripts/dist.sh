@@ -58,15 +58,37 @@ git reset --hard $READIUM_CFI_JS_COMMIT
 cd $ROOT
 mv $READIUM_JS_VIEWER $READIUM_JS_VIEWER_CLONE
 
-# Get the snapshot
+# Get the snapshot.
 cp -p ${SNAPSHOT_DIR}/${READIUM_JS_VIEWER_SNAPSHOT}.tar.bz2 .
+
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: copy of snapshot failed.'
+    exit 1
+fi
+
 bunzip2 $READIUM_JS_VIEWER_SNAPSHOT.tar.bz2
+
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: expanding of the snapshot failed.'
+    exit 1
+fi
+
 tar -xf $READIUM_JS_VIEWER_SNAPSHOT.tar 1>/dev/null
 rm -fr $READIUM_JS_VIEWER_SNAPSHOT.tar 1>/dev/null
 mv readium-js-viewer $READIUM_JS_VIEWER
 
-# Copy in the .git directories from clone.
 cd $READIUM_JS_VIEWER
+# Exit if not in the directory, otherwise this project will get messed up by
+# subsequent git operations.
+if [ $? -ne  ] || [ $(pwd) != "${READIUM_JS_VIEWER}" ]
+then
+    echo >&2 "ERROR: could not cd to $READIUM_JS_VIEWER."
+    exit 1
+fi
+
+# Copy in the .git directories from clone.
 cp -pR ${READIUM_JS_VIEWER_CLONE}/.git .
 cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/.git readium-js/
 cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/readium-shared-js/.git readium-js/readium-shared-js/
@@ -76,8 +98,7 @@ cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/readium-shared-js/readium-cfi-js/.g
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
-# Early exit if clone failed, otherwise the .git for this project will get messed up
-# by subsequent git operations.
+# Early exit if clone failed.
 if [ ! -d $DLTS_PLUGIN_DIR/.git ]
 then
     echo >&2 "ERROR: clone of $DLTS_PLUGIN_GITHUB_REPO failed."
