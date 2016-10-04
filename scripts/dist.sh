@@ -27,8 +27,6 @@ CLOUD_READER=$DIST/cloud-reader
 # references in them -- they need to be in sync with the final build path.
 git clone --recursive -b master https://github.com/readium/readium-js-viewer.git $READIUM_JS_VIEWER
 
-# Early exit if clone failed, otherwise the .git for this project will get messed up
-# by subsequent git operations.
 if [ ! -d $READIUM_JS_VIEWER/.git ]
 then
     echo >&2 'ERROR: clone of https://github.com/readium/readium-js-viewer.git failed.'
@@ -78,8 +76,7 @@ rm -fr $READIUM_JS_VIEWER_SNAPSHOT.tar 1>/dev/null
 mv readium-js-viewer $READIUM_JS_VIEWER
 
 cd $READIUM_JS_VIEWER
-# Exit if not in the directory, otherwise this project will get messed up by
-# subsequent git operations.
+
 if [ $? -ne  ] || [ $(pwd) != "${READIUM_JS_VIEWER}" ]
 then
     echo >&2 "ERROR: could not cd to $READIUM_JS_VIEWER."
