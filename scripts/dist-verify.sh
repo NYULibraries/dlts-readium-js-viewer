@@ -26,6 +26,7 @@ function diff_readium_file() {
     local format_command="$3"
     local version_string="$4"
     local sed_command_replace_timestamp="$5"
+    local sed_command_replace_extra="$6"
 
     local file_basename=$( basename $source_readium_file_expected )
 
@@ -33,10 +34,18 @@ function diff_readium_file() {
     tmp_readium_file_expected=$TMP/expected_${file_basename}
     tmp_readium_file_got=$TMP/got_${file_basename}
 
+    if [ -z $sed_command_replace_extra ]
+    then
+        # Do not do any extra substitutions.
+        sed_command_replace_extra='s/noop/noop/g'
+    fi
+
     $format_command $source_readium_file_expected | \
-        sed -E $sed_command_replace_timestamp > $tmp_readium_file_expected
+        sed -E $sed_command_replace_timestamp     | \
+        sed -E $sed_command_replace_extra > $tmp_readium_file_expected
     $format_command $source_readium_file_got  | \
-        sed -E $sed_command_replace_timestamp > $tmp_readium_file_got
+        sed -E $sed_command_replace_timestamp | \
+        sed -E $sed_command_replace_extra > $tmp_readium_file_got
 
     # Create separate expected and got files containing only the version info.
     # If there are version info differences they will be a lot easier to analyze
@@ -98,12 +107,17 @@ function verify_readium_js_file() {
 function verify_readium_js_source_map_file() {
     local grep_pattern_version_info="define('text\!version.json'"
     local sed_command_replace_timestamp='s/\\"timestamp\\":[0-9]{13}/"timestamp":0000000000000/g'
+
+    # See https://jira.nyu.edu/browse/NYUP-198?focusedCommentId=68725&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-68725
+    local sed_command_replace_insertRequire='s|"(\.\./)+module-insertRequire.js"|"../module-insertRequire.js"|g'
+
     diff_readium_file                    \
         $READIUM_SOURCE_MAP_EXPECTED     \
         $READIUM_SOURCE_MAP_GOT          \
         "$JSON_BEAUTIFY"                 \
         "$grep_pattern_version_info"     \
-        "$sed_command_replace_timestamp"
+        "$sed_command_replace_timestamp" \
+        "$sed_command_replace_insertRequire"
     }
 
 function verify_epub_content_symlink() {
