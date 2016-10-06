@@ -6,6 +6,8 @@ and [Connected Youth](https://github.com/NYULibraries/dlts-connected-youth).
 The builds created by this project are 100% reproducible.  See [Notes on build][#notes-on-build]
 for details about issues surrounding getting reliably reproducible builds.
 
+See also [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dlts-readium-cloud-reader-archive).
+
 ### Prerequisities
 
 * Bash (for Windows, try using the Git Bash that comes with [git for Windows](https://git-for-windows.github.io/))
