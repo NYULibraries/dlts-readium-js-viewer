@@ -9,7 +9,7 @@
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
-    "dist": "npm run clean && scripts/dist.sh",
+    "dist": "npm run clean && scripts/dist.sh readium-snapshot-2016-10-04",
     "dist:verify": "scripts/dist-verify.sh",
     "test": "npm run test:dist && npm run test:mocha",
     "test:dist": "npm run dist && npm run dist:verify",
