@@ -32,26 +32,17 @@ npm install
 ```
 Get the ReadiumJS viewer snapshots (see [Notes on build][#notes-on-build]).  Note
 that due to Github's file size restrictions we are unable to host our snapshot files
-there.  For the time being we have them in a git repo hosted on our private
-git host.  The files themselves do not have to be private.  Eventually we will
-probably move them to a file server where they can be publicly accessed.
+there, and in any case it would be wasteful to version control these large binary
+files using git because it's likely all past versions of these *.tar.bz2 files will
+persist in the `.git` directory even after being deleted, so the repo would end up
+being very large.
 
-```bash
-# Somewhere else
-git clone git@[PRIVATE GIT HOST]:dlts/dlts-readium-js-viewer-snapshots.git
-```
-
-Copy or symlink the files from this newly cloned snapshots repo into `snapshots/`.
-Assuming that the snapshots repo is in the same directory as this one:
-
-```bash
-# Back inside this repo, dlts-readium-js-viewer
-cd snapshots
-for snapshot in ../../dlts-readium-js-viewer-snapshots/*.tar.bz2
-do
-    ln -s $snapshot .
-done
-```
+For the time being we have them stored in NYU Box:
+https://nyu.app.box.com/files/0/f/11596547241/dlts-readium-js-viewer-snapshots.
+Eventually we will probably move them to a file server where they can downloaded
+programmatically by the build scripts.  For now, to build the current distribution
+manually download the snapshot from https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn
+and place it in `snapshots/`.
 
 ### Building the production ReadiumJS viewer
 
