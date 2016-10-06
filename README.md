@@ -40,10 +40,11 @@ persist in the `.git` directory even after being deleted, so the repo would end 
 being very large.
 
 For the time being we have them stored in NYU Box:
-https://nyu.app.box.com/files/0/f/11596547241/dlts-readium-js-viewer-snapshots.
+[dlts-readium-js-viewer-snapshots](https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn).
 Eventually we will probably move them to a file server where they can downloaded
 programmatically by the build scripts.  For now, to build the current distribution
-manually download the snapshot from https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn
+manually download the snapshot
+[readium-snapshot-2016-10-04.tar.bz2](https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn)
 and place it in `snapshots/`.
 
 ### Building the production ReadiumJS viewer
