@@ -4,7 +4,7 @@ Main repo for the building and testing of the DLTS [ReadiumJS viewer](https://gi
 used by NYU Press websites [Open Access Books](https://github.com/NYULibraries/dlts-open-access-books)
 and [Connected Youth](https://github.com/NYULibraries/dlts-connected-youth).
 The builds created by this project are 100% reproducible.  See [Notes on build](#notes-on-build)
-for details about issues surrounding getting reliably reproducible builds.
+for details about issues surrounding reproducibility.
 
 See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dlts-readium-cloud-reader-archive).
 
