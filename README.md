@@ -3,7 +3,7 @@
 Main repo for the building and testing of the DLTS [ReadiumJS viewer](https://github.com/readium/readium-js-viewer)
 used by NYU Press websites [Open Access Books](https://github.com/NYULibraries/dlts-open-access-books)
 and [Connected Youth](https://github.com/NYULibraries/dlts-connected-youth).
-The builds created by this project are 100% reproducible.  See [Notes on build][#notes-on-build]
+The builds created by this project are 100% reproducible.  See [Notes on build](#notes-on-build)
 for details about issues surrounding getting reliably reproducible builds.
 
 See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dlts-readium-cloud-reader-archive).
@@ -32,7 +32,7 @@ git clone git@github.com:NYULibraries/dlts-readium-js-viewer.git
 cd dlts-readium-js-viewer
 npm install
 ```
-Get the ReadiumJS viewer snapshots (see [Notes on build][#notes-on-build]).  Note
+Get the ReadiumJS viewer snapshots (see [Notes on build](#notes-on-build)).  Note
 that due to Github's file size restrictions we are unable to host our snapshot files
 there, and in any case it would be wasteful to version control these large binary
 files using git because it's likely all past versions of these *.tar.bz2 files will
