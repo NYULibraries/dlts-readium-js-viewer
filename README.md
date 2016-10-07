@@ -40,7 +40,7 @@ persist in the `.git` directory even after being deleted, so the repo would end 
 being very large.
 
 For the time being we have them stored in NYU Box:
-[dlts-readium-js-viewer-snapshots](https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn).
+[dlts-readium-js-viewer-snapshots](https://nyu.box.com/s/y5e907gebxfzox5ucfby0sycb7da8vww).
 Eventually we will probably move them to a file server where they can downloaded
 programmatically by the build scripts.  For now, to build the current distribution
 manually download the snapshot
