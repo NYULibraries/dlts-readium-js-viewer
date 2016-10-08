@@ -14,6 +14,6 @@
     "dist:verify": "scripts/dist-verify.sh",
     "test": "npm run test:dist && npm run test:mocha",
     "test:dist": "npm run dist && npm run dist:verify",
-    "test:mocha": "node node_modules/mocha/bin/mocha tests/"
+    "test:browser": "node node_modules/webdriverio/bin/wdio tests/browser/wdio.conf.js"
   }
 }
