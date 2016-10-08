@@ -5,6 +5,7 @@
   "dependencies": {
     "js-beautify": "^1.6.4",
     "mocha": "^3.0.2",
+    "wdio-mocha-framework": "^0.4.3 ",
     "webdriverio": "^4.2.16"
   },
   "scripts": {
