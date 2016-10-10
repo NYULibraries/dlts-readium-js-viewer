@@ -15,5 +15,8 @@
     "test": "npm run test:dist && npm run test:browser",
     "test:dist": "npm run dist && npm run dist:verify",
     "test:browser": "node node_modules/webdriverio/bin/wdio test/browser/wdio.conf.js"
+  },
+  "devDependencies": {
+    "wdio": "^0.3.3"
   }
 }
