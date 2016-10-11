@@ -131,6 +131,7 @@ exports.config = {
     mochaOpts: {
         ui: 'tdd'
     },
+    debug: true,
     //
     // =====
     // Hooks
