@@ -13,11 +13,11 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         let navbar = readium.navbar;
 
-        assert.equal( navbar.backgroundColor, '#2c2c2c',                    '"background"' );
-        assert.equal( navbar.boxShadow,       'xrgb(51,51,51)0px1px5px0px', '"box-shadow"' );
-        assert.equal( navbar.borderRadius,    '0px',                        '"border-radius"' );
-        assert.equal( navbar.minHeight,       '50px',                       '"min-height"' );
-        assert.equal( navbar.marginBottom,    '0px',                        '"margin-bottom"' );
+        assert.equal( navbar.backgroundColor, '#2c2c2c',          '"background"' );
+        assert.equal( navbar.boxShadow,       '0px 1px 5px #333', '"box-shadow"' );
+        assert.equal( navbar.borderRadius,    '0px',              '"border-radius"' );
+        assert.equal( navbar.minHeight,       '50px',             '"min-height"' );
+        assert.equal( navbar.marginBottom,    '0px',              '"margin-bottom"' );
     } );
 
 } );
