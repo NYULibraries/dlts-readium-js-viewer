@@ -25,6 +25,12 @@ let ReadiumPage = Object.create( Page, {
             let minHeight       = element.getCssProperty( 'min-height' ).value;
             let marginBottom    = element.getCssProperty( 'margin-bottom' ).value;
 
+            let navbarLeftButtons = browser.elements( '.btn-group.navbar-left > button' ).value;
+            let leftSideVisibleButtons = getVisibleChildElementIds( navbarLeftButtons );
+
+            let navbarRightButtons = browser.elements( '.btn-group.navbar-right > button' ).value;
+            let rightSideVisibleButtons = getVisibleChildElementIds( navbarRightButtons );
+
             return {
                 element,
                 backgroundColor,
@@ -32,6 +38,8 @@ let ReadiumPage = Object.create( Page, {
                 borderRadius,
                 minHeight,
                 marginBottom,
+                leftSideVisibleButtons,
+                rightSideVisibleButtons,
             }
         }
     },
@@ -40,5 +48,21 @@ let ReadiumPage = Object.create( Page, {
         Page.open.call( this, path );
     } },
 } );
+
+function getVisibleChildElementIds ( parentElement ) {
+    let visibleChildElementIds = [];
+
+    for ( i in parentElement ) {
+        let id = parentElement[ i ].ELEMENT;
+        if (
+            browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
+            browser.elementIdCssProperty( id, 'display' ).value != 'none'
+        ) {
+            visibleChildElementIds.push( browser.elementIdAttribute( id, 'id' ).value );
+        };
+    }
+
+    return visibleChildElementIds;
+}
 
 module.exports = ReadiumPage;
