@@ -7,17 +7,36 @@ const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=e
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'DLTS ReadiumJS viewer', function() {
+    let navbar;
 
-    test( 'customized navbar is styled correctly', function() {
+    suiteSetup( function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        let navbar = readium.navbar;
+        navbar = readium.navbar;
+    } );
 
-        assert.equal( navbar.backgroundColor, '#2c2c2c',          '"background"' );
-        assert.equal( navbar.boxShadow,       '0px 1px 5px #333', '"box-shadow"' );
-        assert.equal( navbar.borderRadius,    '0px',              '"border-radius"' );
-        assert.equal( navbar.minHeight,       '50px',             '"min-height"' );
-        assert.equal( navbar.marginBottom,    '0px',              '"margin-bottom"' );
+    suite( 'Navbar styling', function() {
+
+        test( '"background"', function() {
+            assert.equal( navbar.backgroundColor, '#2c2c2c' );
+        } );
+
+        test( '"box-shadow"', function() {
+            assert.equal( navbar.boxShadow, '0px 1px 5px #333' );
+        } );
+
+        test( '"border-radius"', function() {
+            assert.equal( navbar.borderRadius, '0px' );
+        } );
+
+        test( '"minHeight"', function() {
+            assert.equal( navbar.minHeight, '50px' );
+        } );
+
+        test( '"marginBotton"', function() {
+            assert.equal( navbar.marginBottom, '0px' );
+        } );
+
     } );
 
 } );
