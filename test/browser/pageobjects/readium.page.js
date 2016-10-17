@@ -87,7 +87,7 @@ function getNavbarRightCss() {
 function getVisibleChildElementIds ( parentElement ) {
     let visibleChildElementIds = [];
 
-    for ( i in parentElement ) {
+    for ( let i in parentElement ) {
         let id = parentElement[ i ].ELEMENT;
         if (
             browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
