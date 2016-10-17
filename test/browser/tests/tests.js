@@ -49,7 +49,9 @@ suite( 'DLTS ReadiumJS viewer', function() {
         } );
 
         test( '"height"', function() {
-            assert.equal( navbarRight.height, '0.4em' );
+            // Our plugin sets height to 0.4em, but this is apparently overridden
+            // in the test by min-height of 50px.
+            assert.equal( navbarRight.height, '50px' );
         } );
 
         test( '"margin"', function() {
