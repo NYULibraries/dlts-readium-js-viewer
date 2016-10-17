@@ -1,3 +1,5 @@
+"use strict";
+
 let Page = require('./page');
 
 let ReadiumPage = Object.create( Page, {

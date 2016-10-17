@@ -1,3 +1,5 @@
+"use strict";
+
 let assert = require( 'chai' ).assert;
 
 let readium = require( '../pageobjects/readium.page' );
