@@ -41,6 +41,32 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    suite( 'Navbar styling - right side buttons', function() {
+        
+        let navbarRight = navbar.navbarRight;
+
+        test( '"background"', function() {
+            assert.equal( navbarRight.backgroundColor, '#2c2c2c' );
+        } );
+
+        test( '"height"', function() {
+            assert.equal( navbarRight.height, '0.4em' );
+        } );
+
+        test( '"margin"', function() {
+            assert.equal( navbarRight.margin, '10px 15px 0 0' );
+        } );
+
+        test( '"min-height"', function() {
+            assert.equal( navbarRight.minHeight, '50px' );
+        } );
+
+        test( '"overflow"', function() {
+            assert.equal( navbarRight.overflow, 'visible' );
+        } );
+
+    } );
+
     suite( 'navbar has the correct buttons', function() {
 
         test( 'Left side', function() {
