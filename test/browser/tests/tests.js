@@ -53,7 +53,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
         } );
 
         test( '"margin"', function() {
-            assert.equal( navbarRight.margin, '10px 15px 0 0' );
+            assert.equal( navbarRight.margin, '10px 15px 0px 0px' );
         } );
 
         test( '"min-height"', function() {
