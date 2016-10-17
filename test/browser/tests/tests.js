@@ -42,7 +42,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
-    suite( 'Navbar styling - right side buttons', function() {
+    suite( 'Navbar styling - right side', function() {
 
         test( '"background"', function() {
             assert.equal( navbarRight.backgroundColor, '#2c2c2c' );
