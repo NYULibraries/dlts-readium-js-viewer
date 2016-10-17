@@ -6,26 +6,10 @@ let ReadiumPage = Object.create( Page, {
     navbar: { get:
         function() {
             let element = browser.element( '#app-navbar' );
-            let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
 
-            // Build the convenient testing string.
-            // Need this for the dimensional/spatial information in (for example) "rgb(51,51,51)0px1px5px0px"
-            let boxShadowUnparsedValue = element.getCssProperty( 'box-shadow' ).value;
-            let boxShadowParseOffsetAndRadiusRegex =
-                    /^rgb\(\d{1,3},\d{1,3},\d{1,3}\)(\d+px)(\d+px)(\d+px)\d+px$/;
-            let boxShadowOffsetAndRadiusParts = boxShadowParseOffsetAndRadiusRegex
-                .exec( boxShadowUnparsedValue );
-            let boxShadow = boxShadowOffsetAndRadiusParts[ 1 ] +
-                            ' '                                +
-                            boxShadowOffsetAndRadiusParts[ 2 ] +
-                            ' '                                +
-                            boxShadowOffsetAndRadiusParts[ 3 ] +
-                            ' '                                +
-                            element.getCssProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
+            let navbarCss = getNavbarCss( element );
 
-            let borderRadius    = element.getCssProperty( 'border-radius' ).value;
-            let minHeight       = element.getCssProperty( 'min-height' ).value;
-            let marginBottom    = element.getCssProperty( 'margin-bottom' ).value;
+            let navbarRight = getNavbarRightCss();
 
             let navbarLeftButtons = browser.elements( '.btn-group.navbar-left > button' ).value;
             let leftSideVisibleButtons = getVisibleChildElementIds( navbarLeftButtons );
@@ -33,16 +17,16 @@ let ReadiumPage = Object.create( Page, {
             let navbarRightButtons = browser.elements( '.btn-group.navbar-right > button' ).value;
             let rightSideVisibleButtons = getVisibleChildElementIds( navbarRightButtons );
 
-            return {
+            let navbar = {
                 element,
-                backgroundColor,
-                boxShadow,
-                borderRadius,
-                minHeight,
-                marginBottom,
                 leftSideVisibleButtons,
+                navbarRight,
                 rightSideVisibleButtons,
-            }
+            };
+
+            Object.assign( navbar, navbarCss );
+
+            return navbar;
         }
     },
 
@@ -50,6 +34,55 @@ let ReadiumPage = Object.create( Page, {
         Page.open.call( this, path );
     } },
 } );
+
+function getNavbarCss( navbarElement ) {
+    let backgroundColor = navbarElement.getCssProperty( 'background-color' ).parsed.hex;
+
+    // Build the convenient testing string.
+    // Need this for the dimensional/spatial information in (for example) "rgb(51,51,51)0px1px5px0px"
+    let boxShadowUnparsedValue = navbarElement.getCssProperty( 'box-shadow' ).value;
+    let boxShadowParseOffsetAndRadiusRegex =
+            /^rgb\(\d{1,3},\d{1,3},\d{1,3}\)(\d+px)(\d+px)(\d+px)\d+px$/;
+    let boxShadowOffsetAndRadiusParts = boxShadowParseOffsetAndRadiusRegex
+        .exec( boxShadowUnparsedValue );
+    let boxShadow = boxShadowOffsetAndRadiusParts[ 1 ] +
+                    ' '                                +
+                    boxShadowOffsetAndRadiusParts[ 2 ] +
+                    ' '                                +
+                    boxShadowOffsetAndRadiusParts[ 3 ] +
+                    ' '                                +
+                    navbarElement.getCssProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
+
+    let borderRadius    = navbarElement.getCssProperty( 'border-radius' ).value;
+    let minHeight       = navbarElement.getCssProperty( 'min-height' ).value;
+    let marginBottom    = navbarElement.getCssProperty( 'margin-bottom' ).value;
+
+    return {
+        backgroundColor,
+        boxShadow,
+        borderRadius,
+        minHeight,
+        marginBottom,
+    }
+}
+
+function getNavbarRightCss() {
+    let navbarRight = browser.element( '.navbar-right' );
+
+    let backgroundColor = navbarRight.getCssProperty( 'background-color' ).parsed.hex;
+    let height          = navbarRight.getCssProperty( 'height' ).value;
+    let margin          = navbarRight.getCssProperty( 'margin' ).value;
+    let minHeight       = navbarRight.getCssProperty( 'min-height' ).value;
+    let overflow        = navbarRight.getCssProperty( 'overflow' ).value;
+
+    return {
+        backgroundColor,
+        height,
+        margin,
+        minHeight,
+        overflow,
+    }
+}
 
 function getVisibleChildElementIds ( parentElement ) {
     let visibleChildElementIds = [];
