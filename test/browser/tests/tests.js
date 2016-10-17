@@ -9,12 +9,13 @@ const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=e
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'DLTS ReadiumJS viewer', function() {
-    let navbar;
+    let navbar, navbarRight;
 
     suiteSetup( function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        navbar = readium.navbar;
+        navbar      = readium.navbar;
+        navbarRight = navbar.navbarRight;
     } );
 
     suite( 'Navbar styling', function() {
@@ -42,8 +43,6 @@ suite( 'DLTS ReadiumJS viewer', function() {
     } );
 
     suite( 'Navbar styling - right side buttons', function() {
-        
-        let navbarRight = navbar.navbarRight;
 
         test( '"background"', function() {
             assert.equal( navbarRight.backgroundColor, '#2c2c2c' );
