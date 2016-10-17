@@ -105,13 +105,12 @@ function getVisibleElementIds( parentElement ) {
 function getVisibleButtons( elementIds ) {
     let buttons = {};
 
-    for ( let i in elementIds ) {
-        let elementId = elementIds[ i ];
+    elementIds.forEach( function( elementId ) {
         let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
         buttons[ idAttribute ] = {
             css: getNavbarButtonCss( elementId ),
         };
-    }
+    } );
 
     return buttons;
 }
