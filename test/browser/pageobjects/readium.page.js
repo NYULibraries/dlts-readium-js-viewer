@@ -12,10 +12,12 @@ let ReadiumPage = Object.create( Page, {
             let navbarRight = getNavbarRightCss();
 
             let navbarLeftButtons = browser.elements( '.btn-group.navbar-left > button' ).value;
-            let leftSideVisibleButtons = getVisibleChildElementIds( navbarLeftButtons );
+            let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
+            let leftSideVisibleButtons = getIdAttributes( navbarLeftVisibleButtonIds );
 
             let navbarRightButtons = browser.elements( '.btn-group.navbar-right > button' ).value;
-            let rightSideVisibleButtons = getVisibleChildElementIds( navbarRightButtons );
+            let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
+            let rightSideVisibleButtons = getIdAttributes( navbarRightVisibleButtonIds );
 
             let navbar = {
                 element,
@@ -84,7 +86,7 @@ function getNavbarRightCss() {
     }
 }
 
-function getVisibleChildElementIds ( parentElement ) {
+function getVisibleElementIds( parentElement ) {
     let visibleChildElementIds = [];
 
     for ( let i in parentElement ) {
@@ -93,11 +95,21 @@ function getVisibleChildElementIds ( parentElement ) {
             browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
             browser.elementIdCssProperty( id, 'display' ).value != 'none'
         ) {
-            visibleChildElementIds.push( browser.elementIdAttribute( id, 'id' ).value );
+            visibleChildElementIds.push( id );
         }
     }
 
     return visibleChildElementIds;
+}
+
+function getIdAttributes( elementIds ) {
+    let idAttributes = [];
+
+    for ( let i in elementIds ) {
+        idAttributes.push( browser.elementIdAttribute( elementIds[ i ], 'id' ).value );
+    }
+
+    return idAttributes;
 }
 
 function getNavbarButtonCss( buttonElement ) {
