@@ -94,7 +94,7 @@ function getVisibleChildElementIds ( parentElement ) {
             browser.elementIdCssProperty( id, 'display' ).value != 'none'
         ) {
             visibleChildElementIds.push( browser.elementIdAttribute( id, 'id' ).value );
-        };
+        }
     }
 
     return visibleChildElementIds;
