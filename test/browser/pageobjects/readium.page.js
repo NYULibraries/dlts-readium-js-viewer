@@ -100,4 +100,22 @@ function getVisibleChildElementIds ( parentElement ) {
     return visibleChildElementIds;
 }
 
+function getNavbarButtonCss( buttonElement ) {
+    let color = navbarRight.getCssProperty( 'color' ).value;
+    let fontSize = navbarRight.getCssProperty( 'font-size' ).value;
+    let width = navbarRight.getCssProperty( 'width' ).value;
+    let height = navbarRight.getCssProperty( 'height' ).value;
+    let background = navbarRight.getCssProperty( 'background' ).value;
+    let backgroundColor = navbarRight.getCssProperty( 'background-color' ).value;
+
+    return {
+        background,
+        backgroundColor,
+        color,
+        fontSize,
+        height,
+        width,
+    }
+}
+
 module.exports = ReadiumPage;
