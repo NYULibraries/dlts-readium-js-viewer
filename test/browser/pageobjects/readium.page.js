@@ -89,15 +89,15 @@ function getNavbarRightCss() {
 function getVisibleElementIds( elements ) {
     let visibleChildElementIds = [];
 
-    for ( let i in elements ) {
-        let id = elements[ i ].ELEMENT;
+    elements.forEach( function( element ) {
+        let id = element.ELEMENT;
         if (
             browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
             browser.elementIdCssProperty( id, 'display' ).value != 'none'
         ) {
             visibleChildElementIds.push( id );
         }
-    }
+    } );
 
     return visibleChildElementIds;
 }
