@@ -13,11 +13,11 @@ let ReadiumPage = Object.create( Page, {
 
             let navbarLeftButtons = browser.elements( '.btn-group.navbar-left > button' ).value;
             let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
-            let leftSideVisibleButtons = getIdAttributes( navbarLeftVisibleButtonIds );
+            let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
 
             let navbarRightButtons = browser.elements( '.btn-group.navbar-right > button' ).value;
             let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
-            let rightSideVisibleButtons = getIdAttributes( navbarRightVisibleButtonIds );
+            let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
 
             let navbar = {
                 element,
@@ -102,23 +102,27 @@ function getVisibleElementIds( parentElement ) {
     return visibleChildElementIds;
 }
 
-function getIdAttributes( elementIds ) {
-    let idAttributes = [];
+function getVisibleButtons( elementIds ) {
+    let buttons = {};
 
     for ( let i in elementIds ) {
-        idAttributes.push( browser.elementIdAttribute( elementIds[ i ], 'id' ).value );
+        let elementId = elementIds[ i ];
+        let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
+        buttons[ idAttribute ] = {
+            css: getNavbarButtonCss( elementId ),
+        };
     }
 
-    return idAttributes;
+    return buttons;
 }
 
-function getNavbarButtonCss( buttonElement ) {
-    let color = navbarRight.getCssProperty( 'color' ).value;
-    let fontSize = navbarRight.getCssProperty( 'font-size' ).value;
-    let width = navbarRight.getCssProperty( 'width' ).value;
-    let height = navbarRight.getCssProperty( 'height' ).value;
-    let background = navbarRight.getCssProperty( 'background' ).value;
-    let backgroundColor = navbarRight.getCssProperty( 'background-color' ).value;
+function getNavbarButtonCss( buttonElementId ) {
+    let background      = browser.elementIdCssProperty( buttonElementId, 'background' ).value;
+    let backgroundColor = browser.elementIdCssProperty( buttonElementId, 'background-color' ).value;
+    let color           = browser.elementIdCssProperty( buttonElementId, 'color' ).value;
+    let fontSize        = browser.elementIdCssProperty( buttonElementId, 'font-size' ).value;
+    let height          = browser.elementIdCssProperty( buttonElementId, 'height' ).value;
+    let width           = browser.elementIdCssProperty( buttonElementId, 'width' ).value;
 
     return {
         background,

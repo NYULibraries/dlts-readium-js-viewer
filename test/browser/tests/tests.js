@@ -71,13 +71,13 @@ suite( 'DLTS ReadiumJS viewer', function() {
     suite( 'navbar has the correct buttons', function() {
 
         test( 'Left side', function() {
-            assert.equal( navbar.leftSideVisibleButtons.length, 0,
-                         'Has the correct # of visible buttons' );
+            assert.equal( Object.keys( navbar.leftSideVisibleButtons ).length, 0,
+                         'Has no visible buttons' );
         } );
 
         test( 'Right side', function() {
             assert.sameDeepMembers(
-                navbar.rightSideVisibleButtons,
+                Object.keys( navbar.rightSideVisibleButtons ),
                 [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ],
                'Has the correct visible buttons'
             );
