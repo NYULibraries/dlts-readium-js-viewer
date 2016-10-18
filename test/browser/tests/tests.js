@@ -56,8 +56,20 @@ suite( 'DLTS ReadiumJS viewer', function() {
             assert.equal( navbarRight.height, '50px' );
         } );
 
-        test( '"margin"', function() {
-            assert.equal( navbarRight.margin, '10px 15px 0px 0px' );
+        test( '"marginBottom"', function() {
+            assert.equal( navbarRight.marginBottom, '0px' );
+        } );
+
+        test( '"marginLeft"', function() {
+            assert.equal( navbarRight.marginLeft, '0px' );
+        } );
+
+        test( '"marginRight"', function() {
+            assert.equal( navbarRight.marginRight, '15px' );
+        } );
+
+        test( '"marginTop"', function() {
+            assert.equal( navbarRight.marginTop, '10px' );
         } );
 
         test( '"min-height"', function() {

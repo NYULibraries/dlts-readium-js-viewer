@@ -76,14 +76,23 @@ function getNavbarRightCss() {
 
     let backgroundColor = navbarRight.getCssProperty( 'background-color' ).parsed.hex;
     let height          = navbarRight.getCssProperty( 'height' ).value;
-    let margin          = navbarRight.getCssProperty( 'margin' ).value;
+    // Our plugin sets "margin", but Firefox currently uses the broken-out
+    // properties.
+    let marginBottom    = navbarRight.getCssProperty( 'margin-bottom' ).value;
+    let marginLeft      = navbarRight.getCssProperty( 'margin-left' ).value;
+    let marginRight     = navbarRight.getCssProperty( 'margin-right' ).value;
+    let marginTop       = navbarRight.getCssProperty( 'margin-top' ).value;
+
     let minHeight       = navbarRight.getCssProperty( 'min-height' ).value;
     let overflow        = navbarRight.getCssProperty( 'overflow' ).value;
 
     return {
         backgroundColor,
         height,
-        margin,
+        marginBottom,
+        marginLeft,
+        marginRight,
+        marginTop,
         minHeight,
         overflow,
     }
