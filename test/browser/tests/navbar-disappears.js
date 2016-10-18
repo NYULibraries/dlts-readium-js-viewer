@@ -31,6 +31,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         );
     } );
 
+    test( `disappears after ${DELAY_IN_SECONDS} seconds`, function() {
         readium.open( DEFAULT_BOOK_PATH );
 
         let navbarSelector = readium.navbar.selector;
