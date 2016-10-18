@@ -58,14 +58,23 @@ function getNavbarCss( navbarElement ) {
                     ' '                                +
                     navbarElement.getCssProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
 
-    let borderRadius    = navbarElement.getCssProperty( 'border-radius' ).value;
+    // Our plugin sets "border-radius", but Firefox currently uses the broken-out
+    // properties.
+    let borderBottomLeftRadius  = navbarElement.getCssProperty( 'border-bottom-left-radius' ).value;
+    let borderBottomRightRadius = navbarElement.getCssProperty( 'border-bottom-right-radius' ).value;
+    let borderTopLeftRadius     = navbarElement.getCssProperty( 'border-top-left-radius' ).value;
+    let borderTopRightRadius    = navbarElement.getCssProperty( 'border-top-right-radius' ).value;
+
     let minHeight       = navbarElement.getCssProperty( 'min-height' ).value;
     let marginBottom    = navbarElement.getCssProperty( 'margin-bottom' ).value;
 
     return {
         backgroundColor,
         boxShadow,
-        borderRadius,
+        borderBottomLeftRadius,
+        borderBottomRightRadius,
+        borderTopLeftRadius,
+        borderTopRightRadius,
         minHeight,
         marginBottom,
     }

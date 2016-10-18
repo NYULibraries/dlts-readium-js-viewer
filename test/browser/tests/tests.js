@@ -30,8 +30,20 @@ suite( 'DLTS ReadiumJS viewer', function() {
             assert.equal( navbar.boxShadow, '0px 1px 5px #333' );
         } );
 
-        test( '"border-radius"', function() {
-            assert.equal( navbar.borderRadius, '0px' );
+        test( '"border-bottom-left-radius"', function() {
+            assert.equal( navbar.borderBottomLeftRadius, '0px' );
+        } );
+
+        test( '"border-bottom-right-radius"', function() {
+            assert.equal( navbar.borderBottomRightRadius, '0px' );
+        } );
+
+        test( '"border-top-left-radius"', function() {
+            assert.equal( navbar.borderTopLeftRadius, '0px' );
+        } );
+
+        test( '"border-top-right-radius"', function() {
+            assert.equal( navbar.borderTopRightRadius, '0px' );
         } );
 
         test( '"minHeight"', function() {
