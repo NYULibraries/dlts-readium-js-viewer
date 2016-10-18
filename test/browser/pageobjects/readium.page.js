@@ -2,10 +2,12 @@
 
 let Page = require('./page');
 
+const NAVBAR_SELECTOR = '#app-navbar';
+
 let ReadiumPage = Object.create( Page, {
     navbar: { get:
         function() {
-            let element = browser.element( '#app-navbar' );
+            let element = browser.element( NAVBAR_SELECTOR );
 
             let navbarCss = getNavbarCss( element );
 
@@ -23,6 +25,7 @@ let ReadiumPage = Object.create( Page, {
                 element,
                 leftSideVisibleButtons,
                 navbarRight,
+                selector : NAVBAR_SELECTOR,
                 rightSideVisibleButtons,
             };
 
