@@ -1,5 +1,13 @@
 "use strict";
 
+/**
+ * Keep these tests in a separate file so that they can be run independently and
+ * in parallel with other tests (if maxInstances is set high enough).
+ * These tests intentionally block to allow enough enough time to pass for the
+ * navbar show/hide behavior to be verified.  No need to impose this delay on the
+ * other tests.
+ */
+
 let assert = require( 'chai' ).assert;
 
 let readium = require( '../pageobjects/readium.page' );
