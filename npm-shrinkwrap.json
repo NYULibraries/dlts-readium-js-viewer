@@ -533,6 +533,11 @@
       "from": "http-signature@>=0.10.0 <0.11.0",
       "resolved": "https://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz"
     },
+    "humanize-duration": {
+      "version": "3.9.1",
+      "from": "humanize-duration@>=3.9.0 <4.0.0",
+      "resolved": "https://registry.npmjs.org/humanize-duration/-/humanize-duration-3.9.1.tgz"
+    },
     "inflight": {
       "version": "1.0.5",
       "from": "inflight@>=1.0.4 <2.0.0",
@@ -1397,6 +1402,11 @@
           "resolved": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz"
         }
       }
+    },
+    "wdio-spec-reporter": {
+      "version": "0.0.3",
+      "from": "wdio-spec-reporter@latest",
+      "resolved": "https://registry.npmjs.org/wdio-spec-reporter/-/wdio-spec-reporter-0.0.3.tgz"
     },
     "wdio-sync": {
       "version": "0.5.13",
