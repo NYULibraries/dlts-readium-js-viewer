@@ -8,6 +8,8 @@ let readium = require( '../pageobjects/readium.page' );
 const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
+const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ];
+
 suite( 'DLTS ReadiumJS viewer', function() {
     let navbar, navbarRight;
 
@@ -78,9 +80,90 @@ suite( 'DLTS ReadiumJS viewer', function() {
         test( 'Right side', function() {
             assert.sameDeepMembers(
                 Object.keys( navbar.rightSideVisibleButtons ),
-                [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ],
+                EXPECTED_NAVBAR_BUTTONS,
                'Has the correct visible buttons'
             );
+        } );
+
+    } );
+
+    suite( 'Navbar buttons styled correctly', function() {
+
+        EXPECTED_NAVBAR_BUTTONS.forEach( function( buttonId ) {
+
+            test(
+                `${buttonId}: "background-position"`, function () {
+                    // We define background position as "center center" in the
+                    // "background" shorthand property.  It gets expressed as
+                    // "50% 50%" in the element.
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .backgroundPosition, '50% 50%'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "backgroundRepeat"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .backgroundRepeat, 'no-repeat'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "backgroundColor"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .backgroundColor, '#2c2c2c'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "color"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .color, '#666666'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "fontSize"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .fontSize, '22px'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "height"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .height, '36px'
+                    );
+                }
+            );
+
+            test(
+                `${buttonId}: "width"`, function () {
+                    assert.equal(
+                        navbar.rightSideVisibleButtons[ buttonId ]
+                            .css
+                            .width, '43px'
+                    );
+                }
+            );
+
         } );
 
     } );
