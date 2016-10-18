@@ -108,28 +108,23 @@ function getVisibleButtons( elementIds ) {
     elementIds.forEach( function( elementId ) {
         let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
         buttons[ idAttribute ] = {
-            css: getNavbarButtonCss( elementId ),
+            css: getNavbarButtonCss( idAttribute ),
         };
     } );
 
     return buttons;
 }
 
-function getNavbarButtonCss( buttonElementId ) {
-    let background      = browser.elementIdCssProperty( buttonElementId, 'background' ).value;
-    let backgroundColor = browser.elementIdCssProperty( buttonElementId, 'background-color' ).value;
-    let color           = browser.elementIdCssProperty( buttonElementId, 'color' ).value;
-    let fontSize        = browser.elementIdCssProperty( buttonElementId, 'font-size' ).value;
-    let height          = browser.elementIdCssProperty( buttonElementId, 'height' ).value;
-    let width           = browser.elementIdCssProperty( buttonElementId, 'width' ).value;
+function getNavbarButtonCss( buttonIdAttribute ) {
+    let button = browser.element( `#${buttonIdAttribute}` );
 
     return {
-        background,
-        backgroundColor,
-        color,
-        fontSize,
-        height,
-        width,
+        background      : button.getCssProperty( 'background' ).value,
+        backgroundColor : button.getCssProperty( 'background-color' ).parsed.hex,
+        color           : button.getCssProperty( 'color' ).parsed.hex,
+        fontSize        : button.getCssProperty( 'font-size' ).value,
+        height          : button.getCssProperty( 'height' ).value,
+        width           : button.getCssProperty( 'width' ).value,
     }
 }
 
