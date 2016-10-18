@@ -119,12 +119,13 @@ function getNavbarButtonCss( buttonIdAttribute ) {
     let button = browser.element( `#${buttonIdAttribute}` );
 
     return {
-        background      : button.getCssProperty( 'background' ).value,
-        backgroundColor : button.getCssProperty( 'background-color' ).parsed.hex,
-        color           : button.getCssProperty( 'color' ).parsed.hex,
-        fontSize        : button.getCssProperty( 'font-size' ).value,
-        height          : button.getCssProperty( 'height' ).value,
-        width           : button.getCssProperty( 'width' ).value,
+        backgroundColor    : button.getCssProperty( 'background-color' ).parsed.hex,
+        backgroundPosition : button.getCssProperty( 'background-position' ).value,
+        backgroundRepeat   : button.getCssProperty( 'background-repeat' ).value,
+        color              : button.getCssProperty( 'color' ).parsed.hex,
+        fontSize           : button.getCssProperty( 'font-size' ).value,
+        height             : button.getCssProperty( 'height' ).value,
+        width              : button.getCssProperty( 'width' ).value,
     }
 }
 
