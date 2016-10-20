@@ -6,6 +6,7 @@ let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
 const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const JAPANESE_LESSONS            = '/?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ];
@@ -194,6 +195,22 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     test( 'Reading area is low enough to clear the navbar', function() {
         assert.equal( readium.readingArea.top, '78px', 'Top position is correct' );
+    } );
+
+    suite( 'Book cover should be absolutely positioned to prevent splitting', function() {
+        // OA Book covers are <svg>, Connected Youth book covers are <img>
+        // We use different fixes for each.
+
+        test( 'OA Books', function() {
+            readium.open( JAPANESE_LESSONS );
+
+            let bookCoverPosition = browser.element( 'svg' )
+                                        .getCssProperty( 'position' )
+                                        .value;
+
+            assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
+        } );
+
     } );
 
 } );
