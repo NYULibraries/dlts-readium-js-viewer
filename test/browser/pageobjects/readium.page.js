@@ -2,7 +2,8 @@
 
 let Page = require('./page');
 
-const NAVBAR_SELECTOR = '#app-navbar';
+const NAVBAR_SELECTOR       = '#app-navbar';
+const READING_AREA_SELECTOR = '#reading-area';
 
 let ReadiumPage = Object.create( Page, {
     navbar: { get:
@@ -38,6 +39,16 @@ let ReadiumPage = Object.create( Page, {
     open: { value: function( path ) {
         Page.open.call( this, path );
     } },
+
+    readingArea: { get:
+        function() {
+            let element = browser.element( READING_AREA_SELECTOR );
+
+            return {
+                top: element.getCssProperty( 'top' ).value
+            };
+        }
+    },
 } );
 
 function getNavbarCss( navbarElement ) {

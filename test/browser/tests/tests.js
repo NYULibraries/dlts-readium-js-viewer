@@ -192,4 +192,8 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    test( 'Reading area is low enough to clear the navbar', function() {
+        assert.equal( readium.readingArea.top, '78px', 'Top position is correct' );
+    } );
+
 } );
