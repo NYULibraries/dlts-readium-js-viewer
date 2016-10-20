@@ -131,6 +131,8 @@ exports.config = {
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
+        // The navbar show/hide tests sometimes need more than the default 10 seconds.
+        timeout: 15000,
         ui: 'tdd'
     },
     debug: true,
