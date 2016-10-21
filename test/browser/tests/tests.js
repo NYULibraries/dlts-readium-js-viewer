@@ -218,6 +218,29 @@ suite( 'DLTS ReadiumJS viewer', function() {
             assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
         } );
 
+        suite( 'Connected Youth cover', function() {
+
+            readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
+            let bookCoverImage = readium.epubContentIframe.bookCoverImage;
+
+            test( '"height"', function() {
+                assert.equal( bookCoverImage.height, '93vh' );
+            } );
+
+            test( '"max-height"', function() {
+                assert.equal( bookCoverImage.height, '93vh' );
+            } );
+
+            test( 'max-width', function() {
+                assert.equal( bookCoverImage.height, '98%' );
+            } );
+
+            test( 'width', function() {
+                assert.equal( bookCoverImage.height, 'auto' );
+            } );
+
+        } );
+
     } );
 
 } );
