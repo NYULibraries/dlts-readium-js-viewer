@@ -211,7 +211,9 @@ suite( 'DLTS ReadiumJS viewer', function() {
         test( 'OA Books', function() {
             readium.open( JAPANESE_LESSONS );
 
-            let bookCoverPosition = readium.epubContentIframe.svgPosition;
+            let bookCoverPosition = readium.epubContentIframe
+                                        .bookCoverImage
+                                        .position;
 
             assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
         } );

@@ -12,25 +12,11 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let element = browser.element( EPUB_CONTENT_IFRAME );
 
-            browser.frame( element.value );
-            let svgPosition;
-
-            // OA Book covers are <svg>, Connected Youth book covers are <img>
-            // We use different fixes for each.
-
-            if ( browser.isExisting( 'svg' ) ) {
-                svgPosition = browser.element( 'svg' )
-                    .getCssProperty( 'position' )
-                    .value;
-            } else if ( browser.isExisting( 'img' ) ) {
-                // TODO
-            }
-
-            browser.frameParent();
+            let bookCoverImage = getBookCoverImage( element.value );
 
             return {
                 element,
-                svgPosition,
+                bookCoverImage,
             };
         }
     },
@@ -81,6 +67,27 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 } );
+
+function getBookCoverImage( frameId ) {
+    let bookCoverImage = {};
+
+    browser.frame( frameId );
+
+    // OA Book covers are <svg>, Connected Youth book covers are <img>
+    // We use different fixes for each.
+
+    if ( browser.isExisting( 'svg' ) ) {
+        bookCoverImage.position = browser.element( 'svg' )
+            .getCssProperty( 'position' )
+            .value;
+    } else if ( browser.isExisting( 'img' ) ) {
+        let img = browser.element( 'img' );
+    }
+
+    browser.frameParent();
+
+    return bookCoverImage;
+}
 
 function getNavbarCss( navbarElement ) {
     let backgroundColor = navbarElement.getCssProperty( 'background-color' ).parsed.hex;
