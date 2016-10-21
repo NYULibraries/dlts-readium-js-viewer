@@ -2,10 +2,39 @@
 
 let Page = require('./page');
 
+const EPUB_CONTENT_IFRAME   = '#epubContentIframe';
 const NAVBAR_SELECTOR       = '#app-navbar';
 const READING_AREA_SELECTOR = '#reading-area';
 
 let ReadiumPage = Object.create( Page, {
+
+    epubContentIframe: { get:
+        function() {
+            let element = browser.element( EPUB_CONTENT_IFRAME );
+
+            browser.frame( element.value );
+            let svgPosition;
+
+            // OA Book covers are <svg>, Connected Youth book covers are <img>
+            // We use different fixes for each.
+
+            if ( browser.isExisting( 'svg' ) ) {
+                svgPosition = browser.element( 'svg' )
+                    .getCssProperty( 'position' )
+                    .value;
+            } else if ( browser.isExisting( 'img' ) ) {
+                // TODO
+            }
+
+            browser.frameParent();
+
+            return {
+                element,
+                svgPosition,
+            };
+        }
+    },
+
     navbar: { get:
         function() {
             let element = browser.element( NAVBAR_SELECTOR );
@@ -38,6 +67,8 @@ let ReadiumPage = Object.create( Page, {
 
     open: { value: function( path ) {
         Page.open.call( this, path );
+
+        browser.waitForExist( EPUB_CONTENT_IFRAME );
     } },
 
     readingArea: { get:
