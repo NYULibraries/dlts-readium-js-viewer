@@ -204,11 +204,11 @@ suite( 'DLTS ReadiumJS viewer', function() {
         assert.equal( readium.readingArea.top, '78px', 'Top position is correct' );
     } );
 
-    suite( 'Book cover should be absolutely positioned to prevent splitting', function() {
+    suite( 'Book cover', function() {
         // OA Book covers are <svg>, Connected Youth book covers are <img>
         // We use different fixes for each.
 
-        test( 'OA Books', function() {
+        test( 'OA Books cover should be absolutely positioned to prevent splitting', function() {
             readium.open( JAPANESE_LESSONS );
 
             let bookCoverPosition = readium.epubContentIframe
