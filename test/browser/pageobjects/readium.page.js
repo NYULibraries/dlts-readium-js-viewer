@@ -80,8 +80,13 @@ function getBookCoverImage( frameId ) {
         bookCoverImage.position = browser.element( 'svg' )
             .getCssProperty( 'position' )
             .value;
-    } else if ( browser.isExisting( 'img' ) ) {
-        let img = browser.element( 'img' );
+    } else if ( browser.isExisting( '.cover img' ) ) {
+        let coverImg = browser.element( '.cover img' );
+
+        bookCoverImage.height    = coverImg.getCssProperty( 'height' ).value;
+        bookCoverImage.maxHeight = coverImg.getCssProperty( 'max-height' ).value;
+        bookCoverImage.maxWidth  = coverImg.getCssProperty( 'max-width' ).value;
+        bookCoverImage.width     = coverImg.getCssProperty( 'width' ).value;
     }
 
     browser.frameParent();
