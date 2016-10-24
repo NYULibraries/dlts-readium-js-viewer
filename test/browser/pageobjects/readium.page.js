@@ -6,17 +6,37 @@ const EPUB_CONTENT_IFRAME   = '#epubContentIframe';
 const NAVBAR_SELECTOR       = '#app-navbar';
 const READING_AREA_SELECTOR = '#reading-area';
 
+const BOOK_COVER_IMAGE_TYPE_SVG = 'svg';
+const BOOK_COVER_IMAGE_TYPE_IMG = 'img';
+
 let ReadiumPage = Object.create( Page, {
+
+    bookCoverImageImg: { get:
+        function() {
+            let element = browser.element( EPUB_CONTENT_IFRAME );
+
+            let bookCoverImage = getBookCoverImage( element.value, BOOK_COVER_IMAGE_TYPE_IMG );
+
+            return bookCoverImage;
+        }
+    },
+
+    bookCoverImageSvg: { get:
+        function() {
+            let element = browser.element( EPUB_CONTENT_IFRAME );
+
+            let bookCoverImage = getBookCoverImage( element.value, BOOK_COVER_IMAGE_TYPE_SVG );
+
+            return bookCoverImage;
+        }
+    },
 
     epubContentIframe: { get:
         function() {
             let element = browser.element( EPUB_CONTENT_IFRAME );
 
-            let bookCoverImage = getBookCoverImage( element.value );
-
             return {
                 element,
-                bookCoverImage,
             };
         }
     },
@@ -68,7 +88,7 @@ let ReadiumPage = Object.create( Page, {
     },
 } );
 
-function getBookCoverImage( frameId ) {
+function getBookCoverImage( frameId, bookCoverImageType ) {
     let bookCoverImage = {};
 
     browser.frame( frameId );
@@ -76,17 +96,21 @@ function getBookCoverImage( frameId ) {
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
 
-    if ( browser.isExisting( 'svg' ) ) {
+    if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_SVG ) {
         bookCoverImage.position = browser.element( 'svg' )
             .getCssProperty( 'position' )
             .value;
-    } else if ( browser.isExisting( '.cover img' ) ) {
-        let coverImg = browser.element( '.cover img' );
+    } else if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_IMG ) {
+        let bookCoverImageElement = browser.element( '.cover img' );
 
-        bookCoverImage.height    = coverImg.getCssProperty( 'height' ).value;
-        bookCoverImage.maxHeight = coverImg.getCssProperty( 'max-height' ).value;
-        bookCoverImage.maxWidth  = coverImg.getCssProperty( 'max-width' ).value;
-        bookCoverImage.width     = coverImg.getCssProperty( 'width' ).value;
+        if ( bookCoverImageElement ) {
+            bookCoverImage.height    = bookCoverImageElement.getCssProperty( 'height' ).value;
+            bookCoverImage.maxHeight = bookCoverImageElement.getCssProperty( 'max-height' ).value;
+            bookCoverImage.maxWidth  = bookCoverImageElement.getCssProperty( 'max-width' ).value;
+            bookCoverImage.width     = bookCoverImageElement.getCssProperty( 'width' ).value;
+        }
+    } else {
+        console.log( 'Should never get here.' );
     }
 
     browser.frameParent();
@@ -203,5 +227,8 @@ function getNavbarButtonCss( buttonIdAttribute ) {
         width              : button.getCssProperty( 'width' ).value,
     }
 }
+
+ReadiumPage.BOOK_COVER_IMAGE_TYPE_SVG = BOOK_COVER_IMAGE_TYPE_SVG;
+ReadiumPage.BOOK_COVER_IMAGE_TYPE_IMG = BOOK_COVER_IMAGE_TYPE_IMG;
 
 module.exports = ReadiumPage;
