@@ -211,9 +211,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
         test( 'OA Books cover should be absolutely positioned to prevent splitting', function() {
             readium.open( JAPANESE_LESSONS );
 
-            let bookCoverPosition = readium.epubContentIframe
-                                        .bookCoverImage
-                                        .position;
+            let bookCoverPosition = readium.bookCoverImageSvg.position;
 
             assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
         } );
@@ -221,7 +219,8 @@ suite( 'DLTS ReadiumJS viewer', function() {
         suite( 'Connected Youth cover', function() {
 
             readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
-            let bookCoverImage = readium.epubContentIframe.bookCoverImage;
+
+            let bookCoverImage = readium.bookCoverImageImg;
 
             test( '"height"', function() {
                 assert.equal( bookCoverImage.height, '93vh' );
