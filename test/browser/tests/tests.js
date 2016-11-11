@@ -230,15 +230,15 @@ suite( 'DLTS ReadiumJS viewer', function() {
             } );
 
             test( '"max-height"', function() {
-                assert.equal( bookCoverImage.height, '93vh' );
+                assert.equal( bookCoverImage.maxHeight, '93vh' );
             } );
 
             test( 'max-width', function() {
-                assert.equal( bookCoverImage.height, '98%' );
+                assert.equal( bookCoverImage.maxWidth, '98%' );
             } );
 
             test( 'width', function() {
-                assert.equal( bookCoverImage.height, 'auto' );
+                assert.equal( bookCoverImage.width, 'auto' );
             } );
 
         } );
