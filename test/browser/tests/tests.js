@@ -218,27 +218,69 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         suite( 'Connected Youth cover', function() {
             let bookCoverImage;
+            let browserName;
+            let expectedValue = {
+                height:    undefined,
+                maxHeight: undefined,
+                maxWidth:  undefined,
+                width:     undefined,
+            };
 
             suiteSetup( function() {
                 readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
 
                 bookCoverImage = readium.bookCoverImageImg;
+
+                // We've specified the properties mostly using proportions, but
+                // WebdriverIO returns calculated pixel values which differ
+                // depending on the browser.  Furthermore, the values seem to
+                // change depending on where the tests are run from.  For example,
+                // running the tests from the Mac OS X Terminal program and
+                // running them from the terminal panel in Intellij produced
+                // different values.
+                //
+                // TODO: The expected values need to be calculated for each test run.
+                // This is what we specify in our CSS:
+                //
+                //     height:    '93vh'
+                //     maxHeight: '93vh'
+                //     maxWidth:  '98%'
+                //     width:     'auto'
+                //
+                // Do the expected value assignments here instead of individually
+                // in the tests so that if we need to add browsers later it will be
+                // less work.
+                browserName = browser.options.desiredCapabilities.browserName;
+                if ( browserName === 'chrome' ) {
+                    expectedValue.height    = '?';
+                    expectedValue.maxHeight = '?';
+                    expectedValue.maxWidth  = '?';
+                    expectedValue.width     = '?';
+                } else if ( browserName === 'firefox' ) {
+                    expectedValue.height    = '?';
+                    expectedValue.maxHeight = '?';
+                    expectedValue.maxWidth  = '?';
+                    expectedValue.width     = '?';
+                } else {
+                    // Should never get here
+                }
+
             } );
 
             test( '"height"', function() {
-                assert.equal( bookCoverImage.height, '93vh' );
+                assert.equal( bookCoverImage.height.substring( 0, 3 ), expectedValue.height );
             } );
 
             test( '"max-height"', function() {
-                assert.equal( bookCoverImage.maxHeight, '93vh' );
+                assert.equal( bookCoverImage.maxHeight.substring( 0, 3 ), expectedValue.maxHeight );
             } );
 
             test( 'max-width', function() {
-                assert.equal( bookCoverImage.maxWidth, '98%' );
+                assert.equal( bookCoverImage.maxWidth.substring( 0, 3 ), expectedValue.maxWidth );
             } );
 
             test( 'width', function() {
-                assert.equal( bookCoverImage.width, 'auto' );
+                assert.equal( bookCoverImage.width.substring( 0, 3 ), expectedValue.width );
             } );
 
         } );
