@@ -217,10 +217,13 @@ suite( 'DLTS ReadiumJS viewer', function() {
         } );
 
         suite( 'Connected Youth cover', function() {
+            let bookCoverImage;
 
-            readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
+            suiteSetup( function() {
+                readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
 
-            let bookCoverImage = readium.bookCoverImageImg;
+                bookCoverImage = readium.bookCoverImageImg;
+            } );
 
             test( '"height"', function() {
                 assert.equal( bookCoverImage.height, '93vh' );
