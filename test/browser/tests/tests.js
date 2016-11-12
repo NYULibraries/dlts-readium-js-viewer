@@ -256,7 +256,17 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
                 expectedValue.height    = Math.floor( expectedNumberOfVh * vh );
                 expectedValue.maxHeight = Math.floor( expectedNumberOfVh * vh );
-                expectedValue.maxWidth  = '?';
+
+                let browserName = browser.options.desiredCapabilities.browserName;
+
+                if ( browserName === 'chrome' ) {
+                    expectedValue.maxWidth = '98%';
+                } else if ( browserName = 'firefox' ) {
+                    expectedValue.maxWidth = '?';
+                } else {
+                    // Should never get here.
+                }
+
                 expectedValue.width     = '?';
             } );
 
