@@ -268,11 +268,11 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 assert.equal( bookCoverImage.maxHeight.substring( 0, 3 ), expectedValue.maxHeight );
             } );
 
-            test( 'max-width', function() {
+            test( '"max-width"', function() {
                 assert.equal( bookCoverImage.maxWidth.substring( 0, 3 ), expectedValue.maxWidth );
             } );
 
-            test( 'width', function() {
+            test( '"width"', function() {
                 assert.equal( bookCoverImage.width.substring( 0, 3 ), expectedValue.width );
             } );
 
