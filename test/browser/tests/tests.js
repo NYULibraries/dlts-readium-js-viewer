@@ -267,7 +267,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
                     console.log( 'Should never get here.' );
                 }
 
-                expectedValue.width     = '?';
+                expectedValue.width = '?';
             } );
 
             test( '"height"', function() {
