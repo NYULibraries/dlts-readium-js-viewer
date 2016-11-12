@@ -86,6 +86,20 @@ let ReadiumPage = Object.create( Page, {
             };
         }
     },
+
+    vh: { get:
+        function() {
+            let element = browser.element( EPUB_CONTENT_IFRAME );
+
+            browser.frame( element.value );
+
+            let vh = browser.getViewportSize().height / 100;
+
+            browser.frameParent();
+
+            return vh;
+        }
+    },
 } );
 
 function getBookCoverImage( frameId, bookCoverImageType ) {
