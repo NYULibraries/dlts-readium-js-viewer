@@ -232,12 +232,12 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 bookCoverImage = readium.bookCoverImageImg;
 
                 // We've specified the properties mostly using proportions, but
-                // WebdriverIO returns calculated pixel values which differ
-                // depending on the browser.  Furthermore, the values seem to
-                // change depending on where the tests are run from.  For example,
-                // running the tests from the Mac OS X Terminal program and
-                // running them from the terminal panel in Intellij produced
-                // different values.
+                // WebdriverIO in almost all cases returns calculated pixel values
+                // which differ depending on the browser.  Furthermore, the values
+                // seem to change depending on where the tests are run from.
+                // For example, running the tests from the Mac OS X Terminal
+                // program and running them from the terminal panel in Intellij
+                // produced different values.
                 //
                 // So need to calculate the expected values anew for each test run.
                 // This is what we specify in our CSS:
