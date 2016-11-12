@@ -239,7 +239,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 // running them from the terminal panel in Intellij produced
                 // different values.
                 //
-                // TODO: The expected values need to be calculated for each test run.
+                // So need to calculate the expected values anew for each test run.
                 // This is what we specify in our CSS:
                 //
                 //     height:    '93vh'
@@ -250,21 +250,14 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 // Do the expected value assignments here instead of individually
                 // in the tests so that if we need to add browsers later it will be
                 // less work.
-                browserName = browser.options.desiredCapabilities.browserName;
-                if ( browserName === 'chrome' ) {
-                    expectedValue.height    = '?';
-                    expectedValue.maxHeight = '?';
-                    expectedValue.maxWidth  = '?';
-                    expectedValue.width     = '?';
-                } else if ( browserName === 'firefox' ) {
-                    expectedValue.height    = '?';
-                    expectedValue.maxHeight = '?';
-                    expectedValue.maxWidth  = '?';
-                    expectedValue.width     = '?';
-                } else {
-                    // Should never get here
-                }
 
+                let vh = readium.vh;
+                const expectedNumberOfVh = 93;
+
+                expectedValue.height    = Math.floor( expectedNumberOfVh * vh );
+                expectedValue.maxHeight = Math.floor( expectedNumberOfVh * vh );
+                expectedValue.maxWidth  = '?';
+                expectedValue.width     = '?';
             } );
 
             test( '"height"', function() {
