@@ -264,7 +264,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 } else if ( browserName = 'firefox' ) {
                     expectedValue.maxWidth = '?';
                 } else {
-                    // Should never get here.
+                    console.log( 'Should never get here.' );
                 }
 
                 expectedValue.width     = '?';
