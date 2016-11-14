@@ -58,6 +58,8 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         );
     } );
 
+    // browser.moveToObject() doesn't work yet for Firefox.
+    // https://github.com/mozilla/geckodriver/issues/159
     test( 're-appears when user hovers over it', function() {
         readium.open( DEFAULT_BOOK_PATH );
 
