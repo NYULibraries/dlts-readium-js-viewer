@@ -2,9 +2,11 @@
 
 let Page = require('./page');
 
-const EPUB_CONTENT_IFRAME   = '#epubContentIframe';
-const NAVBAR_SELECTOR       = '#app-navbar';
-const READING_AREA_SELECTOR = '#reading-area';
+const EPUB_CONTENT_IFRAME        = '#epubContentIframe';
+const NAVBAR_SELECTOR            = '#app-navbar';
+const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
+const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
+const READING_AREA_SELECTOR      = '#reading-area';
 
 const BOOK_COVER_IMAGE_TYPE_SVG = 'svg';
 const BOOK_COVER_IMAGE_TYPE_IMG = 'img';
@@ -50,6 +52,26 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    clickPageTurnerLeft: { value:
+        function() {
+            // browser.moveToObject() doesn't work yet for Firefox.
+            // https://github.com/mozilla/geckodriver/issues/159
+            browser.moveToObject( PAGE_TURNER_LEFT_SELECTOR );
+            browser.waitForVisible( PAGE_TURNER_LEFT_SELECTOR );
+            browser.click( PAGE_TURNER_LEFT_SELECTOR );
+        }
+    },
+
+    clickPageTurnerRight: { value:
+        function() {
+            // browser.moveToObject() doesn't work yet for Firefox.
+            // https://github.com/mozilla/geckodriver/issues/159
+            browser.moveToObject( PAGE_TURNER_RIGHT_SELECTOR );
+            browser.waitForVisible( PAGE_TURNER_RIGHT_SELECTOR );
+            browser.click( PAGE_TURNER_RIGHT_SELECTOR );
+        }
+    },
+
     epubContentIframe: { get:
         function() {
             let element = browser.element( EPUB_CONTENT_IFRAME );
@@ -57,6 +79,20 @@ let ReadiumPage = Object.create( Page, {
             return {
                 element,
             };
+        }
+    },
+
+    isExistingInContentIframe: { value:
+        function( selector ) {
+            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+
+            browser.frame( contentIframeElement.value );
+
+            let isExistingResult = browser.getText( selector );
+
+            browser.frameParent();
+
+            return isExistingResult;
         }
     },
 

@@ -311,4 +311,36 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    suite( 'Page turners', function() {
+
+        setup( function() {
+            readium.open( DEFAULT_BOOK_PATH );
+        } );
+
+        test( 'right', function() {
+            readium.clickPageTurnerRight();
+            readium.clickPageTurnerRight();
+
+            assert(
+                // For some reason, selector "span=CONNECTED YOUTH AND DIGITAL FUTURES"
+                // does not work.  Neither does "span.Sans-Medium=...".
+                readium.isExistingInContentIframe( '.Sans-Medium=CONNECTED YOUTH AND DIGITAL FUTURES' ),
+                'Series Title page is displayed'
+            );
+        } );
+
+        test( 'left', function() {
+            // Go to Series Title page.
+            readium.clickPageTurnerRight();
+            readium.clickPageTurnerRight();
+            // Go back to Half Title page.
+            readium.clickPageTurnerLeft();
+
+            assert( readium.isExistingInContentIframe( '.Sans-SC=By Any Media Necessary' ),
+                'Half Title page is displayed'
+            );
+        } );
+
+    } );
+
 } );
