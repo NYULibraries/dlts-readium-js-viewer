@@ -262,7 +262,9 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 if ( browserName === 'chrome' ) {
                     expectedValue.maxWidth = '98%';
                 } else if ( browserName = 'firefox' ) {
-                    expectedValue.maxWidth = '?';
+                    expectedValue.maxWidth = Math.floor(
+                        readium.bookCoverImageImgEnclosingElementWidth * 0.98
+                    );
                 } else {
                     console.log( 'Should never get here.' );
                 }
