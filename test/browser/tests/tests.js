@@ -261,15 +261,30 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
                 if ( browserName === 'chrome' ) {
                     expectedValue.maxWidth = '98%';
+
+                    // width: auto is broken in Chrome.  See comment in else if
+                    // block.
+                    expectedValue.width = undefined;
                 } else if ( browserName = 'firefox' ) {
                     expectedValue.maxWidth = Math.floor(
                         readium.bookCoverImageImgEnclosingElementWidth * 0.98
+                    );
+
+                    // Aspect ratio for the cover being tested is 2:3 (600px x 900px).
+                    // width: auto for <img> tags indicates that width should be
+                    // set so that aspect ratio is maintained.
+                    // Note that this only seems to work in Firefox, so we won't
+                    // test width in Chrome, where the image is distorted on load
+                    // (the aspect ratio was 404px to 783px).
+                    expectedValue.width = Math.floor(
+                        parseInt(
+                            bookCoverImage.height.substring( 0, 3 )
+                        ) * 2 / 3
                     );
                 } else {
                     console.log( 'Should never get here.' );
                 }
 
-                expectedValue.width = '?';
             } );
 
             test( '"height"', function() {
@@ -284,9 +299,13 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 assert.equal( bookCoverImage.maxWidth.substring( 0, 3 ), expectedValue.maxWidth );
             } );
 
-            test( '"width"', function() {
-                assert.equal( bookCoverImage.width.substring( 0, 3 ), expectedValue.width );
-            } );
+            // We are not testing width for every browser.  See comments in
+            // suiteSetup().
+            if ( expectedValue.width ) {
+                test( '"width"', function() {
+                    assert.equal( bookCoverImage.width.substring( 0, 3 ), expectedValue.width );
+                } );
+            }
 
         } );
 
