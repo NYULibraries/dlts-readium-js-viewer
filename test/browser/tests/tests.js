@@ -218,7 +218,6 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         suite( 'Connected Youth cover', function() {
             let bookCoverImage;
-            let browserName;
             let expectedValue = {
                 height:    undefined,
                 maxHeight: undefined,
