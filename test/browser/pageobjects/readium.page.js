@@ -15,9 +15,9 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImg: { get:
         function() {
-            let element = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
-            let bookCoverImage = getBookCoverImage( element.value, BOOK_COVER_IMAGE_TYPE_IMG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
 
             return bookCoverImage;
         }
@@ -44,9 +44,9 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageSvg: { get:
         function() {
-            let element = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
-            let bookCoverImage = getBookCoverImage( element.value, BOOK_COVER_IMAGE_TYPE_SVG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
 
             return bookCoverImage;
         }
@@ -74,10 +74,10 @@ let ReadiumPage = Object.create( Page, {
 
     epubContentIframe: { get:
         function() {
-            let element = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.contentIframeElement( EPUB_CONTENT_IFRAME );
 
             return {
-                element,
+                contentIframeElement,
             };
         }
     },
@@ -144,9 +144,9 @@ let ReadiumPage = Object.create( Page, {
 
     vh: { get:
         function() {
-            let element = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
-            browser.frame( element.value );
+            browser.frame( contentIframeElement.value );
 
             let vh = browser.getViewportSize().height / 100;
 
