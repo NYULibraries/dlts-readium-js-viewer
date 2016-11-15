@@ -461,4 +461,27 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    suite( 'Settings', function() {
+
+        suite( 'Font size', function() {
+
+        } );
+
+        suite( 'Text and background color', function() {
+
+        } );
+
+        suite( 'Page width', function() {
+
+        } );
+
+        suite( 'Display format', function() {
+
+        } );
+
+        suite( 'Scroll mode', function() {
+
+        } );
+    } );
+
 } );
