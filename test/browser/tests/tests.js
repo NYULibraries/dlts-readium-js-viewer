@@ -6,7 +6,7 @@ let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
 const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
-const JAPANESE_LESSONS            = '/?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
+const JAPANESE_LESSONS_PATH       = '/?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ];
@@ -209,7 +209,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
         // We use different fixes for each.
 
         test( 'OA Books cover should be absolutely positioned to prevent splitting', function() {
-            readium.open( JAPANESE_LESSONS );
+            readium.open( JAPANESE_LESSONS_PATH );
 
             let bookCoverPosition = readium.bookCoverImageSvg.position;
 
@@ -417,7 +417,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
         suite( 'OA Books TOC', function() {
 
             setup( function() {
-                readium.open( JAPANESE_LESSONS );
+                readium.open( JAPANESE_LESSONS_PATH );
             } );
 
             test( 'toggle TOC on', function() {
