@@ -14,4 +14,6 @@ wdioLocalConf.config.capabilities = [
     },
 ];
 
+wdioLocalConf.config.mochaOpts.timeout = 99999;
+
 exports.config = wdioLocalConf.config;
