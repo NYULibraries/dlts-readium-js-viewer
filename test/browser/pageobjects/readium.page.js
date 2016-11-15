@@ -8,6 +8,7 @@ const NAVBAR_SELECTOR            = '#app-navbar';
 const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
 const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
 const READING_AREA_SELECTOR      = '#reading-area';
+const SETTINGS_BUTTON_SELECTOR   = '#settbutt1';
 const TOC_SELECTOR               = '#readium-toc-body';
 const TOC_BUTTON_SELECTOR        = '#tocButt';
 
@@ -81,6 +82,17 @@ let ReadiumPage = Object.create( Page, {
             browser.moveToObject( PAGE_TURNER_RIGHT_SELECTOR );
             browser.waitForVisible( PAGE_TURNER_RIGHT_SELECTOR );
             browser.click( PAGE_TURNER_RIGHT_SELECTOR );
+        }
+    },
+
+    clickSettingsButton: { value:
+        function() {
+            // TODO:
+            // browser.moveToObject() doesn't work yet for Firefox.
+            // https://github.com/mozilla/geckodriver/issues/159
+            // browser.moveToObject( SETTINGS_BUTTON_SELECTOR );
+            // browser.waitForVisible( SETTINGS_BUTTON_SELECTOR );
+            browser.click( SETTINGS_BUTTON_SELECTOR );
         }
     },
 
