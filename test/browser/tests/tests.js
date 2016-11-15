@@ -342,6 +342,28 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    suite( 'Fullscreen button', function() {
+
+        setup( function() {
+            readium.open( DEFAULT_BOOK_PATH );
+        } );
+
+        test( 'toggle fullscreen on', function() {
+            readium.clickFullscreenToggle();
+
+            assert( readium.isFullscreen, 'Fullscreen is on' );
+        } );
+
+        test( 'toggle fullscreen off', function() {
+            readium.clickFullscreenToggle();
+            assert( readium.isFullscreen, 'Fullscreen is initially on' );
+
+            readium.clickFullscreenToggle();
+            assert.isFalse( readium.isFullscreen, 'Fullscreen is off' );
+        } );
+
+    } );
+
     suite( 'TOC', function() {
 
         setup( function() {
