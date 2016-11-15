@@ -86,6 +86,7 @@ let ReadiumPage = Object.create( Page, {
 
     clickToc: { value:
          function() {
+             // TODO:
              // browser.moveToObject() doesn't work yet for Firefox.
              // https://github.com/mozilla/geckodriver/issues/159
              // browser.moveToObject( TOC_BUTTON_SELECTOR );
