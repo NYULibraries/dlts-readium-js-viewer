@@ -348,6 +348,28 @@ suite( 'DLTS ReadiumJS viewer', function() {
             readium.open( JAPANESE_LESSONS );
         } );
 
+        test( 'toggle TOC on', function() {
+            readium.clickToc();
+
+            assert.equal( readium.toc.display, 'inline-block',
+                'display property is "inline-block"'
+            );
+        } );
+
+        test( 'toggle TOC off', function() {
+            readium.clickToc();
+
+            assert.equal( readium.toc.display, 'inline-block',
+                          'TOC is on'
+            );
+
+            readium.clickToc();
+
+            assert.equal( readium.toc.display, 'none',
+                          'TOC is off'
+            );
+        } );
+
         test( 'navigate to chapter', function() {
             readium.clickToc();
 

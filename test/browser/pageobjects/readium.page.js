@@ -7,6 +7,7 @@ const NAVBAR_SELECTOR            = '#app-navbar';
 const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
 const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
 const READING_AREA_SELECTOR      = '#reading-area';
+const TOC_SELECTOR               = '#readium-toc-body';
 const TOC_BUTTON_SELECTOR        = '#tocButt';
 
 const BOOK_COVER_IMAGE_TYPE_SVG = 'svg';
@@ -175,6 +176,17 @@ let ReadiumPage = Object.create( Page, {
             return {
                 top: element.getCssProperty( 'top' ).value
             };
+        }
+    },
+
+    toc: { get:
+        function() {
+            let element = browser.element( TOC_SELECTOR );
+
+            return {
+                element,
+                display: element.getCssProperty( 'display' ).value,
+            }
         }
     },
 
