@@ -61,7 +61,7 @@ let ReadiumPage = Object.create( Page, {
             // This does not seem to work with Firefox (geckodriver) right now.
             // Firefox goes fullscreen but all-black, pauses, then shrinks back
             // to the original size and view.
-            browser.click( FULLSCREEN_TOGGLE_BUTTON );
+            clickElement( FULLSCREEN_TOGGLE_BUTTON );
         }
     },
 
@@ -70,8 +70,7 @@ let ReadiumPage = Object.create( Page, {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
             browser.moveToObject( PAGE_TURNER_LEFT_SELECTOR );
-            browser.waitForVisible( PAGE_TURNER_LEFT_SELECTOR );
-            browser.click( PAGE_TURNER_LEFT_SELECTOR );
+            clickElement( PAGE_TURNER_LEFT_SELECTOR );
         }
     },
 
@@ -80,8 +79,7 @@ let ReadiumPage = Object.create( Page, {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
             browser.moveToObject( PAGE_TURNER_RIGHT_SELECTOR );
-            browser.waitForVisible( PAGE_TURNER_RIGHT_SELECTOR );
-            browser.click( PAGE_TURNER_RIGHT_SELECTOR );
+            clickElement( PAGE_TURNER_RIGHT_SELECTOR );
         }
     },
 
@@ -102,8 +100,7 @@ let ReadiumPage = Object.create( Page, {
              // browser.moveToObject() doesn't work yet for Firefox.
              // https://github.com/mozilla/geckodriver/issues/159
              // browser.moveToObject( TOC_BUTTON_SELECTOR );
-             // browser.waitForVisible( TOC_BUTTON_SELECTOR );
-             browser.click( TOC_BUTTON_SELECTOR );
+             clickElement( TOC_BUTTON_SELECTOR );
          }
     },
 
@@ -241,6 +238,11 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 } );
+
+function clickElement( selector ) {
+    browser.waitForVisible( selector );
+    browser.click( selector );
+}
 
 function getBookCoverImage( frameId, bookCoverImageType ) {
     let bookCoverImage = {};
