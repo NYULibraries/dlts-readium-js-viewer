@@ -342,4 +342,22 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    suite( 'TOC', function() {
+
+        setup( function() {
+            readium.open( JAPANESE_LESSONS );
+        } );
+
+        test( 'navigate to chapter', function() {
+            readium.clickToc();
+
+            browser.click( '=3 Day-to-Day Routines' );
+
+            assert( readium.isExistingInContentIframe( 'small', 0, 'AILY' ),
+                    'Found <small>AILY</small> on page'
+            );
+        } );
+
+    } );
+
 } );
