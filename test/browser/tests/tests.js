@@ -378,6 +378,11 @@ suite( 'DLTS ReadiumJS viewer', function() {
             assert( readium.isExistingInContentIframe( 'small', 0, 'AILY' ),
                     'Found <small>AILY</small> on page'
             );
+
+            // Make sure the TOC hasn't disappeared.
+            assert.equal( readium.toc.display, 'inline-block',
+                'display property is "inline-block"'
+            );
         } );
 
     } );
