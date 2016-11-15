@@ -3,6 +3,7 @@
 let Page = require('./page');
 
 const EPUB_CONTENT_IFRAME        = '#epubContentIframe';
+const FULLSCREEN_TOGGLE_BUTTON   = '#buttFullScreenToggle';
 const NAVBAR_SELECTOR            = '#app-navbar';
 const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
 const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
@@ -51,6 +52,15 @@ let ReadiumPage = Object.create( Page, {
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
 
             return bookCoverImage;
+        }
+    },
+
+    clickFullscreenToggle: { value:
+        function() {
+            // This does not seem to work with Firefox (geckodriver) right now.
+            // Firefox goes fullscreen but all-black, pauses, then shrinks back
+            // to the original size and view.
+            browser.click( FULLSCREEN_TOGGLE_BUTTON );
         }
     },
 
@@ -130,6 +140,20 @@ let ReadiumPage = Object.create( Page, {
             browser.frameParent();
 
             return isExistingResult;
+        }
+    },
+
+    isFullscreen : { get:
+        function() {
+            let fullscreenEnabled = browser.execute( function() {
+                if ( document.mozFullscreenElement || document.webkitFullscreenElement ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } ).value;
+
+            return fullscreenEnabled;
         }
     },
 
