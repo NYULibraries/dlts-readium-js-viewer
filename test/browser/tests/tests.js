@@ -364,47 +364,99 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     } );
 
+    // Not sure if we need to test OA Books (EPUB 2, generally) and Connected Youth (EPUB 3),
+    // but doing it just in case.
     suite( 'TOC', function() {
 
-        setup( function() {
-            readium.open( JAPANESE_LESSONS );
+        suite( 'Connected Youth TOC', function() {
+
+            setup( function() {
+                readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
+            } );
+
+            test( 'toggle TOC on', function() {
+                readium.clickToc();
+
+                assert.equal( readium.toc.display, 'inline-block',
+                              'display property is "inline-block"'
+                );
+            } );
+
+            test( 'toggle TOC off', function() {
+                readium.clickToc();
+
+                assert.equal( readium.toc.display, 'inline-block',
+                              'TOC is on'
+                );
+
+                readium.clickToc();
+
+                assert.equal( readium.toc.display, 'none',
+                              'TOC is off'
+                );
+            } );
+
+            test( 'navigate to chapter', function() {
+                readium.clickToc();
+
+                browser.click( '=About the Authors' );
+
+                // "span.Sans-SC=About the Authors" selector doesn't work.
+                assert( readium.isExistingInContentIframe( 'span', 1, 'About the Authors' ),
+                        'Found <span>About the Authors</span> on page'
+                );
+
+                // Make sure the TOC hasn't disappeared.
+                assert.equal( readium.toc.display, 'inline-block',
+                              'display property is "inline-block"'
+                );
+            } );
+
         } );
 
-        test( 'toggle TOC on', function() {
-            readium.clickToc();
+        suite( 'OA Books TOC', function() {
 
-            assert.equal( readium.toc.display, 'inline-block',
-                'display property is "inline-block"'
-            );
-        } );
+            setup( function() {
+                readium.open( JAPANESE_LESSONS );
+            } );
 
-        test( 'toggle TOC off', function() {
-            readium.clickToc();
+            test( 'toggle TOC on', function() {
+                readium.clickToc();
 
-            assert.equal( readium.toc.display, 'inline-block',
-                          'TOC is on'
-            );
+                assert.equal( readium.toc.display, 'inline-block',
+                              'display property is "inline-block"'
+                );
+            } );
 
-            readium.clickToc();
+            test( 'toggle TOC off', function() {
+                readium.clickToc();
 
-            assert.equal( readium.toc.display, 'none',
-                          'TOC is off'
-            );
-        } );
+                assert.equal( readium.toc.display, 'inline-block',
+                              'TOC is on'
+                );
 
-        test( 'navigate to chapter', function() {
-            readium.clickToc();
+                readium.clickToc();
 
-            browser.click( '=3 Day-to-Day Routines' );
+                assert.equal( readium.toc.display, 'none',
+                              'TOC is off'
+                );
+            } );
 
-            assert( readium.isExistingInContentIframe( 'small', 0, 'AILY' ),
-                    'Found <small>AILY</small> on page'
-            );
+            test( 'navigate to chapter', function() {
+                readium.clickToc();
 
-            // Make sure the TOC hasn't disappeared.
-            assert.equal( readium.toc.display, 'inline-block',
-                'display property is "inline-block"'
-            );
+                browser.click( '=3 Day-to-Day Routines' );
+
+                assert( readium.isExistingInContentIframe( 'small', 0, 'AILY' ),
+                        'Found <small>AILY</small> on page'
+                );
+
+                // Make sure the TOC hasn't disappeared.
+                assert.equal( readium.toc.display, 'inline-block',
+                              'display property is "inline-block"'
+                );
+            } );
+
         } );
 
     } );
