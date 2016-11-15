@@ -74,7 +74,7 @@ let ReadiumPage = Object.create( Page, {
 
     epubContentIframe: { get:
         function() {
-            let contentIframeElement = browser.contentIframeElement( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
             return {
                 contentIframeElement,
