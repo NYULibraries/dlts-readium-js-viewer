@@ -447,7 +447,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
                 browser.click( '=3 Day-to-Day Routines' );
 
-                assert( readium.isExistingInContentIframe( 'small', 0, 'AILY' ),
+                assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
                         'Found <small>AILY</small> on page'
                 );
 
