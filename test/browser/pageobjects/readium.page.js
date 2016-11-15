@@ -83,12 +83,26 @@ let ReadiumPage = Object.create( Page, {
     },
 
     isExistingInContentIframe: { value:
-        function( selector ) {
+        function( selector, index, matchText ) {
+            let isExistingResult;
+
             let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
             browser.frame( contentIframeElement.value );
 
-            let isExistingResult = browser.getText( selector );
+            let text = browser.getText( selector );
+
+            // Element with text selectors (e.g. "small=AILY") and XPath selectors
+            // (e.g. //small[normalize-space() = "AILY"]) do not seem to be working.
+            // This provides an alternative for verification.  The optional
+            // arguments allow for a workaround of fetching array of all tags of
+            // type selector and matching the indexed element against the optional
+            // matchText argument.
+            if ( index >= 0 ) {
+                isExistingResult = text[ index ] === matchText;
+            } else {
+                isExistingResult = text !== '';
+            }
 
             browser.frameParent();
 
