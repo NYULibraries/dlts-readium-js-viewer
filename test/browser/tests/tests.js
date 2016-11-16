@@ -481,19 +481,19 @@ suite( 'DLTS ReadiumJS viewer', function() {
                           'Font size preview has changed to 22.4px (1.6em)' );
         } );
 
-        suite( 'Text and background color', function() {
+        test( 'Text and background color', function() {
 
         } );
 
-        suite( 'Page width', function() {
+        test( 'Page width', function() {
 
         } );
 
-        suite( 'Display format', function() {
+        test( 'Display format', function() {
 
         } );
 
-        suite( 'Scroll mode', function() {
+        test( 'Scroll mode', function() {
 
         } );
     } );
