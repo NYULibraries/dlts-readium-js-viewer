@@ -8,7 +8,15 @@ const NAVBAR_SELECTOR            = '#app-navbar';
 const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
 const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
 const READING_AREA_SELECTOR      = '#reading-area';
-const SETTINGS_BUTTON_SELECTOR   = '#settbutt1';
+
+const SETTINGS_BUTTON_SELECTOR           = '#settbutt1';
+const SETTINGS_CLOSE_BUTTON_SELECTOR     = '#closeSettingsCross';
+const SETTINGS_FONT_SIZE_SLIDER_ID       = 'font-size-input';
+const SETTINGS_FONT_SIZE_SLIDER_SELECTOR = '#' + SETTINGS_FONT_SIZE_SLIDER_ID;
+const SETTINGS_LAYOUT_TAB_SELECTOR       = '#tab-butt-layout';
+const SETTINGS_STYLE_PREVIEW_SELECTOR    = 'div.preview-text';
+const SETTINGS_STYLE_TAB_SELECTOR        = '#tab-butt-style';
+
 const TOC_SELECTOR               = '#readium-toc-body';
 const TOC_BUTTON_SELECTOR        = '#tocButt';
 
