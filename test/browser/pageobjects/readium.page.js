@@ -140,8 +140,17 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
+            browser.frame( contentIframeElement.value );
+
+            let fontSize = browser.execute( function() {
+                return document.querySelector( 'html' ).style.fontSize;
+            } ).value;
+
+            browser.frameParent();
+
             return {
-                contentIframeElement
+                contentIframeElement,
+                fontSize,
             };
         }
     },
