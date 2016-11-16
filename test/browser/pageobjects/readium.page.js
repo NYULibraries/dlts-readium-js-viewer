@@ -14,6 +14,7 @@ const SETTINGS_CLOSE_BUTTON_SELECTOR     = '#closeSettingsCross';
 const SETTINGS_FONT_SIZE_SLIDER_ID       = 'font-size-input';
 const SETTINGS_FONT_SIZE_SLIDER_SELECTOR = '#' + SETTINGS_FONT_SIZE_SLIDER_ID;
 const SETTINGS_LAYOUT_TAB_SELECTOR       = '#tab-butt-layout';
+const SETTINGS_SAVE_BUTTON_SELECTOR      = '#buttSave';
 const SETTINGS_STYLE_PREVIEW_SELECTOR    = 'div.preview-text';
 const SETTINGS_STYLE_TAB_SELECTOR        = '#tab-butt-style';
 
@@ -110,6 +111,12 @@ let ReadiumPage = Object.create( Page, {
     clickSettingsLayoutTab: { value:
         function() {
             clickElement( SETTINGS_LAYOUT_TAB_SELECTOR );
+        }
+    },
+
+    clickSettingsSaveButton: { value:
+        function() {
+            clickElement( SETTINGS_SAVE_BUTTON_SELECTOR );
         }
     },
 
