@@ -238,6 +238,33 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    setFontSizeSliderValue: { value:
+        function( value ) {
+            browser.waitForVisible( SETTINGS_FONT_SIZE_SLIDER_SELECTOR );
+
+            browser.execute( function( selector, newValue ) {
+                $( selector ).val( newValue );
+
+                // Trigger change event so that the preview window text changes.
+                $( selector  ).change();
+            }, SETTINGS_FONT_SIZE_SLIDER_SELECTOR, value );
+        }
+    },
+
+    stylePreview: { get:
+        function() {
+            browser.waitForVisible( SETTINGS_STYLE_PREVIEW_SELECTOR );
+
+            let element = browser.element( SETTINGS_STYLE_PREVIEW_SELECTOR );
+
+            let fontSize = element.getCssProperty( 'font-size' ).value;
+            return {
+                element,
+                fontSize,
+            }
+        }
+    },
+
     toc: { get:
         function() {
             let element = browser.element( TOC_SELECTOR );
