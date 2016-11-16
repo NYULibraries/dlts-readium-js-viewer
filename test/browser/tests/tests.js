@@ -463,8 +463,22 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
     suite( 'Settings', function() {
 
-        suite( 'Font size', function() {
+        setup( function() {
+            readium.open( DEFAULT_BOOK_PATH );
 
+            readium.clickSettingsButton();
+        } );
+
+        test( 'Font size', function() {
+            readium.clickSettingsStyleTab();
+
+            assert.equal( readium.stylePreview.fontSize, '14px',
+                'Font size default is 14px (1.1em)' );
+
+            readium.setFontSizeSliderValue( '160' );
+
+            assert.equal( readium.stylePreview.fontSize, '22.4px',
+                          'Font size preview has changed to 22.4px (1.6em)' );
         } );
 
         suite( 'Text and background color', function() {
