@@ -97,8 +97,25 @@ let ReadiumPage = Object.create( Page, {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
             // browser.moveToObject( SETTINGS_BUTTON_SELECTOR );
-            // browser.waitForVisible( SETTINGS_BUTTON_SELECTOR );
-            browser.click( SETTINGS_BUTTON_SELECTOR );
+            clickElement( SETTINGS_BUTTON_SELECTOR );
+        }
+    },
+
+    clickSettingsCloseButton: { value:
+        function() {
+            clickElement( SETTINGS_CLOSE_BUTTON_SELECTOR );
+        }
+    },
+
+    clickSettingsLayoutTab: { value:
+        function() {
+            clickElement( SETTINGS_LAYOUT_TAB_SELECTOR );
+        }
+    },
+
+    clickSettingsStyleTab: { value:
+        function() {
+            clickElement( SETTINGS_STYLE_TAB_SELECTOR );
         }
     },
 
