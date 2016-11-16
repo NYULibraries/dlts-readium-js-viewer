@@ -140,23 +140,11 @@ let ReadiumPage = Object.create( Page, {
     },
 
     isExistingInContentIframe: { value:
-        function( selector, optArg1, optArg2) {
+        function( selector, matchText ) {
             // Element with text selectors (e.g. "small=AILY") and XPath selectors
             // (e.g. //small[normalize-space() = "AILY"]) do not seem to be working.
-            // The optional arguments allow for a workaround of fetching an array
-            // of all tags of type selector and matching an indexed element
-            // against optional matchText argument.  If only optArg1 is specified,
-            // the index defaults to 0.
-
-            let index, matchText;
-
-            if ( optArg2 ) {
-                index     = optArg1;
-                matchText = optArg2;
-            } else if ( optArg1 ) {
-                index     = 0;
-                matchText = optArg1;
-            }
+            // The optional argument allows for a workaround of fetching an array
+            // of all tags of type and checking for a match in the array elements.
 
             let isExistingResult;
 
@@ -167,7 +155,7 @@ let ReadiumPage = Object.create( Page, {
             let text = browser.getText( selector );
 
             if ( matchText ) {
-                isExistingResult = ( text[ index ] === matchText );
+                isExistingResult = text.includes( matchText );
             } else {
                 isExistingResult = ( text !== '' );
             }

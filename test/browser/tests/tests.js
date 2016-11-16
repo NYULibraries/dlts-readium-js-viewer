@@ -402,7 +402,7 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 browser.click( '=About the Authors' );
 
                 // "span.Sans-SC=About the Authors" selector doesn't work.
-                assert( readium.isExistingInContentIframe( 'span', 1, 'About the Authors' ),
+                assert( readium.isExistingInContentIframe( 'span', 'About the Authors' ),
                         'Found <span>About the Authors</span> on page'
                 );
 
