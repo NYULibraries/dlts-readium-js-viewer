@@ -465,20 +465,33 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         setup( function() {
             readium.open( DEFAULT_BOOK_PATH );
-
-            readium.clickSettingsButton();
         } );
 
         test( 'Font size', function() {
+            assert.equal(
+                readium.epubContentIframe.fontSize,
+                '100%',
+                'Content font-size is at default'
+            );
+
+            readium.clickSettingsButton();
             readium.clickSettingsStyleTab();
 
             assert.equal( readium.stylePreview.fontSize, '14px',
-                'Font size default is 14px (1.1em)' );
+                'Font size preview is at default' );
 
             readium.setFontSizeSliderValue( '160' );
 
             assert.equal( readium.stylePreview.fontSize, '22.4px',
-                          'Font size preview has changed to 22.4px (1.6em)' );
+                          'Font size preview has been changed (1.6em)' );
+
+            readium.clickSettingsSaveButton();
+
+            assert.equal(
+                readium.epubContentIframe.fontSize,
+                '160%',
+                'Content font-size has been changed'
+            );
         } );
 
         test( 'Text and background color', function() {
