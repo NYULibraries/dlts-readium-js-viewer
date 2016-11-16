@@ -134,17 +134,47 @@ let ReadiumPage = Object.create( Page, {
             let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
 
             return {
-                contentIframeElement,
+                contentIframeElement
             };
         }
     },
 
     isExistingInContentIframe: { value:
         function( selector, matchText ) {
-            // Element with text selectors (e.g. "small=AILY") and XPath selectors
-            // (e.g. //small[normalize-space() = "AILY"]) do not seem to be working.
-            // The optional argument allows for a workaround of fetching an array
-            // of all tags of type and checking for a match in the array elements.
+            // Element with text selectors (ex. "span=Spreadable Media") and XPath selectors
+            // (ex. //span[normalize-space() = "Spreadable Media"]) do not seem to be working
+            // on our test EPUB.  This appears to be because the chapter files
+            // are XHTML, with .xthml extensions, which seems to throw Selenium
+            // into "XML mode", where namespace prefixes are necessary for matching
+            // tags using XPath:
+            // http://stackoverflow.com/questions/32232299/selenium-cannot-find-xpath-when-xmlns-attribute-is-included
+            //
+            // Selenium output shows that WebdriverIO is using
+            //
+            //    By.XPath '//span[normalize-space() = "Spreadable Media"]'
+            //
+            // ...which fails, whereas selector
+            //
+            //    '//*[normalize-space() = "Spreadable Media"]'
+            //
+            // ...succeeds.
+            //
+            // Tried using namespace specified in the xhtml file:
+            //
+            //     '//span[namespace-uri()="http://www.w3.org/1999/xhtml"][normalize-space() = "Spreadable Media"]'
+            //
+            // ...but without success.
+            //
+            // Simply changing the file extension from .xhtml to .html makes this
+            // bug go away.  We don't have this option for our EPUBs, though.
+            //
+            // The workaround we use here is to overload this method with an
+            // optional matchText param.  When matchText is specified, fetch an
+            // array of all tags of the type specified by selector, and then check
+            // for a match in the array elements.
+            //
+            // Example: use `readium.isExistingInContentIframe( 'span', 'Spreadable Media' )`
+            //     instead of `readium.isExistingInContentIframe( 'span=Spreadable Media' )`
 
             let isExistingResult;
 
