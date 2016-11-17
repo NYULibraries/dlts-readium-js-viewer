@@ -12,7 +12,6 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        // TODO: Re-enable
         'test/browser/tests/book-cover.js',
         'test/browser/tests/fullscreen.js',
         'test/browser/tests/misc.js',
