@@ -22,6 +22,43 @@ exports.config = {
         'test/browser/tests/settings.js',
         'test/browser/tests/toc.js',
     ],
+
+    suites: {
+
+        bookCover: [
+            'test/browser/tests/book-cover.js',
+        ],
+
+        fullscreen: [
+            'test/browser/tests/fullscreen.js',
+        ],
+
+        misc: [
+            'test/browser/tests/misc.js',
+        ],
+
+        navbar: [
+            'test/browser/tests/navbar.js',
+        ],
+
+        navbarShowAndHide: [
+            'test/browser/tests/navbar.show-and-hide.js',
+        ],
+
+        pageTurners: [
+            'test/browser/tests/page-turners.js',
+        ],
+
+        settings: [
+            'test/browser/tests/settings.js',
+        ],
+
+        toc: [
+            'test/browser/tests/toc.js',
+        ],
+
+    },
+
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
