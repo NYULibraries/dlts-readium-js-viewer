@@ -32,16 +32,18 @@ const SELECTORS = {
         },
 
         style: {
+            tab: '#tab-butt-style',
+
             arabianNights: 'button.night-theme',
             fontSize: '#font-size-input',
             preview: 'div.preview-text',
-            tab: '#tab-butt-style',
         },
     },
 
     toc: {
-        body: '#readium-toc-body',
         toggle: '#tocButt',
+
+        body: '#readium-toc-body',
     },
 };
 
