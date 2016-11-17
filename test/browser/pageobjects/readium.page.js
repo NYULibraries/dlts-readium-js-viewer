@@ -8,7 +8,11 @@ const SELECTORS = {
 
     fullscreen: '#buttFullScreenToggle',
 
-    navbar: '#app-navbar',
+    navbar: {
+        main: '#app-navbar',
+        leftSideButtons: '.btn-group.navbar-left > button',
+        rightSideButtons: '.btn-group.navbar-right > button',
+    },
 
     pageTurners: {
         left: '#left-page-btn',
@@ -268,17 +272,17 @@ let ReadiumPage = Object.create( Page, {
 
     navbar: { get:
         function() {
-            let element = browser.element( SELECTORS.navbar );
+            let element = browser.element( SELECTORS.navbar.main );
 
             let navbarCss = getNavbarCss( element );
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = browser.elements( '.btn-group.navbar-left > button' ).value;
+            let navbarLeftButtons = browser.elements( SELECTORS.navbar.leftSideButtons ).value;
             let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
             let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
 
-            let navbarRightButtons = browser.elements( '.btn-group.navbar-right > button' ).value;
+            let navbarRightButtons = browser.elements( SELECTORS.navbar.rightSideButtons  ).value;
             let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
             let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
 
@@ -286,7 +290,7 @@ let ReadiumPage = Object.create( Page, {
                 element,
                 leftSideVisibleButtons,
                 navbarRight,
-                selector : SELECTORS.navbar,
+                selector : SELECTORS.navbar.main,
                 rightSideVisibleButtons,
             };
 
