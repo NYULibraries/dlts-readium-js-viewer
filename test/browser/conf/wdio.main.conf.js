@@ -13,8 +13,14 @@ exports.config = {
     //
     specs: [
         // TODO: Re-enable
-        // 'test/browser/tests/navbar-show-and-hide.js',
-        'test/browser/tests/tests.js',
+        'test/browser/tests/book-cover.js',
+        'test/browser/tests/fullscreen.js',
+        'test/browser/tests/misc.js',
+        'test/browser/tests/navbar.js',
+        'test/browser/tests/navbar.show-and-hide.js',
+        'test/browser/tests/page-turners.js',
+        'test/browser/tests/settings.js',
+        'test/browser/tests/toc.js',
     ],
     // Patterns to exclude.
     exclude: [
