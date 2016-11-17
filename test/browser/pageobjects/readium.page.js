@@ -335,10 +335,9 @@ let ReadiumPage = Object.create( Page, {
 
     setFontSizeSliderValue: { value:
         function( value ) {
-            browser.waitForVisible( SELECTORS.settings.style.fontSize );
-
-            browser.execute( function( selector, newValue ) {
-                $( selector ).val( newValue );
+            setSliderValue( SELECTORS.settings.style.fontSize, value );
+        }
+    },
 
                 // Trigger change event so that the preview window text changes.
                 $( selector  ).change();
@@ -534,6 +533,17 @@ function getNavbarButtonCss( buttonIdAttribute ) {
         height             : button.getCssProperty( 'height' ).value,
         width              : button.getCssProperty( 'width' ).value,
     }
+}
+
+function setSliderValue( sliderSelector, value ) {
+    browser.waitForVisible( sliderSelector );
+
+    browser.execute( function( selector, newValue ) {
+        $( selector ).val( newValue );
+
+        // Trigger change event so that the preview window text changes.
+        $( selector  ).change();
+    }, sliderSelector, value );
 }
 
 ReadiumPage.BOOK_COVER_IMAGE_TYPE_SVG = BOOK_COVER_IMAGE_TYPE_SVG;
