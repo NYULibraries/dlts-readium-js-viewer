@@ -339,9 +339,9 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-                // Trigger change event so that the preview window text changes.
-                $( selector  ).change();
-            }, SELECTORS.settings.style.fontSize , value );
+    setPageWidthSliderValue: { value:
+        function( value ) {
+            setSliderValue( SELECTORS.settings.layout.pageWidth, value );
         }
     },
 
