@@ -46,7 +46,33 @@ suite( 'Settings', function() {
     } );
 
     test( 'Text and background color', function() {
+        readium.clickSettingsButton();
+        readium.clickSettingsStyleTab();
 
+        assert.equal( readium.stylePreview.backgroundColor, '#ffffff',
+                      'Preview "background-color" property is at default' );
+        assert.equal( readium.stylePreview.color, '#000000',
+                      'Preview "color" property is at default' );
+
+        readium.clickSettingsArabianNightsButton();
+
+        assert.equal( readium.stylePreview.backgroundColor, '#141414',
+                      'Preview "background-color" property has been changed' );
+        assert.equal( readium.stylePreview.color, '#ffffff',
+                      'Preview "color" property has been changed' );
+
+        readium.clickSettingsSaveButton();
+
+        assert.equal(
+            readium.epubContentIframe.backgroundColor,
+            '#141414',
+            'Content "background-color" property has been changed'
+        );
+        assert.equal(
+            readium.epubContentIframe.color,
+            '#ffffff',
+            'Content "color" property has been changed'
+        );
     } );
 
     test( 'Page width', function() {
