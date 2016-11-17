@@ -47,9 +47,11 @@ const SELECTORS = {
         style: {
             tab: '#tab-butt-style',
 
-            arabianNights: 'button.night-theme',
             fontSize: '#font-size-input',
             preview: 'div.preview-text',
+            textAndBackground: {
+                arabianNights: 'button.night-theme',
+            },
         },
     },
 
@@ -151,7 +153,7 @@ let ReadiumPage = Object.create( Page, {
 
     clickSettingsArabianNightsButton: { value:
         function() {
-            clickElement( SELECTORS.settings.style.arabianNights );
+            clickElement( SELECTORS.settings.style.textAndBackground.arabianNights );
         }
     },
 
