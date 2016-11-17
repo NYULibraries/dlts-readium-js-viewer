@@ -2,31 +2,44 @@
 
 let Page = require('./page');
 
-const EPUB_CONTENT_IFRAME        = '#epubContentIframe';
-const FULLSCREEN_TOGGLE_BUTTON   = '#buttFullScreenToggle';
-const NAVBAR_SELECTOR            = '#app-navbar';
-const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
-const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
-const READING_AREA_SELECTOR      = '#reading-area';
+const SELECTORS = {
 
-const SETTINGS_BUTTON_SELECTOR                      = '#settbutt1';
+    epubContentIframe: '#epubContentIframe',
 
-const SETTINGS_CLOSE_BUTTON_SELECTOR                = '#closeSettingsCross';
-const SETTINGS_SAVE_BUTTON_SELECTOR                 = '#buttSave';
+    fullscreen: '#buttFullScreenToggle',
 
-const SETTINGS_FONT_SIZE_SLIDER_ID                  = 'font-size-input';
-const SETTINGS_FONT_SIZE_SLIDER_SELECTOR            = '#' + SETTINGS_FONT_SIZE_SLIDER_ID;
+    navbar: '#app-navbar',
 
-const SETTINGS_LAYOUT_TAB_SELECTOR                  = '#tab-butt-layout';
+    pageTurners: {
+        left: '#left-page-btn',
+        right: '#right-page-btn',
+    },
 
-const SETTINGS_STYLE_ARABIAN_NIGHTS_BUTTON_SELECTOR = 'button.night-theme';
-const SETTINGS_STYLE_PREVIEW_SELECTOR               = 'div.preview-text';
-const SETTINGS_STYLE_TAB_SELECTOR                   = '#tab-butt-style';
+    readingArea: '#reading-area',
 
-column-max-width-input
+    settings: {
+        toggle: '#settbutt1',
 
-const TOC_SELECTOR               = '#readium-toc-body';
-const TOC_BUTTON_SELECTOR        = '#tocButt';
+        close: '#closeSettingsCross',
+        save: '#buttSave',
+
+        layout: {
+            tab: '#tab-butt-layout',
+        },
+
+        style: {
+            arabianNights: 'button.night-theme',
+            fontSize: '#font-size-input',
+            preview: 'div.preview-text',
+            tab: '#tab-butt-style',
+        },
+    },
+
+    toc: {
+        body: '#readium-toc-body',
+        toggle: '#tocButt',
+    },
+};
 
 const BOOK_COVER_IMAGE_TYPE_SVG = 'svg';
 const BOOK_COVER_IMAGE_TYPE_IMG = 'img';
@@ -35,7 +48,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImg: { get:
         function() {
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
 
@@ -45,7 +58,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImgEnclosingElementWidth: { get:
         function() {
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -64,7 +77,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageSvg: { get:
         function() {
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
 
@@ -85,7 +98,7 @@ let ReadiumPage = Object.create( Page, {
             // This does not seem to work with Firefox (geckodriver) right now.
             // Firefox goes fullscreen but all-black, pauses, then shrinks back
             // to the original size and view.
-            clickElement( FULLSCREEN_TOGGLE_BUTTON );
+            clickElement( SELECTORS.fullscreen );
         }
     },
 
@@ -93,8 +106,8 @@ let ReadiumPage = Object.create( Page, {
         function() {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( PAGE_TURNER_LEFT_SELECTOR );
-            clickElement( PAGE_TURNER_LEFT_SELECTOR );
+            browser.moveToObject( SELECTORS.pageTurners.left );
+            clickElement( SELECTORS.pageTurners.left );
         }
     },
 
@@ -102,8 +115,8 @@ let ReadiumPage = Object.create( Page, {
         function() {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( PAGE_TURNER_RIGHT_SELECTOR );
-            clickElement( PAGE_TURNER_RIGHT_SELECTOR );
+            browser.moveToObject( SELECTORS.pageTurners.right );
+            clickElement( SELECTORS.pageTurners.right );
         }
     },
 
@@ -112,38 +125,38 @@ let ReadiumPage = Object.create( Page, {
             // TODO:
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SETTINGS_BUTTON_SELECTOR );
-            clickElement( SETTINGS_BUTTON_SELECTOR );
+            // browser.moveToObject( SELECTORS.settings.toggle );
+            clickElement( SELECTORS.settings.toggle );
         }
     },
 
     clickSettingsArabianNightsButton: { value:
         function() {
-            clickElement( SETTINGS_STYLE_ARABIAN_NIGHTS_BUTTON_SELECTOR );
+            clickElement( SELECTORS.settings.style.arabianNights );
         }
     },
 
     clickSettingsCloseButton: { value:
         function() {
-            clickElement( SETTINGS_CLOSE_BUTTON_SELECTOR );
+            clickElement( SELECTORS.settings.close );
         }
     },
 
     clickSettingsLayoutTab: { value:
         function() {
-            clickElement( SETTINGS_LAYOUT_TAB_SELECTOR );
+            clickElement( SELECTORS.settings.layout.tab );
         }
     },
 
     clickSettingsSaveButton: { value:
         function() {
-            clickElement( SETTINGS_SAVE_BUTTON_SELECTOR );
+            clickElement( SELECTORS.settings.save );
         }
     },
 
     clickSettingsStyleTab: { value:
         function() {
-            clickElement( SETTINGS_STYLE_TAB_SELECTOR );
+            clickElement( SELECTORS.settings.style.tab );
         }
     },
 
@@ -152,14 +165,14 @@ let ReadiumPage = Object.create( Page, {
              // TODO:
              // browser.moveToObject() doesn't work yet for Firefox.
              // https://github.com/mozilla/geckodriver/issues/159
-             // browser.moveToObject( TOC_BUTTON_SELECTOR );
-             clickElement( TOC_BUTTON_SELECTOR );
+             // browser.moveToObject( SELECTORS.toc.toggle );
+             clickElement( SELECTORS.toc.toggle );
          }
     },
 
     epubContentIframe: { get:
         function() {
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -221,7 +234,7 @@ let ReadiumPage = Object.create( Page, {
 
             let isExistingResult;
 
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -255,7 +268,7 @@ let ReadiumPage = Object.create( Page, {
 
     navbar: { get:
         function() {
-            let element = browser.element( NAVBAR_SELECTOR );
+            let element = browser.element( SELECTORS.navbar );
 
             let navbarCss = getNavbarCss( element );
 
@@ -273,7 +286,7 @@ let ReadiumPage = Object.create( Page, {
                 element,
                 leftSideVisibleButtons,
                 navbarRight,
-                selector : NAVBAR_SELECTOR,
+                selector : SELECTORS.navbar,
                 rightSideVisibleButtons,
             };
 
@@ -286,12 +299,12 @@ let ReadiumPage = Object.create( Page, {
     open: { value: function( path ) {
         Page.open.call( this, path );
 
-        browser.waitForExist( EPUB_CONTENT_IFRAME );
+        browser.waitForExist( SELECTORS.epubContentIframe );
     } },
 
     readingArea: { get:
         function() {
-            let element = browser.element( READING_AREA_SELECTOR );
+            let element = browser.element( SELECTORS.readingArea );
 
             return {
                 top: element.getCssProperty( 'top' ).value
@@ -301,22 +314,22 @@ let ReadiumPage = Object.create( Page, {
 
     setFontSizeSliderValue: { value:
         function( value ) {
-            browser.waitForVisible( SETTINGS_FONT_SIZE_SLIDER_SELECTOR );
+            browser.waitForVisible( SELECTORS.settings.style.fontSize );
 
             browser.execute( function( selector, newValue ) {
                 $( selector ).val( newValue );
 
                 // Trigger change event so that the preview window text changes.
                 $( selector  ).change();
-            }, SETTINGS_FONT_SIZE_SLIDER_SELECTOR, value );
+            }, SELECTORS.settings.style.fontSize , value );
         }
     },
 
     stylePreview: { get:
         function() {
-            browser.waitForVisible( SETTINGS_STYLE_PREVIEW_SELECTOR );
+            browser.waitForVisible( SELECTORS.settings.style.preview );
 
-            let element = browser.element( SETTINGS_STYLE_PREVIEW_SELECTOR );
+            let element = browser.element( SELECTORS.settings.style.preview );
 
             let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
             let color           = element.getCssProperty( 'color' ).parsed.hex;
@@ -333,7 +346,7 @@ let ReadiumPage = Object.create( Page, {
 
     toc: { get:
         function() {
-            let element = browser.element( TOC_SELECTOR );
+            let element = browser.element( SELECTORS.toc.body );
 
             return {
                 element,
@@ -344,7 +357,7 @@ let ReadiumPage = Object.create( Page, {
 
     vh: { get:
         function() {
-            let contentIframeElement = browser.element( EPUB_CONTENT_IFRAME );
+            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
