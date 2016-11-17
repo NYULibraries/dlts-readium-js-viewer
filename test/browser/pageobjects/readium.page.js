@@ -65,6 +65,14 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    clearLocalStorage: { value:
+        function() {
+            browser.execute( function() {
+                localStorage.clear();
+            } );
+        }
+    },
+
     clickFullscreenToggle: { value:
         function() {
             // This does not seem to work with Firefox (geckodriver) right now.

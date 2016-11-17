@@ -316,6 +316,10 @@ suite( 'DLTS ReadiumJS viewer', function() {
             readium.open( DEFAULT_BOOK_PATH );
         } );
 
+        teardown( function() {
+            readium.clearLocalStorage();
+        } );
+
         test( 'right', function() {
             readium.clickPageTurnerRight();
             readium.clickPageTurnerRight();
@@ -346,6 +350,10 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         setup( function() {
             readium.open( DEFAULT_BOOK_PATH );
+        } );
+
+        teardown( function() {
+            readium.clearLocalStorage();
         } );
 
         test( 'toggle fullscreen on', function() {
@@ -420,6 +428,10 @@ suite( 'DLTS ReadiumJS viewer', function() {
                 readium.open( JAPANESE_LESSONS_PATH );
             } );
 
+            teardown( function() {
+                readium.clearLocalStorage();
+            } );
+
             test( 'toggle TOC on', function() {
                 readium.clickToc();
 
@@ -465,6 +477,10 @@ suite( 'DLTS ReadiumJS viewer', function() {
 
         setup( function() {
             readium.open( DEFAULT_BOOK_PATH );
+        } );
+
+        teardown( function() {
+            readium.clearLocalStorage();
         } );
 
         test( 'Font size', function() {
