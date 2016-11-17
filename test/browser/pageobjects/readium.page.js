@@ -29,6 +29,19 @@ const SELECTORS = {
 
         layout: {
             tab: '#tab-butt-layout',
+
+            pageWidth: '#column-max-width-input',
+
+            displayFormat: {
+                doublePage: '#double-page-radio',
+                singlePage: '#single-page-radio',
+            },
+
+            scrollMode: {
+                continuous: '#scroll-continuous-option',
+                document: '#scroll-doc-radio',
+            }
+
         },
 
         style: {
