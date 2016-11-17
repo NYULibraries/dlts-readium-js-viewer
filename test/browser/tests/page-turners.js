@@ -10,6 +10,8 @@ const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'Page turners', function() {
 
+    this.retries( 3 );
+
     setup( function() {
         readium.open( DEFAULT_BOOK_PATH );
     } );
