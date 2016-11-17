@@ -9,14 +9,15 @@ const PAGE_TURNER_LEFT_SELECTOR  = '#left-page-btn';
 const PAGE_TURNER_RIGHT_SELECTOR = '#right-page-btn';
 const READING_AREA_SELECTOR      = '#reading-area';
 
-const SETTINGS_BUTTON_SELECTOR           = '#settbutt1';
-const SETTINGS_CLOSE_BUTTON_SELECTOR     = '#closeSettingsCross';
-const SETTINGS_FONT_SIZE_SLIDER_ID       = 'font-size-input';
-const SETTINGS_FONT_SIZE_SLIDER_SELECTOR = '#' + SETTINGS_FONT_SIZE_SLIDER_ID;
-const SETTINGS_LAYOUT_TAB_SELECTOR       = '#tab-butt-layout';
-const SETTINGS_SAVE_BUTTON_SELECTOR      = '#buttSave';
-const SETTINGS_STYLE_PREVIEW_SELECTOR    = 'div.preview-text';
-const SETTINGS_STYLE_TAB_SELECTOR        = '#tab-butt-style';
+const SETTINGS_BUTTON_SELECTOR                = '#settbutt1';
+const SETTINGS_ARABIAN_NIGHTS_BUTTON_SELECTOR = 'button.night-theme';
+const SETTINGS_CLOSE_BUTTON_SELECTOR          = '#closeSettingsCross';
+const SETTINGS_FONT_SIZE_SLIDER_ID            = 'font-size-input';
+const SETTINGS_FONT_SIZE_SLIDER_SELECTOR      = '#' + SETTINGS_FONT_SIZE_SLIDER_ID;
+const SETTINGS_LAYOUT_TAB_SELECTOR            = '#tab-butt-layout';
+const SETTINGS_SAVE_BUTTON_SELECTOR           = '#buttSave';
+const SETTINGS_STYLE_PREVIEW_SELECTOR         = 'div.preview-text';
+const SETTINGS_STYLE_TAB_SELECTOR             = '#tab-butt-style';
 
 const TOC_SELECTOR               = '#readium-toc-body';
 const TOC_BUTTON_SELECTOR        = '#tocButt';
@@ -110,6 +111,12 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    clickSettingsArabianNightsButton: { value:
+        function() {
+            clickElement( SETTINGS_ARABIAN_NIGHTS_BUTTON_SELECTOR );
+        }
+    },
+
     clickSettingsCloseButton: { value:
         function() {
             clickElement( SETTINGS_CLOSE_BUTTON_SELECTOR );
@@ -150,6 +157,10 @@ let ReadiumPage = Object.create( Page, {
 
             browser.frame( contentIframeElement.value );
 
+            let bodyElement = browser.element( 'body' );
+            let backgroundColor = bodyElement.getCssProperty( 'background-color' ).parsed.hex;
+            let color           = bodyElement.getCssProperty( 'color' ).parsed.hex;
+
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
             } ).value;
@@ -158,6 +169,8 @@ let ReadiumPage = Object.create( Page, {
 
             return {
                 contentIframeElement,
+                backgroundColor,
+                color,
                 fontSize,
             };
         }
@@ -299,9 +312,14 @@ let ReadiumPage = Object.create( Page, {
 
             let element = browser.element( SETTINGS_STYLE_PREVIEW_SELECTOR );
 
-            let fontSize = element.getCssProperty( 'font-size' ).value;
+            let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
+            let color           = element.getCssProperty( 'color' ).parsed.hex;
+            let fontSize        = element.getCssProperty( 'font-size' ).value;
+
             return {
                 element,
+                backgroundColor,
+                color,
                 fontSize,
             }
         }
