@@ -1,66 +1,7 @@
 "use strict";
 
-let Page = require('./page');
-
-const SELECTORS = {
-
-    epubContentIframe: '#epubContentIframe',
-
-    fullscreen: '#buttFullScreenToggle',
-
-    navbar: {
-        main: '#app-navbar',
-        leftSideButtons: '.btn-group.navbar-left > button',
-        rightSideButtons: '.btn-group.navbar-right > button',
-    },
-
-    pageTurners: {
-        left: '#left-page-btn',
-        right: '#right-page-btn',
-    },
-
-    readingArea: '#reading-area',
-
-    settings: {
-        toggle: '#settbutt1',
-
-        close: '#closeSettingsCross',
-        save: '#buttSave',
-
-        layout: {
-            tab: '#tab-butt-layout',
-
-            pageWidth: '#column-max-width-input',
-
-            displayFormat: {
-                doublePage: '#double-page-radio',
-                singlePage: '#single-page-radio',
-            },
-
-            scrollMode: {
-                continuous: '#scroll-continuous-option',
-                document: '#scroll-doc-radio',
-            }
-
-        },
-
-        style: {
-            tab: '#tab-butt-style',
-
-            fontSize: '#font-size-input',
-            preview: 'div.preview-text',
-            textAndBackground: {
-                arabianNights: 'button.night-theme',
-            },
-        },
-    },
-
-    toc: {
-        toggle: '#tocButt',
-
-        body: '#readium-toc-body',
-    },
-};
+let Page      = require('./page');
+let Selectors = require( './readium-selectors' );
 
 const BOOK_COVER_IMAGE_TYPE_SVG = 'svg';
 const BOOK_COVER_IMAGE_TYPE_IMG = 'img';
@@ -69,7 +10,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImg: { get:
         function() {
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
 
@@ -79,7 +20,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImgEnclosingElementWidth: { get:
         function() {
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -98,7 +39,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageSvg: { get:
         function() {
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
 
@@ -119,7 +60,7 @@ let ReadiumPage = Object.create( Page, {
             // This does not seem to work with Firefox (geckodriver) right now.
             // Firefox goes fullscreen but all-black, pauses, then shrinks back
             // to the original size and view.
-            clickElement( SELECTORS.fullscreen );
+            clickElement( Selectors.fullscreen );
         }
     },
 
@@ -127,8 +68,8 @@ let ReadiumPage = Object.create( Page, {
         function() {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( SELECTORS.pageTurners.left );
-            clickElement( SELECTORS.pageTurners.left );
+            browser.moveToObject( Selectors.pageTurners.left );
+            clickElement( Selectors.pageTurners.left );
         }
     },
 
@@ -136,8 +77,8 @@ let ReadiumPage = Object.create( Page, {
         function() {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( SELECTORS.pageTurners.right );
-            clickElement( SELECTORS.pageTurners.right );
+            browser.moveToObject( Selectors.pageTurners.right );
+            clickElement( Selectors.pageTurners.right );
         }
     },
 
@@ -147,37 +88,37 @@ let ReadiumPage = Object.create( Page, {
             // browser.moveToObject() doesn't work yet for Firefox.
             // https://github.com/mozilla/geckodriver/issues/159
             // browser.moveToObject( SELECTORS.settings.toggle );
-            clickElement( SELECTORS.settings.toggle );
+            clickElement( Selectors.settings.toggle );
         }
     },
 
     clickSettingsArabianNightsButton: { value:
         function() {
-            clickElement( SELECTORS.settings.style.textAndBackground.arabianNights );
+            clickElement( Selectors.settings.style.textAndBackground.arabianNights );
         }
     },
 
     clickSettingsCloseButton: { value:
         function() {
-            clickElement( SELECTORS.settings.close );
+            clickElement( Selectors.settings.close );
         }
     },
 
     clickSettingsLayoutTab: { value:
         function() {
-            clickElement( SELECTORS.settings.layout.tab );
+            clickElement( Selectors.settings.layout.tab );
         }
     },
 
     clickSettingsSaveButton: { value:
         function() {
-            clickElement( SELECTORS.settings.save );
+            clickElement( Selectors.settings.save );
         }
     },
 
     clickSettingsStyleTab: { value:
         function() {
-            clickElement( SELECTORS.settings.style.tab );
+            clickElement( Selectors.settings.style.tab );
         }
     },
 
@@ -187,13 +128,13 @@ let ReadiumPage = Object.create( Page, {
              // browser.moveToObject() doesn't work yet for Firefox.
              // https://github.com/mozilla/geckodriver/issues/159
              // browser.moveToObject( SELECTORS.toc.toggle );
-             clickElement( SELECTORS.toc.toggle );
+             clickElement( Selectors.toc.toggle );
          }
     },
 
     epubContentIframe: { get:
         function() {
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -205,6 +146,10 @@ let ReadiumPage = Object.create( Page, {
                 return document.querySelector( 'html' ).style.fontSize;
             } ).value;
 
+            let htmlWidth = browser.execute( function() {
+                return document.querySelector( 'html' ).style.width;
+            } ).value;
+
             browser.frameParent();
 
             return {
@@ -212,6 +157,7 @@ let ReadiumPage = Object.create( Page, {
                 backgroundColor,
                 color,
                 fontSize,
+                htmlWidth,
             };
         }
     },
@@ -255,7 +201,7 @@ let ReadiumPage = Object.create( Page, {
 
             let isExistingResult;
 
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -289,17 +235,17 @@ let ReadiumPage = Object.create( Page, {
 
     navbar: { get:
         function() {
-            let element = browser.element( SELECTORS.navbar.main );
+            let element = browser.element( Selectors.navbar.main );
 
             let navbarCss = getNavbarCss( element );
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = browser.elements( SELECTORS.navbar.leftSideButtons ).value;
+            let navbarLeftButtons = browser.elements( Selectors.navbar.leftSideButtons ).value;
             let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
             let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
 
-            let navbarRightButtons = browser.elements( SELECTORS.navbar.rightSideButtons  ).value;
+            let navbarRightButtons = browser.elements( Selectors.navbar.rightSideButtons  ).value;
             let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
             let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
 
@@ -307,7 +253,7 @@ let ReadiumPage = Object.create( Page, {
                 element,
                 leftSideVisibleButtons,
                 navbarRight,
-                selector : SELECTORS.navbar.main,
+                selector : Selectors.navbar.main,
                 rightSideVisibleButtons,
             };
 
@@ -320,12 +266,12 @@ let ReadiumPage = Object.create( Page, {
     open: { value: function( path ) {
         Page.open.call( this, path );
 
-        browser.waitForExist( SELECTORS.epubContentIframe );
+        browser.waitForExist( Selectors.epubContentIframe );
     } },
 
     readingArea: { get:
         function() {
-            let element = browser.element( SELECTORS.readingArea );
+            let element = browser.element( Selectors.readingArea );
 
             return {
                 top: element.getCssProperty( 'top' ).value
@@ -335,21 +281,21 @@ let ReadiumPage = Object.create( Page, {
 
     setFontSizeSliderValue: { value:
         function( value ) {
-            setSliderValue( SELECTORS.settings.style.fontSize, value );
+            setSliderValue( Selectors.settings.style.fontSize, value );
         }
     },
 
     setPageWidthSliderValue: { value:
         function( value ) {
-            setSliderValue( SELECTORS.settings.layout.pageWidth, value );
+            setSliderValue( Selectors.settings.layout.pageWidth, value );
         }
     },
 
     stylePreview: { get:
         function() {
-            browser.waitForVisible( SELECTORS.settings.style.preview );
+            browser.waitForVisible( Selectors.settings.style.preview );
 
-            let element = browser.element( SELECTORS.settings.style.preview );
+            let element = browser.element( Selectors.settings.style.preview );
 
             let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
             let color           = element.getCssProperty( 'color' ).parsed.hex;
@@ -366,7 +312,7 @@ let ReadiumPage = Object.create( Page, {
 
     toc: { get:
         function() {
-            let element = browser.element( SELECTORS.toc.body );
+            let element = browser.element( Selectors.toc.body );
 
             return {
                 element,
@@ -377,7 +323,7 @@ let ReadiumPage = Object.create( Page, {
 
     vh: { get:
         function() {
-            let contentIframeElement = browser.element( SELECTORS.epubContentIframe );
+            let contentIframeElement = browser.element( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
