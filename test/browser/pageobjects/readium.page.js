@@ -251,6 +251,18 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    selectSettingContinuousScrollMode: { value :
+        function() {
+            clickElement( Selectors.settings.layout.scrollMode.continuous );
+        }
+    },
+
+    selectSettingDocumentScrollMode: { value :
+        function() {
+            clickElement( Selectors.settings.layout.scrollMode.document );
+        }
+    },
+
     selectSettingSinglePage: { value :
         function() {
             clickElement( Selectors.settings.layout.displayFormat.singlePage );
