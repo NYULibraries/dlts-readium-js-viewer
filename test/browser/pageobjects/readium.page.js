@@ -55,7 +55,7 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    clickFullscreenToggle: { value:
+    toggleFullscreen : { value :
         function() {
             // This does not seem to work with Firefox (geckodriver) right now.
             // Firefox goes fullscreen but all-black, pauses, then shrinks back
@@ -82,7 +82,7 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    clickSettingsButton: { value:
+    toggleSettings : { value :
         function() {
             // TODO:
             // browser.moveToObject() doesn't work yet for Firefox.
@@ -92,37 +92,37 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    clickSettingsArabianNightsButton: { value:
+    selectSettingArabianNights : { value :
         function() {
             clickElement( Selectors.settings.style.textAndBackground.arabianNights );
         }
     },
 
-    clickSettingsCloseButton: { value:
+    closeSettings : { value :
         function() {
             clickElement( Selectors.settings.close );
         }
     },
 
-    clickSettingsLayoutTab: { value:
+    selectSettingsLayoutTab : { value :
         function() {
             clickElement( Selectors.settings.layout.tab );
         }
     },
 
-    clickSettingsSaveButton: { value:
+    saveSettings : { value :
         function() {
             clickElement( Selectors.settings.save );
         }
     },
 
-    clickSettingsStyleTab: { value:
+    selectSettingsStyleTab : { value :
         function() {
             clickElement( Selectors.settings.style.tab );
         }
     },
 
-    clickToc: { value:
+    toggleToc : { value :
          function() {
              // TODO:
              // browser.moveToObject() doesn't work yet for Firefox.

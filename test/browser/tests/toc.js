@@ -21,7 +21,7 @@ suite( 'TOC', function() {
         } );
 
         test( 'toggle TOC on', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'display property is "inline-block"'
@@ -29,13 +29,13 @@ suite( 'TOC', function() {
         } );
 
         test( 'toggle TOC off', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'TOC is on'
             );
 
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'none',
                           'TOC is off'
@@ -43,7 +43,7 @@ suite( 'TOC', function() {
         } );
 
         test( 'navigate to chapter', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             browser.click( '=About the Authors' );
 
@@ -71,7 +71,7 @@ suite( 'TOC', function() {
         } );
 
         test( 'toggle TOC on', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'display property is "inline-block"'
@@ -79,13 +79,13 @@ suite( 'TOC', function() {
         } );
 
         test( 'toggle TOC off', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'TOC is on'
             );
 
-            readium.clickToc();
+            readium.toggleToc();
 
             assert.equal( readium.toc.display, 'none',
                           'TOC is off'
@@ -93,7 +93,7 @@ suite( 'TOC', function() {
         } );
 
         test( 'navigate to chapter', function() {
-            readium.clickToc();
+            readium.toggleToc();
 
             browser.click( '=3 Day-to-Day Routines' );
 

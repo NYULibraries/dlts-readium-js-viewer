@@ -27,8 +27,8 @@ suite( 'Settings', function() {
             'Content font-size is at default'
         );
 
-        readium.clickSettingsButton();
-        readium.clickSettingsStyleTab();
+        readium.toggleSettings();
+        readium.selectSettingsStyleTab();
 
         assert.equal( readium.stylePreview.fontSize, '14px',
             'Font size preview is at default' );
@@ -38,7 +38,7 @@ suite( 'Settings', function() {
         assert.equal( readium.stylePreview.fontSize, '22.4px',
                       'Font size preview has been changed (1.6em)' );
 
-        readium.clickSettingsSaveButton();
+        readium.saveSettings();
 
         assert.equal(
             readium.epubContentIframe.fontSize,
@@ -48,22 +48,22 @@ suite( 'Settings', function() {
     } );
 
     test( 'Text and background color', function() {
-        readium.clickSettingsButton();
-        readium.clickSettingsStyleTab();
+        readium.toggleSettings();
+        readium.selectSettingsStyleTab();
 
         assert.equal( readium.stylePreview.backgroundColor, '#ffffff',
                       'Preview "background-color" property is at default' );
         assert.equal( readium.stylePreview.color, '#000000',
                       'Preview "color" property is at default' );
 
-        readium.clickSettingsArabianNightsButton();
+        readium.selectSettingArabianNights();
 
         assert.equal( readium.stylePreview.backgroundColor, '#141414',
                       'Preview "background-color" property has been changed' );
         assert.equal( readium.stylePreview.color, '#ffffff',
                       'Preview "color" property has been changed' );
 
-        readium.clickSettingsSaveButton();
+        readium.saveSettings();
 
         assert.equal(
             readium.epubContentIframe.backgroundColor,
@@ -111,10 +111,10 @@ suite( 'Settings', function() {
                           expectedDefaultPageWidth,
                           'Page width at default' );
 
-            readium.clickSettingsButton();
-            readium.clickSettingsLayoutTab();
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MIN );
-            readium.clickSettingsSaveButton();
+            readium.saveSettings();
 
             assert.equal( readium.epubContentIframe.htmlWidth, expectedMinPagewidth,
                           'Page width has been changed to minimum' );
@@ -125,10 +125,10 @@ suite( 'Settings', function() {
                           expectedDefaultPageWidth,
                           'Page width at default' );
 
-            readium.clickSettingsButton();
-            readium.clickSettingsLayoutTab();
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MAX );
-            readium.clickSettingsSaveButton();
+            readium.saveSettings();
 
             assert.equal( readium.epubContentIframe.htmlWidth, expectedMaxPagewidth,
                           'Page width has been changed to maximum' );
