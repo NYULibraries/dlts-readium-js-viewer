@@ -55,15 +55,6 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    toggleFullscreen : { value :
-        function() {
-            // This does not seem to work with Firefox (geckodriver) right now.
-            // Firefox goes fullscreen but all-black, pauses, then shrinks back
-            // to the original size and view.
-            clickElement( Selectors.fullscreen );
-        }
-    },
-
     clickPageTurnerLeft: { value:
         function() {
             // browser.moveToObject() doesn't work yet for Firefox.
@@ -82,54 +73,10 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    toggleSettings : { value :
-        function() {
-            // TODO:
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SELECTORS.settings.toggle );
-            clickElement( Selectors.settings.toggle );
-        }
-    },
-
-    selectSettingArabianNights : { value :
-        function() {
-            clickElement( Selectors.settings.style.textAndBackground.arabianNights );
-        }
-    },
-
     closeSettings : { value :
         function() {
             clickElement( Selectors.settings.close );
         }
-    },
-
-    selectSettingsLayoutTab : { value :
-        function() {
-            clickElement( Selectors.settings.layout.tab );
-        }
-    },
-
-    saveSettings : { value :
-        function() {
-            clickElement( Selectors.settings.save );
-        }
-    },
-
-    selectSettingsStyleTab : { value :
-        function() {
-            clickElement( Selectors.settings.style.tab );
-        }
-    },
-
-    toggleToc : { value :
-         function() {
-             // TODO:
-             // browser.moveToObject() doesn't work yet for Firefox.
-             // https://github.com/mozilla/geckodriver/issues/159
-             // browser.moveToObject( SELECTORS.toc.toggle );
-             clickElement( Selectors.toc.toggle );
-         }
     },
 
     epubContentIframe: { get:
@@ -279,6 +226,30 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    saveSettings : { value :
+        function() {
+            clickElement( Selectors.settings.save );
+        }
+    },
+
+    selectSettingArabianNights : { value :
+        function() {
+            clickElement( Selectors.settings.style.textAndBackground.arabianNights );
+        }
+    },
+
+    selectSettingsLayoutTab : { value :
+        function() {
+            clickElement( Selectors.settings.layout.tab );
+        }
+    },
+
+    selectSettingsStyleTab : { value :
+        function() {
+            clickElement( Selectors.settings.style.tab );
+        }
+    },
+
     setFontSizeSliderValue: { value:
         function( value ) {
             setSliderValue( Selectors.settings.style.fontSize, value );
@@ -318,6 +289,35 @@ let ReadiumPage = Object.create( Page, {
                 element,
                 display: element.getCssProperty( 'display' ).value,
             }
+        }
+    },
+
+    toggleFullscreen : { value :
+        function() {
+            // This does not seem to work with Firefox (geckodriver) right now.
+            // Firefox goes fullscreen but all-black, pauses, then shrinks back
+            // to the original size and view.
+            clickElement( Selectors.fullscreen );
+        }
+    },
+
+    toggleSettings : { value :
+        function() {
+            // TODO:
+            // browser.moveToObject() doesn't work yet for Firefox.
+            // https://github.com/mozilla/geckodriver/issues/159
+            // browser.moveToObject( SELECTORS.settings.toggle );
+            clickElement( Selectors.settings.toggle );
+        }
+    },
+
+    toggleToc : { value :
+        function() {
+            // TODO:
+            // browser.moveToObject() doesn't work yet for Firefox.
+            // https://github.com/mozilla/geckodriver/issues/159
+            // browser.moveToObject( SELECTORS.toc.toggle );
+            clickElement( Selectors.toc.toggle );
         }
     },
 
