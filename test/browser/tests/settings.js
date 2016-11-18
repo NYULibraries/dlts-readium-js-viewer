@@ -78,6 +78,9 @@ suite( 'Settings', function() {
     } );
 
     suite( 'Page width', function() {
+
+        this.retries( 3 );
+
         const PAGE_WIDTH_SLIDER_MIN = '500';
         const PAGE_WIDTH_SLIDER_MAX = '2000';
 
@@ -135,8 +138,66 @@ suite( 'Settings', function() {
         } );
     } );
 
-    test( 'Display format', function() {
+    suite( 'Display format', function() {
 
+        this.retries( 3 );
+
+        let expectedDefaultColumns;
+        let expectedSinglePageColumns;
+        let expectedDoublePageColumns;
+
+        suiteSetup( function() {
+            let browserName = browser.options.desiredCapabilities.browserName;
+
+            if ( browserName === 'chrome' ) {
+
+                // Chrome initially opens at a narrower width than Firefox, which
+                // might explain why it defaults to single-column format instead
+                // of double.
+                expectedDefaultColumns    = '550px auto';
+                expectedSinglePageColumns = '550px auto';
+                expectedDoublePageColumns = 'auto 2';
+
+            } else if ( browserName === 'firefox' ) {
+
+                expectedDefaultColumns    = '2';
+                expectedSinglePageColumns = 'auto';
+                expectedDoublePageColumns = '2';
+
+            } else {
+                // Should never get here.
+            }
+        } );
+
+        test( 'Single column/page', function() {
+            assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
+                          'Columns at default'
+            );
+
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
+            readium.selectSettingSinglePage();
+            readium.saveSettings();
+
+            assert.equal( readium.epubContentIframe.columns, expectedSinglePageColumns,
+                          'Single-page layout'
+            );
+        } );
+
+        test( 'Double column/page', function() {
+            assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
+                          'Columns at default'
+            );
+
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
+            readium.selectSettingDoublePage();
+            readium.saveSettings();
+
+            assert.equal( readium.epubContentIframe.columns, expectedDoublePageColumns,
+                          'Double-page layout'
+            );
+        } );
     } );
 
     test( 'Scroll mode', function() {

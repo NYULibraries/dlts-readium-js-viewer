@@ -89,6 +89,18 @@ let ReadiumPage = Object.create( Page, {
             let backgroundColor = bodyElement.getCssProperty( 'background-color' ).parsed.hex;
             let color           = bodyElement.getCssProperty( 'color' ).parsed.hex;
 
+            let browserName = browser.options.desiredCapabilities.browserName;
+            let columns;
+            if ( browserName === 'chrome' ) {
+                columns = browser.execute( function() {
+                    return document.querySelector( 'html' ).style.columns;
+                } ).value;
+            } else if ( browserName === 'firefox' ) {
+                columns = browser.getCssProperty( 'html', '-moz-column-count' ).value
+            } else {
+                // Should never get here.
+            }
+
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
             } ).value;
@@ -103,6 +115,7 @@ let ReadiumPage = Object.create( Page, {
                 contentIframeElement,
                 backgroundColor,
                 color,
+                columns,
                 fontSize,
                 htmlWidth,
             };
@@ -235,6 +248,18 @@ let ReadiumPage = Object.create( Page, {
     selectSettingArabianNights : { value :
         function() {
             clickElement( Selectors.settings.style.textAndBackground.arabianNights );
+        }
+    },
+
+    selectSettingSinglePage: { value :
+        function() {
+            clickElement( Selectors.settings.layout.displayFormat.singlePage );
+        }
+    },
+
+    selectSettingDoublePage: { value :
+        function() {
+            clickElement( Selectors.settings.layout.displayFormat.doublePage );
         }
     },
 
