@@ -77,8 +77,62 @@ suite( 'Settings', function() {
         );
     } );
 
-    test( 'Page width', function() {
+    suite( 'Page width', function() {
+        const PAGE_WIDTH_SLIDER_MIN = '500';
+        const PAGE_WIDTH_SLIDER_MAX = '2000';
 
+        let expectedDefaultPageWidth;
+        let expectedMaxPagewidth;
+        let expectedMinPagewidth;
+
+        suiteSetup( function() {
+            // Chrome and Firefox both seem to want to open at different sizes,
+            // and this determines the actual widths set by moving Page Width slider
+            // to the min and max.  Presumably screen resolution also influences
+            // the max.  For now, just expect what we've been seeing during
+            // development.  Later, we might need to tighten this up.
+            let browserName = browser.options.desiredCapabilities.browserName;
+
+            if ( browserName === 'chrome' ) {
+                expectedDefaultPageWidth = '550px';
+                expectedMaxPagewidth     = '846px';
+                expectedMinPagewidth     = '500px';
+            } else if ( browserName === 'firefox' ) {
+                expectedDefaultPageWidth = '1160px';
+                expectedMaxPagewidth     = '1200px';
+                expectedMinPagewidth     = '1060px';
+            } else {
+                // Should never get here.
+            }
+        } );
+
+        test( 'set to minimum', function() {
+            assert.equal( readium.epubContentIframe.htmlWidth,
+                          expectedDefaultPageWidth,
+                          'Page width at default' );
+
+            readium.clickSettingsButton();
+            readium.clickSettingsLayoutTab();
+            readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MIN );
+            readium.clickSettingsSaveButton();
+
+            assert.equal( readium.epubContentIframe.htmlWidth, expectedMinPagewidth,
+                          'Page width has been changed to minimum' );
+        } );
+
+        test( 'set to maximum', function() {
+            assert.equal( readium.epubContentIframe.htmlWidth,
+                          expectedDefaultPageWidth,
+                          'Page width at default' );
+
+            readium.clickSettingsButton();
+            readium.clickSettingsLayoutTab();
+            readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MAX );
+            readium.clickSettingsSaveButton();
+
+            assert.equal( readium.epubContentIframe.htmlWidth, expectedMaxPagewidth,
+                          'Page width has been changed to maximum' );
+        } );
     } );
 
     test( 'Display format', function() {
