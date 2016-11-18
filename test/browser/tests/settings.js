@@ -200,7 +200,27 @@ suite( 'Settings', function() {
         } );
     } );
 
-    test( 'Scroll mode', function() {
+    suite( 'Scroll mode', function() {
+
+        this.retries( 3 );
+
+        test( 'Document mode', function() {
+
+            readium.toggleToc();
+
+            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
+            readium.selectSettingDocumentScrollMode();
+            readium.saveSettings();
+
+            readium.toggleToc();
+
+            browser.keys( [ "\uE004", "\uE004", "\uE004", "\uE010" ] );
+
+            readium.isExistingInContentIframe( '//*[ contains( ., "to explore a broader array of contemporary political and civic practices." )' );
+        } );
 
     } );
 } );
