@@ -2,7 +2,11 @@
 
 const Selectors = {
 
-    epubContentIframe: '#epubContentIframe',
+    // The EPUB content <iframe> changes depending on user settings.  The default
+    // scroll mode uses a viewer <iframe> with id attribute "epubContentIframe".
+    // In document view, the <iframe> has no id attribute, but a class name of
+    // "iframe-fixed".  For now, just target using the "iframe" tag name.
+    epubContentIframe: 'iframe',
 
     fullscreen: '#buttFullScreenToggle',
 
