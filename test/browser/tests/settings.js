@@ -210,6 +210,12 @@ suite( 'Settings', function() {
 
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 
+            // Default max-height usually "846px", but it seems to change sometimes,
+            // so just check for "px".
+            assert.match( readium.epubContentIframe.maxHeight, /\d+px$/,
+                          'Content iframe <html> "max-height" set to default'
+            );
+
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();
             readium.selectSettingDocumentScrollMode();
@@ -217,9 +223,10 @@ suite( 'Settings', function() {
 
             readium.toggleToc();
 
-            browser.keys( [ "\uE004", "\uE004", "\uE004", "\uE010" ] );
+            assert.equal( readium.epubContentIframe.maxHeight, 'none',
+                          'Content iframe <html> "max-height" set to "none"'
+            );
 
-            readium.isExistingInContentIframe( '//*[ contains( ., "to explore a broader array of contemporary political and civic practices." )' );
         } );
 
     } );

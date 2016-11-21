@@ -109,6 +109,8 @@ let ReadiumPage = Object.create( Page, {
                 return document.querySelector( 'html' ).style.width;
             } ).value;
 
+            let maxHeight = browser.getCssProperty( 'html', 'max-height' ).value;
+
             browser.frameParent();
 
             return {
@@ -118,6 +120,7 @@ let ReadiumPage = Object.create( Page, {
                 columns,
                 fontSize,
                 htmlWidth,
+                maxHeight,
             };
         }
     },
