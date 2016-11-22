@@ -308,6 +308,19 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    scrolledContentFrame: { get:
+        function() {
+            let scrolledContentFrameElement = browser.element( Selectors.scrolledContentFrame );
+
+            let overflowY = scrolledContentFrameElement.getCssProperty( 'overflow-y' ).value;
+
+            return {
+                scrolledContentFrameElement,
+                overflowY,
+            };
+        }
+    },
+
     stylePreview: { get:
         function() {
             browser.waitForVisible( Selectors.settings.style.preview );

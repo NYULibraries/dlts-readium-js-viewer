@@ -229,6 +229,24 @@ suite( 'Settings', function() {
 
         } );
 
+        test( 'Continuous mode', function() {
+
+            readium.toggleToc();
+
+            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+
+            readium.toggleSettings();
+            readium.selectSettingsLayoutTab();
+            readium.selectSettingContinuousScrollMode();
+            readium.saveSettings();
+
+            readium.toggleToc();
+
+            assert.equal( readium.scrolledContentFrame.overflowY, 'auto',
+                'ReadiumJS viewer scrolled content frame is present and has correct "overflow-y" value' );
+
+        } );
+
     } );
 } );
 

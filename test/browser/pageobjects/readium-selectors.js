@@ -24,6 +24,8 @@ const Selectors = {
 
     readingArea: '#reading-area',
 
+    scrolledContentFrame: '#scrolled-content-frame',
+
     settings: {
         toggle: '#settbutt1',
 
