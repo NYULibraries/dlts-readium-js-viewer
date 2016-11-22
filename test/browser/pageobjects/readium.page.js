@@ -404,6 +404,9 @@ function clickElementWithTemporaryFirefoxWorkaround( selectorArg ) {
         // https://github.com/mozilla/geckodriver/issues/159
         // TODO: After geckodriver implementation of Actions API is completed,
         // remove this workaround.
+
+        browser.waitForExist( selectorArg );
+
         browser.execute( function( selector ) {
             document.querySelector( selector )
                 .dispatchEvent( new Event( 'click' ) );
