@@ -57,19 +57,13 @@ let ReadiumPage = Object.create( Page, {
 
     clickPageTurnerLeft: { value:
         function() {
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( Selectors.pageTurners.left );
-            clickElement( Selectors.pageTurners.left );
+            clickPageTurner( Selectors.pageTurners.left );
         }
     },
 
     clickPageTurnerRight: { value:
         function() {
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            browser.moveToObject( Selectors.pageTurners.right );
-            clickElement( Selectors.pageTurners.right );
+            clickPageTurner( Selectors.pageTurners.right );
         }
     },
 
@@ -398,6 +392,24 @@ let ReadiumPage = Object.create( Page, {
 function clickElement( selector ) {
     browser.waitForVisible( selector );
     browser.click( selector );
+}
+
+function clickPageTurner( pageTurnerSelector ) {
+    let browserName = browser.options.desiredCapabilities.browserName;
+
+    if ( browserName === 'chrome' ) {
+        browser.moveToObject( pageTurnerSelector );
+        clickElement( pageTurnerSelector );
+    } else if ( browserName === 'firefox' ) {
+        // browser.moveToObject() doesn't work yet for Firefox.
+        // https://github.com/mozilla/geckodriver/issues/159
+        browser.execute( function( selector ) {
+            document.querySelector( selector )
+                .dispatchEvent( new Event( 'click' ) );
+        }, pageTurnerSelector );
+    } else {
+        // Should never get here.
+    }
 }
 
 function getBookCoverImage( frameId, bookCoverImageType ) {
