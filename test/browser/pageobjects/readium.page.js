@@ -79,6 +79,9 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    // This is only used in Auto and Document scroll modes.  Continuous scroll mode
+    // uses a view that has two <iframe> elements.  See the ReadiumPage.scrolledContentFrame
+    // property.
     epubContentIframe: { get:
         function() {
             let contentIframeElement = browser.element( Selectors.epubContentIframe );
@@ -125,6 +128,9 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    // This is only used in Auto and Document scroll modes.  Continuous scroll mode
+    // uses a view that has two <iframe> elements.  See the ReadiumPage.scrolledContentFrame
+    // property.
     isExistingInContentIframe: { value:
         function( selector, matchText ) {
             // Element with text selectors (ex. "span=Spreadable Media") and XPath selectors

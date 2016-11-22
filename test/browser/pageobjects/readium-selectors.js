@@ -2,10 +2,11 @@
 
 const Selectors = {
 
-    // The EPUB content <iframe> changes depending on user settings.  The default
+    // The EPUB content <iframe> changes depending on user settings.  The Auto
     // scroll mode uses a viewer <iframe> with id attribute "epubContentIframe".
-    // In document view, the <iframe> has no id attribute, but a class name of
+    // In Document scroll mode, the <iframe> has no id attribute, but a class name of
     // "iframe-fixed".  For now, just target using the "iframe" tag name.
+    // For Continuous scroll mode, see scrolledContentFrame selector.
     epubContentIframe: 'iframe',
 
     fullscreen: '#buttFullScreenToggle',
