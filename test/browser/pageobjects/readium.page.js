@@ -57,13 +57,13 @@ let ReadiumPage = Object.create( Page, {
 
     clickPageTurnerLeft: { value:
         function() {
-            clickPageTurner( Selectors.pageTurners.left );
+            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.left );
         }
     },
 
     clickPageTurnerRight: { value:
         function() {
-            clickPageTurner( Selectors.pageTurners.right );
+            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.right );
         }
     },
 
@@ -394,12 +394,11 @@ function clickElement( selector ) {
     browser.click( selector );
 }
 
-function clickPageTurner( pageTurnerSelector ) {
+function clickElementWithTemporaryFirefoxWorkaround( selectorArg ) {
     let browserName = browser.options.desiredCapabilities.browserName;
 
     if ( browserName === 'chrome' ) {
-        browser.moveToObject( pageTurnerSelector );
-        clickElement( pageTurnerSelector );
+        clickElement( selectorArg );
     } else if ( browserName === 'firefox' ) {
         // browser.moveToObject() doesn't work yet for Firefox.
         // https://github.com/mozilla/geckodriver/issues/159
@@ -408,7 +407,7 @@ function clickPageTurner( pageTurnerSelector ) {
         browser.execute( function( selector ) {
             document.querySelector( selector )
                 .dispatchEvent( new Event( 'click' ) );
-        }, pageTurnerSelector );
+        }, selectorArg );
     } else {
         // Should never get here.
     }
