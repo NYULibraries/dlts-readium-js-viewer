@@ -56,6 +56,10 @@ exports.config = {
             'test/browser/tests/toc.js',
         ],
 
+        youtube: [
+            'test/browser/tests/youtube.js',
+        ],
+
     },
 
     // Patterns to exclude.
