@@ -403,6 +403,8 @@ function clickPageTurner( pageTurnerSelector ) {
     } else if ( browserName === 'firefox' ) {
         // browser.moveToObject() doesn't work yet for Firefox.
         // https://github.com/mozilla/geckodriver/issues/159
+        // TODO: After geckodriver implementation of Actions API is completed,
+        // remove this workaround.
         browser.execute( function( selector ) {
             document.querySelector( selector )
                 .dispatchEvent( new Event( 'click' ) );
