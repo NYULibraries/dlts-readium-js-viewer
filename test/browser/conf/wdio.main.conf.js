@@ -20,6 +20,7 @@ exports.config = {
         'test/browser/tests/page-turners.js',
         'test/browser/tests/settings.js',
         'test/browser/tests/toc.js',
+        'test/browser/tests/youtube.js',
     ],
 
     suites: {
