@@ -92,25 +92,40 @@ the Chrome and Firefox drivers set.
 in both Chrome and Firefox simultaneously:
 
 ```shell
-node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.conf.js
+npm run test:browser:local
 ```
 
 * To debug the tests for a specific browser:
 
 ```shell
-node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-chrome.conf.js
+npm run test:browser:local:debug:chrome
 ```
 
 ...or:
 
 ```shell
-node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-firefox.conf.js
+npm run test:browser:local:debug:firefox
 ```
 
-These debug `wdio` configuration files limit tests to a single browser, and also
-set the test timeout to an extremely high value to allow for pausing at breakpoints
- and other line-debugging operations that would not be possible under normal timeout
- conditions.
+These debug `wdio` configuration files set the test timeout to an extremely
+high value to allow for pausing at breakpoints and other line-debugging operations
+that would not be possible under normal timeout conditions.
+
+* To run specific test suites, pass in the `--suite` option as specified in
+[Group Test Specs](http://webdriver.io/guide/testrunner/organizesuite.html):
+
+```shell
+# Run 3 tests suites against both Chrome and Firefox
+npm run test:browser:local -- --suite navbar,navbarShowAndHide,settings
+
+# Run a single test suite against either Chrome or Firefox
+npm run test:browser:local:debug:chrome -- --suite youtube
+npm run test:browser:local:debug:chrome -- --suite toc
+```
+
+The `suites` property in
+[test/browser/conf/wdio.main.conf.js](https://github.com/NYULibraries/dlts-readium-js-viewer/blob/master/test/browser/conf/wdio.main.conf.js)
+contains the definitions for the available test suites.
  
 **Note on Firefox testing**
 
