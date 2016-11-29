@@ -62,6 +62,8 @@ location on the host.
 
 ### Tests
 
+#### Build
+
 * To test that `npm run dist` builds a correct instance:
 
   `npm run test:dist`
@@ -71,6 +73,74 @@ location on the host.
 * To run the (not yet implemented) browser test suite against a given ReadiumJS viewer:
 
   `npm run test:mocha`
+
+#### Automated browser tests
+
+Selenium-driven UI tests of the DLTS build of ReadiumJS viewer are written using
+[webdriver.io](http://webdriver.io/) and [mocha](https://mochajs.org/).  To run
+them, first make sure Selenium is running on the default port with the paths to
+the Chrome and Firefox drivers set.
+
+```shell
+ cd test/browser/selenium
+ java -jar -Dwebdriver.gecko.driver=drivers/geckodriver/mac64/geckodriver \
+           -Dwebdriver.chrome.driver=drivers/chromedriver/mac64/chromedriver \
+           selenium-server-standalone.jar
+```
+
+* To run the full test suite against a local instance of DLTS ReadiumJS viewer
+in both Chrome and Firefox simultaneously:
+
+```shell
+npm run test:browser:local
+```
+
+* To debug the tests for a specific browser:
+
+```shell
+npm run test:browser:local:debug:chrome
+```
+
+...or:
+
+```shell
+npm run test:browser:local:debug:firefox
+```
+
+These debug `wdio` configuration files set the test timeout to an extremely
+high value to allow for pausing at breakpoints and other line-debugging operations
+that would not be possible under normal timeout conditions.
+
+* To run specific test suites, pass in the `--suite` option as specified in
+[Group Test Specs](http://webdriver.io/guide/testrunner/organizesuite.html):
+
+```shell
+# Run 3 tests suites against both Chrome and Firefox
+npm run test:browser:local -- --suite navbar,navbarShowAndHide,settings
+
+# Run a single test suite against either Chrome or Firefox
+npm run test:browser:local:debug:chrome -- --suite youtube
+npm run test:browser:local:debug:chrome -- --suite toc
+```
+
+The `suites` property in
+[test/browser/conf/wdio.main.conf.js](https://github.com/NYULibraries/dlts-readium-js-viewer/blob/master/test/browser/conf/wdio.main.conf.js)
+contains the definitions for the available test suites.
+ 
+**Note on Firefox testing**
+
+Mozilla is in the process of transitioning to their next generation of automation
+driver, [Marionette](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette).
+Marionette is not yet complete.  Selenium is no longer able to automate Firefox
+without the aid of a 3rd-party driver.  It is now necessary to provide to
+Selenium the external driver currently still under development by Mozilla:
+[geckodriver](https://github.com/mozilla/geckodriver).  `geckodriver` does not
+yet fully implement the WebDriver protocol --
+see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status).
+
+As a result, there are a few tests that will always fail in Firefox
+until the `geckodriver` WebDriver <-> Marionette proxy is complete.  See
+[NYUP-206](https://jira.nyu.edu/jira/browse/NYUP-206) for more details.
 
 ### Notes on build
 

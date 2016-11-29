@@ -5,14 +5,21 @@
   "dependencies": {
     "js-beautify": "^1.6.4",
     "mocha": "^3.0.2",
+    "wdio-mocha-framework": "^0.4.3 ",
+    "wdio-spec-reporter": "0.0.3",
     "webdriverio": "^4.2.16"
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
     "dist": "npm run clean && scripts/dist.sh readium-snapshot-2016-10-04",
     "dist:verify": "scripts/dist-verify.sh",
-    "test": "npm run test:dist && npm run test:mocha",
+    "test": "npm run test:dist && npm run test:browser:local",
     "test:dist": "npm run dist && npm run dist:verify",
-    "test:mocha": "node node_modules/mocha/bin/mocha tests/"
+    "test:browser:local": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.conf.js",
+    "test:browser:local:debug:chrome": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-chrome.conf.js",
+    "test:browser:local:debug:firefox": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-firefox.conf.js"
+  },
+  "devDependencies": {
+    "wdio": "^0.3.3"
   }
 }

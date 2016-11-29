@@ -7,7 +7,7 @@ TMP=$ROOT/tmp
 JS_BEAUTIFY="node $ROOT/bin/js-beautify.js"
 JSON_BEAUTIFY="node $ROOT/bin/json-beautify.js"
 
-CLOUD_READER_EXPECTED=$ROOT/tests/dist/expected/cloud-reader
+CLOUD_READER_EXPECTED=$ROOT/test/dist/expected/cloud-reader
 CLOUD_READER_GOT=$ROOT/readium-js-viewer/dist/cloud-reader
 
 READIUM_FILE_EXPECTED=$CLOUD_READER_EXPECTED/scripts/readium-js-viewer_all.js
