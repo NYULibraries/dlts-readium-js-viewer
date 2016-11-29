@@ -62,6 +62,8 @@ location on the host.
 
 ### Tests
 
+#### Build
+
 * To test that `npm run dist` builds a correct instance:
 
   `npm run test:dist`
@@ -71,6 +73,56 @@ location on the host.
 * To run the (not yet implemented) browser test suite against a given ReadiumJS viewer:
 
   `npm run test:mocha`
+
+#### Automated browser tests
+
+Selenium-driven UI tests of the DLTS build of ReadiumJS viewer are written using
+[webdriver.io](http://webdriver.io/) and [mocha](https://mochajs.org/).  To run
+them, first make sure Selenium is running on the default port with the paths to
+the Chrome and Firefox drivers set.
+
+```shell
+ cd test/browser/selenium
+ java -jar -Dwebdriver.gecko.driver=drivers/geckodriver/mac64/geckodriver \
+           -Dwebdriver.chrome.driver=drivers/chromedriver/mac64/chromedriver \
+           selenium-server-standalone.jar
+```
+
+* To run the full test suite against a local instance of DLTS ReadiumJS viewer
+in both Chrome and Firefox simultaneously:
+
+```shell
+node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.conf.js
+```
+
+* To debug the tests for a specific browser:
+
+```shell
+node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-chrome.conf.js
+```
+
+...or:
+
+```shell
+node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-firefox.conf.js
+```
+
+These debug `wdio` configuration files limit tests to a single browser, and also
+set the test timeout to an extremely high value to allow for pausing at breakpoints
+ and other line-debugging operations that would not be possible under normal timeout
+ conditions.
+ 
+**Note on Firefox testing**
+
+Mozilla is in the process of transitioning to their next generation of automation
+driver, [Marionette](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette).
+Marionette is not yet complete.  Selenium is no longer able to automate Firefox
+without the aid of a 3rd driver executable.  It is now necessary to provide to
+Selenium the external driver currently still under development by Mozilla:
+[geckodriver](https://github.com/mozilla/geckodriver).  `geckodriver` does not
+yet fully implement the WebDriver protocol --
+see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status).
+
 
 ### Notes on build
 
