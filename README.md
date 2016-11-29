@@ -132,7 +132,7 @@ contains the definitions for the available test suites.
 Mozilla is in the process of transitioning to their next generation of automation
 driver, [Marionette](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette).
 Marionette is not yet complete.  Selenium is no longer able to automate Firefox
-without the aid of a 3rd driver executable.  It is now necessary to provide to
+without the aid of a 3rd-party driver.  It is now necessary to provide to
 Selenium the external driver currently still under development by Mozilla:
 [geckodriver](https://github.com/mozilla/geckodriver).  `geckodriver` does not
 yet fully implement the WebDriver protocol --
