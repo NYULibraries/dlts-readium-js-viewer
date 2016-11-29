@@ -1,3 +1,5 @@
+"use strict";
+
 exports.config = {
     
     //
@@ -10,8 +12,57 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        'test/browser/tests/tests.js'
+        'test/browser/tests/book-cover.js',
+        'test/browser/tests/fullscreen.js',
+        'test/browser/tests/misc.js',
+        'test/browser/tests/navbar.js',
+        'test/browser/tests/navbar.show-and-hide.js',
+        'test/browser/tests/page-turners.js',
+        'test/browser/tests/settings.js',
+        'test/browser/tests/toc.js',
+        'test/browser/tests/youtube.js',
     ],
+
+    suites: {
+
+        bookCover: [
+            'test/browser/tests/book-cover.js',
+        ],
+
+        fullscreen: [
+            'test/browser/tests/fullscreen.js',
+        ],
+
+        misc: [
+            'test/browser/tests/misc.js',
+        ],
+
+        navbar: [
+            'test/browser/tests/navbar.js',
+        ],
+
+        navbarShowAndHide: [
+            'test/browser/tests/navbar.show-and-hide.js',
+        ],
+
+        pageTurners: [
+            'test/browser/tests/page-turners.js',
+        ],
+
+        settings: [
+            'test/browser/tests/settings.js',
+        ],
+
+        toc: [
+            'test/browser/tests/toc.js',
+        ],
+
+        youtube: [
+            'test/browser/tests/youtube.js',
+        ],
+
+    },
+
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -32,7 +83,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 1,
+    maxInstances: 2,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -43,18 +94,18 @@ exports.config = {
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
             // grid with only 5 firefox instance available you can make sure that not more than
             // 5 instance gets started at a time.
-            maxInstances: 1,
+            maxInstances: 2,
             //
             browserName: 'chrome'
         },
-        // {
-        //     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        //     // grid with only 5 firefox instance available you can make sure that not more than
-        //     // 5 instance gets started at a time.
-        //     maxInstances: 5,
-        //     //
-        //     browserName: 'firefox'
-        // },
+        {
+            // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+            // grid with only 5 firefox instance available you can make sure that not more than
+            // 5 instance gets started at a time.
+            maxInstances: 2,
+            //
+            browserName: 'firefox'
+        },
     ],
     //
     // ===================
@@ -124,11 +175,13 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    // reporters: ['dot'],
+    reporters: [ 'spec' ],
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
+        // The navbar show/hide tests sometimes need more than the default 10 seconds.
+        timeout: 15000,
         ui: 'tdd'
     },
     debug: true,
