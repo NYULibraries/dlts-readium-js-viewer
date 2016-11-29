@@ -138,6 +138,9 @@ Selenium the external driver currently still under development by Mozilla:
 yet fully implement the WebDriver protocol --
 see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status).
 
+As a result, there are a few tests that will always fail in Firefox
+until the `geckodriver` WebDriver <-> Marionette proxy is complete.  See
+[NYUP-206](https://jira.nyu.edu/jira/browse/NYUP-206) for more details.
 
 ### Notes on build
 
