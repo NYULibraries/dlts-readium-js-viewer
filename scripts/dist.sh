@@ -2,14 +2,30 @@
 
 set -x
 
-READIUM_JS_VIEWER_SNAPSHOT=$1
+# `yarn` must be available.
+# Decided against including it in this repo as NPM module dependency because
+# `npm install yarn` outputs a recommendation to install `yarn` natively instead.
+which yarn
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: you must have `yarn` installed: https://yarnpkg.com/en/docs/install.'
+    exit 1
+fi
+
+READIUM_JS_VIEWER_VERSION=$1
 
 ROOT=$(pwd)
-SNAPSHOT_DIR=${ROOT}/snapshots
+
+LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
+if [ ! -d $LOCKFILES_DIR ]
+then
+    echo >&2 "ERROR: ${LOCKFILES_DIR} does not exist.  Please specify a valid version to build."
+    exit 1
+fi
+
 TMP=${ROOT}/tmp
 
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
-READIUM_JS_VIEWER_CLONE=${TMP}/readium-js-viewer_clone
 
 READIUM_JS_VIEWER_COMMIT=b5aa6267dd96601f98a398e3d4e1ef2674d0bcc9
 READIUM_JS_COMMIT=1db51c5c5852df2250df8091a6931c008741153a
@@ -37,58 +53,27 @@ cd $READIUM_JS_VIEWER
 git submodule update --init --recursive
 git checkout master && git submodule foreach --recursive "git checkout master"
 
+# Set up main repo
 git reset --hard $READIUM_JS_VIEWER_COMMIT
+cp -p ${LOCKFILES_DIR}/yarn.lock .
+yarn
 
-# Branches for sub-modules need to be detached HEADs to get exact match with expected
-# cloud-reader version info.
+# Set up submodules.  Note that branches for sub-modules need to be detached HEADs
+# to get exact match with expected cloud-reader version info.
 cd readium-js/
 git checkout $READIUM_JS_COMMIT
+cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
+yarn
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
+cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
+yarn
 
-cd readium-cfi-js
+cd readium-cfi-js/
 git checkout $READIUM_CFI_JS_COMMIT
-
-# Rename
-cd $ROOT
-mv $READIUM_JS_VIEWER $READIUM_JS_VIEWER_CLONE
-
-# Get the snapshot.
-cd $TMP
-cp -p ${SNAPSHOT_DIR}/${READIUM_JS_VIEWER_SNAPSHOT}.tar.bz2 .
-
-if [ $? -ne 0 ]
-then
-    echo >&2 'ERROR: copy of snapshot failed.'
-    exit 1
-fi
-
-bunzip2 $READIUM_JS_VIEWER_SNAPSHOT.tar.bz2
-
-if [ $? -ne 0 ]
-then
-    echo >&2 'ERROR: expanding of the snapshot failed.'
-    exit 1
-fi
-
-tar -xf $READIUM_JS_VIEWER_SNAPSHOT.tar 1>/dev/null
-rm -fr $READIUM_JS_VIEWER_SNAPSHOT.tar 1>/dev/null
-mv readium-js-viewer $READIUM_JS_VIEWER
-
-cd $READIUM_JS_VIEWER
-
-if [ $(pwd) != "${READIUM_JS_VIEWER}" ]
-then
-    echo >&2 "ERROR: could not cd to $READIUM_JS_VIEWER."
-    exit 1
-fi
-
-# Copy in the .git directories from clone.
-cp -pR ${READIUM_JS_VIEWER_CLONE}/.git .
-cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/.git readium-js/
-cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/readium-shared-js/.git readium-js/readium-shared-js/
-cp -pR ${READIUM_JS_VIEWER_CLONE}/readium-js/readium-shared-js/readium-cfi-js/.git readium-js/readium-shared-js/readium-cfi-js/
+cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/readium-cfi-js/yarn.lock .
+yarn
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
@@ -104,13 +89,7 @@ cd $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
 cd $READIUM_JS_VIEWER
-
-# TODO: see if https://github.com/readium/readium-cfi-js/commit/bb13853a2f359d446d8ffb571ea90bc22087e6ae
-# makes this no longer necessary.
-echo 'gitdir: ../.git/modules/readium-js' > readium-js/.git
-echo 'gitdir: ../../.git/modules/readium-js/modules/readium-shared-js' > readium-js/readium-shared-js/.git
-echo 'gitdir: ../../../.git/modules/readium-js/modules/readium-shared-js/modules/readium-cfi-js' > readium-js/readium-shared-js/readium-cfi-js/.git
-
+npm run prepare
 npm run dist
 
 if [ $? -ne 0 ]
