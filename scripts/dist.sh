@@ -62,6 +62,8 @@ yarn
 # to get exact match with expected cloud-reader version info.
 cd readium-js/
 git checkout $READIUM_JS_COMMIT
+# https://github.com/readium/readium-js/issues/165
+sed -i.bak "s/zipjs/zip-js/g" package.json
 cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
 yarn
 
