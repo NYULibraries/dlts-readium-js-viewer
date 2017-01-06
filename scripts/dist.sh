@@ -90,8 +90,25 @@ fi
 cd $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
+# We can't run Readium's `npm run prepare` because it will force updates of the
+# node modules due to `npm outdated` returning true for various Github-sourced
+# modules.  Perhaps if we were able to use npm-shrinkwrap files this would not
+# happen, but so far only yarn is able to lock all four repos.
+# So, we run everything from Readium's prepare task ourselves, minus the npm
+# updates.
+# https://jira.nyu.edu/jira/browse/NYUP-208?focusedCommentId=72238&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-72238
+cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/readium-cfi-js/
+node readium-build-tools/patchRequireJS.js
+
+cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/
+node ./readium-cfi-js/node_modules/rimraf/bin.js node_modules/eventemitter3/_rjs/** && \
+    node readium-cfi-js/node_modules/requirejs/bin/r.js \
+        -convert node_modules/eventemitter3/ node_modules/eventemitter3/_rjs/
+
 cd $READIUM_JS_VIEWER
-npm run prepare
+cd node_modules/
+ln -s ../node_modules/grunt-selenium-webdriver/node_modules/phantomjs phantomjs
+
 npm run dist
 
 if [ $? -ne 0 ]
