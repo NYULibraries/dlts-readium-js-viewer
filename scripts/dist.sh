@@ -90,6 +90,16 @@ fi
 cd $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
 
+# Create plugins-override.cson
+cat << EOF > $READIUM_JS_VIEWER/readium-js/readium-shared-js/plugins/plugins-override.cson
+plugins:
+  include: [
+    'dltsRjsPluginOaBooks'
+  ]
+  exclude: [
+  ]
+EOF
+
 # We can't run Readium's `npm run prepare` because it will force updates of the
 # node modules due to `npm outdated` returning true for various Github-sourced
 # modules.  Perhaps if we were able to use npm-shrinkwrap files this would not
