@@ -153,3 +153,13 @@ appears that `npm shrinkwrap` fails for `readium-js` and `readium-shared-js` pro
 To prevent the possibility of our build process breaking again, and to ensure that
 our `cloud-reader` build is 100% reproducible, our build system uses
 [yarn](https://yarnpkg.com/) to lock the dependencies of the Readium projects.
+
+### Caveats
+
+#### Failed `npm run test:dist` due to `yarn` bug
+
+There is currently a bug in `yarn` that can cause a wrong version of a dependency
+ to be installed from its cache under certain circumstances.
+If `npm run test:dist` fails, try doing a `yarn cache clean` and running the test
+again.  `yarn` should then download and cache the correct code as specified in the
+`yarn.lock`.
