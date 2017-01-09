@@ -11,7 +11,6 @@ See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dl
 ### Prerequisities
 
 * Bash (for Windows, try using the Git Bash that comes with [git for Windows](https://git-for-windows.github.io/))
-* Bzip2
 * Git
 * NodeJS version 4.x or higher (for ES6 support).  For doing NPM operations based
 on the `package.json` at the root of this repo, any NodeJS version higher than
@@ -24,6 +23,7 @@ repos, do not use a NodeJS version higher than v4 -- from the ReadiumJS viewer
 NodeJS ( https://nodejs.org ) v4 (but not v5, because the installer ships with
 NPM v3 which seems to have bugs related to the new flat module dependencies)
 ```
+* [yarn](https://yarnpkg.com/)
 
 ### Installation and setup
 
@@ -32,20 +32,6 @@ git clone git@github.com:NYULibraries/dlts-readium-js-viewer.git
 cd dlts-readium-js-viewer
 npm install
 ```
-Get the ReadiumJS viewer snapshots (see [Notes on build](#notes-on-build)).  Note
-that due to Github's file size restrictions we are unable to host our snapshot files
-there, and in any case it would be wasteful to version control these large binary
-files using git because it's likely all past versions of these *.tar.bz2 files will
-persist in the `.git` directory even after being deleted, so the repo would end up
-being very large.
-
-For the time being we have them stored in NYU Box:
-[dlts-readium-js-viewer-snapshots](https://nyu.box.com/s/y5e907gebxfzox5ucfby0sycb7da8vww).
-Eventually we will probably move them to a file server where they can downloaded
-programmatically by the build scripts.  For now, to build the current distribution
-manually download the snapshot
-[readium-snapshot-2016-10-04.tar.bz2](https://nyu.box.com/s/plpwqmhdjwf8hutdoy2oclh3b6ze62yn)
-and place it in `snapshots/`.
 
 ### Building the production ReadiumJS viewer
 
@@ -156,13 +142,14 @@ each time it is run.  There has been at least one case where the update of `node
 caused the build to break: [Fix version of node module cpy #44](https://github.com/readium/readium-cfi-js/pull/44).
 This particular build bug prevented us from re-creating our `cloud-reader` non-optimized
 and `dev/` readers.  We were forced to update our `readium-js-viewer` before we
-we were ready to a later version that had the fix.
+we were ready to a later version that had the fix.  Readium has an open ticket
+for this problem:
+[NPM build process, semantic versioning on external dependencies, bind to major versions #432](https://github.com/readium/readium-js-viewer/issues/432)
 
 The ideal solution would be for `readium-js-viewer` and all its submodule projects to
 use `npm shrinkwrap` to lock the dependencies.  Unfortunately, at this time it
 appears that `npm shrinkwrap` fails for `readium-js` and `readium-shared-js` projects.
 
 To prevent the possibility of our build process breaking again, and to ensure that
-we our `cloud-reader` build is 100% reproducible, our build system uses a snapshot
-of the `readium-js-viewer` file-system including all submodules and `node_modules`
-directories that were used to build our current prod `cloud-reader`.
+our `cloud-reader` build is 100% reproducible, our build system uses
+[yarn](https://yarnpkg.com/) to lock the dependencies of the Readium projects.

@@ -52,10 +52,6 @@ readium-js-viewer/
 # Readium frozen dependencies
 !readium-dependencies/**/node_modules
 
-# ReadiumJS viewer snapshots, which are copied or linked into this directory.
-snapshots/*
-!snapshots/.commit-empty-directory
-
 # Work directory
 tmp/*
 !tmp/.commit-empty-directory
