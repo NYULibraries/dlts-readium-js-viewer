@@ -20,6 +20,16 @@ function clean() {
     rm -fr $TMP/*
 }
 
+function error_exit_with_recommendation_to_clear_yarn_cache() {
+    local exit_code=$1
+
+    echo -e >&2 '\nNOTE: Build differences might be due to an existing yarn bug which causes'\
+                'the wrong version of a dependency to be installed from the global'\
+                'cache.  Try doing a `yarn cache clean` and re-running this test.\n'
+
+    exit $exit_code
+}
+
 function diff_readium_file() {
     local source_readium_file_expected=$1
     local source_readium_file_got=$2
@@ -72,7 +82,7 @@ function diff_readium_file() {
         echo >&2 "FAIL: ${file_basename} differences detected:"
         diff $tmp_readium_file_expected $tmp_readium_file_got
 
-        exit 1
+        error_exit_with_recommendation_to_clear_yarn_cache 1
     fi
 
     # Diff of full version object.
@@ -89,7 +99,7 @@ function diff_readium_file() {
         diff $tmp_version_info_file_expected $tmp_version_info_file_got | \
             sed $REMOVE_LINE_NUMBERS_SED_COMMAND
 
-        exit 1
+        error_exit_with_recommendation_to_clear_yarn_cache 1
     fi
 }
 
@@ -147,7 +157,7 @@ function verify_cloud_reader_remainder() {
     then
         echo >&2 "FAIL: cloud-reader differences detected:"
 
-        exit 1
+        error_exit_with_recommendation_to_clear_yarn_cache 1
     fi
 }
 
