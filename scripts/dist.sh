@@ -14,7 +14,7 @@ fi
 
 READIUM_JS_VIEWER_VERSION=$1
 
-ROOT=$(pwd)
+ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
 
 LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
 if [ ! -d $LOCKFILES_DIR ]
