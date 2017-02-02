@@ -39,8 +39,6 @@ DLTS_PLUGIN_GITHUB_COMMIT=81ad1cb70bdb6926a7138e89de0acb83f5204cda
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
 
-# Clone into build space, then rename to clone.  The .git directories seem to have some hardcoded path
-# references in them -- they need to be in sync with the final build path.
 git clone --recursive -b master https://github.com/readium/readium-js-viewer.git $READIUM_JS_VIEWER
 
 if [ ! -d $READIUM_JS_VIEWER/.git ]
