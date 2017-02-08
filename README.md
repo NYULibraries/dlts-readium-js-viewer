@@ -159,7 +159,9 @@ our `cloud-reader` build is 100% reproducible, our build system uses
 #### Failed `npm run test:dist` due to `yarn` bug
 
 There is currently a bug in `yarn` that can cause a wrong version of a dependency
- to be installed from its cache under certain circumstances.
+ to be installed from its cache under certain circumstances:
+ https://github.com/yarnpkg/yarn/issues/2649
+
 If `npm run dist:verify` fails, try doing a `yarn cache clean` and running the test
 again.  `yarn` should then download and cache the correct code as specified in the
 `yarn.lock`.
