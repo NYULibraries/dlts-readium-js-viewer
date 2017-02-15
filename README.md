@@ -23,7 +23,9 @@ repos, do not use a NodeJS version higher than v4 -- from the ReadiumJS viewer
 NodeJS ( https://nodejs.org ) v4 (but not v5, because the installer ships with
 NPM v3 which seems to have bugs related to the new flat module dependencies)
 ```
-* [yarn](https://yarnpkg.com/)
+* [yarn](https://yarnpkg.com/): use version v0.20.3 or higher to avoid the bug
+fixed by [Add hash to cache path for non-NPM packages #2074](https://github.com/yarnpkg/yarn/pull/2074).
+See [Caveats](###Caveats).
 
 ### Installation and setup
 
@@ -158,9 +160,10 @@ our `cloud-reader` build is 100% reproducible, our build system uses
 
 #### Failed `npm run test:dist` due to `yarn` bug
 
-There is currently a bug in `yarn` that can cause a wrong version of a dependency
- to be installed from its cache under certain circumstances:
- https://github.com/yarnpkg/yarn/issues/2649
+There is a bug in versions of `yarn` older than v0.20.3 that can cause a wrong
+version of a dependency to be installed from cache under certain circumstances.
+For details see the bugfix PR:
+[Add hash to cache path for non-NPM packages #2074](https://github.com/yarnpkg/yarn/pull/2074).
 
 If `npm run dist:verify` fails, try doing a `yarn cache clean` and running the test
 again.  `yarn` should then download and cache the correct code as specified in the
