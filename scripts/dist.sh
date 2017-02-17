@@ -27,10 +27,10 @@ TMP=${ROOT}/tmp
 
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
-READIUM_JS_VIEWER_COMMIT=b5aa6267dd96601f98a398e3d4e1ef2674d0bcc9
-READIUM_JS_COMMIT=1db51c5c5852df2250df8091a6931c008741153a
-READIUM_SHARED_JS_COMMIT=87d29fa98519ab70b3376bac979845f154387964
-READIUM_CFI_JS_COMMIT=74c9eb365460fd28a884a639a4a039d09a931f70
+READIUM_JS_VIEWER_COMMIT=bd05fe1525333b686f80ef1a6f89c2b42bc5b9e1
+READIUM_JS_COMMIT=35ba010692ff6937fe674f3ecb2d6cbfa6addeed
+READIUM_SHARED_JS_COMMIT=4be835c5116bc5d96d8a513ce913942088d9922c
+READIUM_CFI_JS_COMMIT=eb799a2243b95cca105928a480440ee98b50b428
 
 DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
 DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-oa-books.git'
@@ -60,13 +60,13 @@ yarn
 # to get exact match with expected cloud-reader version info.
 cd readium-js/
 git checkout $READIUM_JS_COMMIT
-# https://github.com/readium/readium-js/issues/165
-sed -i.bak "s/zipjs/zip-js/g" package.json
 cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
 yarn
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
+# https://github.com/readium/readium-shared-js/issues/373
+sed -i.bak "s/ResizeSensor/css-element-queries/g" package.json
 cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
 yarn
 
