@@ -65,6 +65,8 @@ yarn
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
+# https://github.com/readium/readium-shared-js/issues/373
+sed -i.bak "s/ResizeSensor/css-element-queries/g" package.json
 cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
 yarn
 
