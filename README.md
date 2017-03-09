@@ -58,10 +58,6 @@ location on the host.
 
   This runs `npm run dist` followed by `npm run dist:verify`.
 
-* To run the (not yet implemented) browser test suite against a given ReadiumJS viewer:
-
-  `npm run test:mocha`
-
 #### Automated browser tests
 
 Selenium-driven UI tests of the DLTS build of ReadiumJS viewer are written using
