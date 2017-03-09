@@ -16,13 +16,10 @@ See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dl
 on the `package.json` at the root of this repo, any NodeJS version higher than
 4.x should be fine.  However, if after running the build you wish to go inside
 the built ReadiumJS viewer instance to do the NPM tasks specified by Readium's
-repos, do not use a NodeJS version higher than v4 -- from the ReadiumJS viewer
-[README.md](https://github.com/readium/readium-js-viewer/blob/master/README.md):
+repos, check the *Prerequisites*  section of the ReadiumJS viewer
+[README.md](https://github.com/readium/readium-js-viewer/blob/master/README.md)
+for information about which Node and NPM versions are recommended.
 
-```
-NodeJS ( https://nodejs.org ) v4 (but not v5, because the installer ships with
-NPM v3 which seems to have bugs related to the new flat module dependencies)
-```
 * [yarn](https://yarnpkg.com/): use version v0.20.3 or higher to avoid the bug
 fixed by [Add hash to cache path for non-NPM packages #2074](https://github.com/yarnpkg/yarn/pull/2074).
 See [Caveats](###Caveats).
