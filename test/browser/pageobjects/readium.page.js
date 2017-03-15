@@ -18,25 +18,6 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    bookCoverImageImgEnclosingElementWidth: { get:
-        function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
-
-            browser.frame( contentIframeElement.value );
-
-            let width = browser.execute( function() {
-                // Switching to ES5 syntax, just in case.
-                return window.getComputedStyle(
-                    document.getElementsByTagName( 'img' )[ 0 ].parentElement
-                ).width;
-            } );
-
-            browser.frameParent();
-
-            return parseInt( width.value.replace( /px$/, '' ) );
-        }
-    },
-
     bookCoverImageSvg: { get:
         function() {
             let contentIframeElement = browser.element( Selectors.epubContentIframe );
