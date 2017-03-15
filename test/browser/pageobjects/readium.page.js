@@ -155,9 +155,11 @@ let ReadiumPage = Object.create( Page, {
             // bug go away.  We don't have this option for our EPUBs, though.
             //
             // The workaround we use here is to overload this method with an
-            // optional matchText param.  When matchText is specified, fetch an
-            // array of all tags of the type specified by selector, and then check
-            // for a match in the array elements.
+            // optional matchText param.  When matchText is specified, the selector
+            // argument is understood to be a selector for fetching an array of
+            // tags whose elements will then be checked against matchText.
+            // Otherwise, selector will be understood to be a specification for
+            // fetching a single element only based on text.
             //
             // Example: use `readium.isExistingInContentIframe( 'span', 'Spreadable Media' )`
             //     instead of `readium.isExistingInContentIframe( 'span=Spreadable Media' )`
