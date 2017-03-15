@@ -392,6 +392,14 @@ let ReadiumPage = Object.create( Page, {
             return vh;
         }
     },
+
+    waitForExistInContentIframe : { value :
+        function( selector, matchText ) {
+            browser.waitUntil(
+                this.isExistingInContentIframe( selector, matchText )
+            );
+        }
+    }
 } );
 
 function clickElement( selector ) {
