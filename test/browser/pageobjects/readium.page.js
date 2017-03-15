@@ -170,6 +170,9 @@ let ReadiumPage = Object.create( Page, {
 
             browser.frame( contentIframeElement.value );
 
+            // Make race condition less likely.
+            browser.waitForText( selector );
+
             let text = browser.getText( selector );
 
             if ( matchText ) {
