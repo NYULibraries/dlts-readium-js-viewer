@@ -16,13 +16,6 @@ READIUM_JS_VIEWER_VERSION=$1
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
 
-LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
-if [ ! -d $LOCKFILES_DIR ]
-then
-    echo >&2 "ERROR: ${LOCKFILES_DIR} does not exist.  Please specify a valid version to build."
-    exit 1
-fi
-
 TMP=${ROOT}/tmp
 
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
