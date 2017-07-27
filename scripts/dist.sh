@@ -16,25 +16,18 @@ READIUM_JS_VIEWER_VERSION=$1
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
 
-LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
-if [ ! -d $LOCKFILES_DIR ]
-then
-    echo >&2 "ERROR: ${LOCKFILES_DIR} does not exist.  Please specify a valid version to build."
-    exit 1
-fi
-
 TMP=${ROOT}/tmp
 
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
-READIUM_JS_VIEWER_COMMIT=bd05fe1525333b686f80ef1a6f89c2b42bc5b9e1
-READIUM_JS_COMMIT=35ba010692ff6937fe674f3ecb2d6cbfa6addeed
-READIUM_SHARED_JS_COMMIT=4be835c5116bc5d96d8a513ce913942088d9922c
-READIUM_CFI_JS_COMMIT=eb799a2243b95cca105928a480440ee98b50b428
+READIUM_JS_VIEWER_COMMIT=6dcded9b785ae17dd540e64fedda0809ec2288ac
+READIUM_JS_COMMIT=cceed006f346a922d9648fa446608588fed87b28
+READIUM_SHARED_JS_COMMIT=94f123256f1fc6c3980081d413d3ec31503f476c
+READIUM_CFI_JS_COMMIT=e981832a1a8ba20a5a03a6efbcefa61b429f3c7b
 
 DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
 DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-oa-books.git'
-DLTS_PLUGIN_GITHUB_COMMIT=81ad1cb70bdb6926a7138e89de0acb83f5204cda
+DLTS_PLUGIN_GITHUB_COMMIT=fdd5a9f48adb8a333151c729b1eb173c302beb9d
 
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
@@ -53,27 +46,17 @@ git checkout master && git submodule foreach --recursive "git checkout master"
 
 # Set up main repo
 git reset --hard $READIUM_JS_VIEWER_COMMIT
-cp -p ${LOCKFILES_DIR}/yarn.lock .
-yarn
 
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
 # to get exact match with expected cloud-reader version info.
 cd readium-js/
 git checkout $READIUM_JS_COMMIT
-cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
-yarn
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
-# https://github.com/readium/readium-shared-js/issues/373
-sed -i.bak "s/ResizeSensor/css-element-queries/g" package.json
-cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
-yarn
 
 cd readium-cfi-js/
 git checkout $READIUM_CFI_JS_COMMIT
-cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/readium-cfi-js/yarn.lock .
-yarn
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
@@ -98,24 +81,9 @@ plugins:
   ]
 EOF
 
-# We can't run Readium's `npm run prepare` because it will force updates of the
-# node modules due to `npm outdated` returning true for various Github-sourced
-# modules.  Perhaps if we were able to use npm-shrinkwrap files this would not
-# happen, but so far only yarn is able to lock all four repos.
-# So, we run everything from Readium's prepare task ourselves, minus the npm
-# updates.
-# https://jira.nyu.edu/jira/browse/NYUP-208?focusedCommentId=72238&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-72238
-cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/readium-cfi-js/
-node readium-build-tools/patchRequireJS.js
-
-cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/
-node ./readium-cfi-js/node_modules/rimraf/bin.js node_modules/eventemitter3/_rjs/** && \
-    node readium-cfi-js/node_modules/requirejs/bin/r.js \
-        -convert node_modules/eventemitter3/ node_modules/eventemitter3/_rjs/
-
 cd $READIUM_JS_VIEWER
-cd node_modules/
-ln -s ../node_modules/grunt-selenium-webdriver/node_modules/phantomjs phantomjs
+
+yarn run prepare:yarn:all
 
 npm run dist
 
