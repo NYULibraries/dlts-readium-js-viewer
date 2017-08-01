@@ -3,8 +3,6 @@
 Main repo for the building and testing of the DLTS [ReadiumJS viewer](https://github.com/readium/readium-js-viewer)
 used by NYU Press websites [Open Access Books](https://github.com/NYULibraries/dlts-open-access-books)
 and [Connected Youth](https://github.com/NYULibraries/dlts-connected-youth).
-The builds created by this project are 100% reproducible.  See [Notes on build](#notes-on-build)
-for details about issues surrounding reproducibility.
 
 See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dlts-readium-cloud-reader-archive).
 
@@ -20,9 +18,8 @@ repos, check the *Prerequisites*  section of the ReadiumJS viewer
 [README.md](https://github.com/readium/readium-js-viewer/blob/master/README.md)
 for information about which Node and NPM versions are recommended.
 
-* [yarn](https://yarnpkg.com/): use version v0.20.3 or higher to avoid the bug
-fixed by [Add hash to cache path for non-NPM packages #2074](https://github.com/yarnpkg/yarn/pull/2074).
-See [Caveats](###Caveats).
+* [yarn](https://yarnpkg.com/): see [readium-js-viewer/package.json](https://github.com/readium/readium-js-viewer/blob/master/package.json)
+for required minimum version.
 
 ### Installation and setup
 
@@ -122,42 +119,3 @@ see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Mario
 As a result, there are a few tests that will always fail in Firefox
 until the `geckodriver` WebDriver <-> Marionette proxy is complete.  See
 [NYUP-206](https://jira.nyu.edu/jira/browse/NYUP-206) for more details.
-
-### Notes on build
-
-The way that the [readium-js-viewer](https://github.com/readium/readium-js-viewer)
-project is currently set up does not allow for building a `dist/cloud-reader/`
-with absolute reliability, and might also make it impossible to build a fixed version
-on demand for an indefinite period (this needs to be verified).
-
-The reason is that the dependencies in the
-[package.json](https://github.com/readium/readium-js-viewer/blob/master/package.json)
-are not fixed to particular versions, and the `npm run prepare` script does an `npm update`
-each time it is run.  There has been at least one case where the update of `node_modules`
-caused the build to break: [Fix version of node module cpy #44](https://github.com/readium/readium-cfi-js/pull/44).
-This particular build bug prevented us from re-creating our `cloud-reader` non-optimized
-and `dev/` readers.  We were forced to update our `readium-js-viewer` before we
-we were ready to a later version that had the fix.  Readium has an open ticket
-for this problem:
-[NPM build process, semantic versioning on external dependencies, bind to major versions #432](https://github.com/readium/readium-js-viewer/issues/432)
-
-The ideal solution would be for `readium-js-viewer` and all its submodule projects to
-use `npm shrinkwrap` to lock the dependencies.  Unfortunately, at this time it
-appears that `npm shrinkwrap` fails for `readium-js` and `readium-shared-js` projects.
-
-To prevent the possibility of our build process breaking again, and to ensure that
-our `cloud-reader` build is 100% reproducible, our build system uses
-[yarn](https://yarnpkg.com/) to lock the dependencies of the Readium projects.
-
-### Caveats
-
-#### Failed `npm run test:dist` due to `yarn` bug
-
-There is a bug in versions of `yarn` older than v0.20.3 that can cause a wrong
-version of a dependency to be installed from cache under certain circumstances.
-For details see the bugfix PR:
-[Add hash to cache path for non-NPM packages #2074](https://github.com/yarnpkg/yarn/pull/2074).
-
-If `npm run dist:verify` fails, try doing a `yarn cache clean` and running the test
-again.  `yarn` should then download and cache the correct code as specified in the
-`yarn.lock`.
