@@ -11,7 +11,7 @@
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
-    "dist": "npm run clean && scripts/dist.sh prod",
+    "dist": "npm run clean && scripts/dist.sh",
     "dist:verify": "scripts/dist-verify.sh",
     "test": "npm run test:dist && npm run test:browser:local",
     "test:dist": "npm run dist && npm run dist:verify",
