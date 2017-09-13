@@ -91,6 +91,7 @@ cat << EOF > $READIUM_JS_VIEWER/readium-js/readium-shared-js/plugins/plugins-ove
 plugins:
   include: [
     'dltsRjsPluginOaBooks'
+    ${EXTRA_PLUGINS}
   ]
   exclude: [
   ]
