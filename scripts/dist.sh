@@ -2,6 +2,30 @@
 
 set -x
 
+ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
+
+# Determine reader version to build
+VERSIONS_DIR=${ROOT}/versions
+
+READIUM_JS_VIEWER_VERSION=$1
+
+# Default to prod if no version arg is provided
+if [ -z "${READIUM_JS_VIEWER_VERSION}" ]
+then
+    echo >&2 -n "ERROR: You must specify a version to build.  See ${VERSIONS_DIR} for available versions."
+    exit 1
+fi
+
+VERSION_SCRIPT=$VERSIONS_DIR/${READIUM_JS_VIEWER_VERSION}.sh
+if [ ! -e $VERSION_SCRIPT ]
+then
+    echo >&2 "ERROR: VERSION_SCRIPT \"${VERSION_SCRIPT}\" does not exist."
+    exit 1
+fi
+
+# Get version-specific code
+source $VERSION_SCRIPT
+
 # `yarn` must be available.
 # Decided against including it in this repo as NPM module dependency because
 # `npm install yarn` outputs a recommendation to install `yarn` natively instead.
@@ -12,18 +36,9 @@ then
     exit 1
 fi
 
-READIUM_JS_VIEWER_VERSION=$1
-
-ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
-
-TMP=${ROOT}/tmp
-
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
-READIUM_JS_VIEWER_COMMIT=6dcded9b785ae17dd540e64fedda0809ec2288ac
-READIUM_JS_COMMIT=cceed006f346a922d9648fa446608588fed87b28
-READIUM_SHARED_JS_COMMIT=94f123256f1fc6c3980081d413d3ec31503f476c
-READIUM_CFI_JS_COMMIT=e981832a1a8ba20a5a03a6efbcefa61b429f3c7b
+TMP=${ROOT}/tmp
 
 DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
 DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-oa-books.git'
@@ -76,6 +91,7 @@ cat << EOF > $READIUM_JS_VIEWER/readium-js/readium-shared-js/plugins/plugins-ove
 plugins:
   include: [
     'dltsRjsPluginOaBooks'
+    ${EXTRA_PLUGINS}
   ]
   exclude: [
   ]
