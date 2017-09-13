@@ -12,7 +12,8 @@ READIUM_JS_VIEWER_VERSION=$1
 # Default to prod if no version arg is provided
 if [ -z "${READIUM_JS_VIEWER_VERSION}" ]
 then
-    READIUM_JS_VIEWER_VERSION='prod'
+    echo >&2 -n "ERROR: You must specify a version to build.  See ${VERSIONS_DIR} for available versions."
+    exit 1
 fi
 
 VERSION_SCRIPT=$VERSIONS_DIR/${READIUM_JS_VIEWER_VERSION}.sh
