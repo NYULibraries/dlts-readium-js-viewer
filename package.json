@@ -16,8 +16,8 @@
     "dist:prod": "npm run clean && scripts/dist.sh prod",
     "dist:prod:verify": "scripts/dist-verify.sh",
 
-    "test": "npm run test:dist && npm run test:browser:local",
-    "test:dist:prod": "npm run dist && npm run dist:verify",
+    "test": "npm run test:dist:prod && npm run test:browser:local",
+    "test:dist:prod": "npm run dist:prod && npm run dist:prod:verify",
     "test:browser:local": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.conf.js",
     "test:browser:local:debug:chrome": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-chrome.conf.js",
     "test:browser:local:debug:firefox": "node node_modules/webdriverio/bin/wdio test/browser/conf/wdio.local.debug-firefox.conf.js"
