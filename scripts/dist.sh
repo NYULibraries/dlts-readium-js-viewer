@@ -42,7 +42,6 @@ TMP=${ROOT}/tmp
 
 DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
 DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-oa-books.git'
-DLTS_PLUGIN_GITHUB_COMMIT=fdd5a9f48adb8a333151c729b1eb173c302beb9d
 
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
