@@ -56,7 +56,20 @@ fi
 
 cd $READIUM_JS_VIEWER
 git submodule update --init --recursive
+
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: `git submodule update --init --recursive` failed.'
+    exit 1
+fi
+
 git checkout master && git submodule foreach --recursive "git checkout master"
+
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: `git checkout master && git submodule foreach --recursive "git checkout master"` failed.'
+    exit 1
+fi
 
 # Set up main repo
 # Have to do a checkout before hard reset, because $READIUM_JS_VIEWER_COMMIT might
@@ -64,23 +77,53 @@ git checkout master && git submodule foreach --recursive "git checkout master"
 # checkout of a specific commit ID is fine even if the commit is not in a local
 # branch.
 git checkout $READIUM_JS_VIEWER_COMMIT
+
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git checkout ${READIUM_JS_VIEWER_COMMIT}\` failed."
+    exit 1
+fi
+
 git reset --hard $READIUM_JS_VIEWER_COMMIT
+
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git reset --hard ${READIUM_JS_VIEWER_COMMIT}\` failed."
+    exit 1
+fi
 
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
 # to get exact match with expected cloud-reader version info.
 cd readium-js/
 git checkout $READIUM_JS_COMMIT
 
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git checkout ${READIUM_JS_COMMIT}\` failed."
+    exit 1
+fi
+
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
+
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git checkout ${READIUM_SHARED_JS_COMMIT}\` failed."
+    exit 1
+fi
 
 cd readium-cfi-js/
 git checkout $READIUM_CFI_JS_COMMIT
 
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git checkout ${READIUM_CFI_JS_COMMIT}\` failed."
+    exit 1
+fi
+
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
 
-# Early exit if clone failed.
 if [ ! -d $DLTS_PLUGIN_DIR/.git ]
 then
     echo >&2 "ERROR: clone of $DLTS_PLUGIN_GITHUB_REPO failed."
@@ -89,6 +132,12 @@ fi
 
 cd $DLTS_PLUGIN_DIR
 git checkout $DLTS_PLUGIN_GITHUB_COMMIT
+
+if [ $? -ne 0 ]
+then
+    echo >&2 "ERROR: \`git checkout ${DLTS_PLUGIN_GITHUB_COMMIT}\` failed."
+    exit 1
+fi
 
 # Create plugins-override.cson
 cat << EOF > $READIUM_JS_VIEWER/readium-js/readium-shared-js/plugins/plugins-override.cson
@@ -104,6 +153,12 @@ EOF
 cd $READIUM_JS_VIEWER
 
 yarn run prepare:yarn:all
+
+if [ $? -ne 0 ]
+then
+    echo >&2 'ERROR: `yarn run prepare:yarn:all` failed.'
+    exit 1
+fi
 
 npm run dist
 
