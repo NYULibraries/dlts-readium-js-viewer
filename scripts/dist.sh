@@ -59,6 +59,11 @@ git submodule update --init --recursive
 git checkout master && git submodule foreach --recursive "git checkout master"
 
 # Set up main repo
+# Have to do a checkout before hard reset, because $READIUM_JS_VIEWER_COMMIT might
+# be a branch name, which is not automatically checked out.  Apparently doing a
+# checkout of a specific commit ID is fine even if the commit is not in a local
+# branch.
+git checkout $READIUM_JS_VIEWER_COMMIT
 git reset --hard $READIUM_JS_VIEWER_COMMIT
 
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
