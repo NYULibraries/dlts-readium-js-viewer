@@ -92,6 +92,8 @@ then
     exit 1
 fi
 
+yarn
+
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
 # to get exact match with expected cloud-reader version info.
 cd readium-js/
@@ -103,6 +105,8 @@ then
     exit 1
 fi
 
+yarn
+
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
 
@@ -112,6 +116,8 @@ then
     exit 1
 fi
 
+yarn
+
 cd readium-cfi-js/
 git checkout $READIUM_CFI_JS_COMMIT
 
@@ -120,6 +126,8 @@ then
     echo >&2 "ERROR: \`git checkout ${READIUM_CFI_JS_COMMIT}\` failed."
     exit 1
 fi
+
+yarn
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
@@ -150,15 +158,31 @@ plugins:
   ]
 EOF
 
+
+# We can't run Readium's `yarn run prepare:yarn:all` because it will force updates
+# of the
+# node modules due to this command in package.json:
+#
+#     "prepare:yarn:local": "yarn outdated || echo outdated && yarn install && yarn upgrade && yarn run prepare:local:common",
+#
+# `yarn outdated` often returns true for many packages, causing `yarn upgrade` to
+# run, which updates the modules and rewrites yarn.lock.
+#
+# So, we run everything from Readium's prepare task ourselves, minus the yarn
+# upgrades and calls to `readium-cfi-js/readium-build-tools/gitHubForksUpdater.js`.
+#
+# See https://jira.nyu.edu/jira/browse/NYUP-298
+cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/readium-cfi-js/
+node readium-build-tools/patchRequireJS.js
+
+cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/
+node ./readium-cfi-js/node_modules/rimraf/bin.js node_modules/eventemitter3/_rjs/** && \
+    node readium-cfi-js/node_modules/requirejs/bin/r.js \
+        -convert node_modules/eventemitter3/ node_modules/eventemitter3/_rjs/
+
+# End `yarn run prepare:yarn:all` manual steps
+
 cd $READIUM_JS_VIEWER
-
-yarn run prepare:yarn:all
-
-if [ $? -ne 0 ]
-then
-    echo >&2 'ERROR: `yarn run prepare:yarn:all` failed.'
-    exit 1
-fi
 
 npm run dist
 
