@@ -184,7 +184,7 @@ exports.config = {
         timeout: 15000,
         ui: 'tdd'
     },
-    debug: true,
+    debug: false,
     //
     // =====
     // Hooks
