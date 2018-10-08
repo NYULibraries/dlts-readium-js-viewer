@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo >&2 'BROKEN: see https://jira.nyu.edu/jira/browse/NYUP-457'
+exit 1
+
 set -x
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
