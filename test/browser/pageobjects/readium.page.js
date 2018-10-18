@@ -387,8 +387,11 @@ let ReadiumPage = Object.create( Page, {
 
     waitForExistInContentIframe : { value :
         function( selector, matchText ) {
+            let that = this;
             browser.waitUntil(
-                this.isExistingInContentIframe( selector, matchText )
+                function() {
+                    return that.isExistingInContentIframe( selector, matchText );
+                }
             );
         }
     }
