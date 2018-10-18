@@ -96,7 +96,12 @@ exports.config = {
             // 5 instance gets started at a time.
             maxInstances: 9,
             //
-            browserName: 'chrome'
+            browserName: 'chrome',
+            chromeOptions: {
+                // to run chrome headless the following flags are required
+                // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+                args: [ '--headless' ],
+            },
         },
         {
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
@@ -104,7 +109,11 @@ exports.config = {
             // 5 instance gets started at a time.
             maxInstances: 9,
             //
-            browserName: 'firefox'
+            browserName: 'firefox',
+            'moz:firefoxOptions': {
+                // flag to activate Firefox headless mode (see https://github.com/mozilla/geckodriver/blob/master/README.md#firefox-capabilities for more details about moz:firefoxOptions)
+                args: ['-headless'],
+            },
         },
     ],
     //
