@@ -288,6 +288,17 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    setViewportSize: { value:
+        function( size) {
+            // size must be an object with width and height fields:
+            // {
+            //     width  : 500,
+            //     height : 500,
+            // }
+            browser.setViewportSize( size );
+        }
+    },
+
     scrolledContentFrame: { get:
         function() {
             let scrolledContentFrameElement = browser.element( Selectors.scrolledContentFrame );
