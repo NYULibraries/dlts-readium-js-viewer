@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "DLTS ReadiumJS viewer",
   "dependencies": {
+    "chromedriver": "2.43.0",
     "js-beautify": "1.6.4",
     "mocha": "5.2.0",
     "wdio": "2.0.2",
