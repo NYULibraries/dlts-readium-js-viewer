@@ -5,7 +5,7 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const YOUTUBE_VIDEO_URL           = 'https://www.youtube.com/embed/FyQi79aYfxU';
 
 suite( 'YouTube', function() {
