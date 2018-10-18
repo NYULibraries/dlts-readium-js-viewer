@@ -129,11 +129,7 @@ suite( 'Settings', function() {
             let browserName = browser.options.desiredCapabilities.browserName;
 
             if ( browserName === 'chrome' ) {
-
-                // Chrome initially opens at a narrower width than Firefox, which
-                // might explain why it defaults to single-column format instead
-                // of double.
-                expectedDefaultColumns    = '550px auto';
+                expectedDefaultColumns    = 'auto 2';
                 expectedSinglePageColumns = '550px auto';
                 expectedDoublePageColumns = 'auto 2';
 
