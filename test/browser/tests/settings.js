@@ -14,6 +14,15 @@ suite( 'Settings', function() {
 
     setup( function() {
         readium.open( DEFAULT_BOOK_PATH );
+
+        // It seems that setting width to higher than 1150 causes tests to hang
+        // in Firefox.  Cause currently unknown.
+        readium.setViewportSize(
+            {
+                height: 920,
+                width: 1150,
+            }
+        );
     } );
 
     teardown( function() {
@@ -84,36 +93,10 @@ suite( 'Settings', function() {
         const PAGE_WIDTH_SLIDER_MIN = '500';
         const PAGE_WIDTH_SLIDER_MAX = '2000';
 
-        let expectedDefaultPageWidth;
-        let expectedMaxPagewidth;
-        let expectedMinPagewidth;
-
-        suiteSetup( function() {
-            // Chrome and Firefox both seem to want to open at different sizes,
-            // and this determines the actual widths set by moving Page Width slider
-            // to the min and max.  Presumably screen resolution also influences
-            // the max.  For now, just expect what we've been seeing during
-            // development.  Later, we might need to tighten this up.
-            let browserName = browser.options.desiredCapabilities.browserName;
-
-            if ( browserName === 'chrome' ) {
-                expectedDefaultPageWidth = '550px';
-                expectedMaxPagewidth     = '846px';
-                expectedMinPagewidth     = '500px';
-            } else if ( browserName === 'firefox' ) {
-                expectedDefaultPageWidth = '1160px';
-                expectedMaxPagewidth     = '1200px';
-                expectedMinPagewidth     = '1060px';
-            } else {
-                // Should never get here.
-            }
-        } );
+        let expectedMaxPagewidth = '1070px';
+        let expectedMinPagewidth = '1060px';
 
         test( 'set to minimum', function() {
-            assert.equal( readium.epubContentIframe.htmlWidth,
-                          expectedDefaultPageWidth,
-                          'Page width at default' );
-
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MIN );
@@ -124,10 +107,6 @@ suite( 'Settings', function() {
         } );
 
         test( 'set to maximum', function() {
-            assert.equal( readium.epubContentIframe.htmlWidth,
-                          expectedDefaultPageWidth,
-                          'Page width at default' );
-
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MAX );
