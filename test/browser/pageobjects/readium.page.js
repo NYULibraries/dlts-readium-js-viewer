@@ -385,6 +385,20 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    // On fast machines, sometimes need to pause a bit to allow settings change
+    // of columns to take effect.
+    waitForColumnsToBeEqualTo : { value :
+        function( columnsValue ) {
+            let that = this;
+            browser.waitUntil(
+                function() {
+                    return that.epubContentIframe.columns === columnsValue;
+                },
+                1000
+            );
+        }
+    },
+
     waitForExistInContentIframe : { value :
         function( selector, matchText ) {
             let that = this;

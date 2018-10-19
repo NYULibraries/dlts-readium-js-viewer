@@ -154,6 +154,8 @@ suite( 'Settings', function() {
             readium.selectSettingSinglePage();
             readium.saveSettings();
 
+            readium.waitForColumnsToBeEqualTo( expectedSinglePageColumns );
+
             assert.equal( readium.epubContentIframe.columns, expectedSinglePageColumns,
                           'Single-page layout'
             );
@@ -168,6 +170,8 @@ suite( 'Settings', function() {
             readium.selectSettingsLayoutTab();
             readium.selectSettingDoublePage();
             readium.saveSettings();
+
+            readium.waitForColumnsToBeEqualTo( expectedSinglePageColumns );
 
             assert.equal( readium.epubContentIframe.columns, expectedDoublePageColumns,
                           'Double-page layout'
