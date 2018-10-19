@@ -45,6 +45,8 @@ suite( 'TOC', function() {
         test( 'navigate to chapter', function() {
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             browser.click( '=About the Authors' );
 
             // "span.Sans-SC=About the Authors" selector doesn't work.
@@ -94,6 +96,8 @@ suite( 'TOC', function() {
 
         test( 'navigate to chapter', function() {
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             browser.click( '=3 Day-to-Day Routines' );
 

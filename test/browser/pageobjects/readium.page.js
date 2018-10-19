@@ -400,6 +400,12 @@ let ReadiumPage = Object.create( Page, {
                 }
             );
         }
+    },
+
+    waitForTocToBeVisible : { value :
+        function() {
+            return browser.waitForVisible( Selectors.toc.body );
+        }
     }
 } );
 
