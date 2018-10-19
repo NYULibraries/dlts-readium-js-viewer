@@ -353,20 +353,12 @@ let ReadiumPage = Object.create( Page, {
 
     toggleSettings : { value :
         function() {
-            // TODO:
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SELECTORS.settings.toggle );
             clickElement( Selectors.settings.toggle );
         }
     },
 
     toggleToc : { value :
         function() {
-            // TODO:
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SELECTORS.toc.toggle );
             clickElement( Selectors.toc.toggle );
         }
     },
