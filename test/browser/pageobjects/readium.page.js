@@ -38,13 +38,13 @@ let ReadiumPage = Object.create( Page, {
 
     clickPageTurnerLeft: { value:
         function() {
-            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.left );
+            clickElement( Selectors.pageTurners.left );
         }
     },
 
     clickPageTurnerRight: { value:
         function() {
-            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.right );
+            clickElement( Selectors.pageTurners.right );
         }
     },
 
@@ -414,28 +414,6 @@ let ReadiumPage = Object.create( Page, {
 function clickElement( selector ) {
     browser.waitForVisible( selector );
     browser.click( selector );
-}
-
-function clickElementWithTemporaryFirefoxWorkaround( selectorArg ) {
-    let browserName = browser.options.desiredCapabilities.browserName;
-
-    if ( browserName === 'chrome' ) {
-        clickElement( selectorArg );
-    } else if ( browserName === 'firefox' ) {
-        // browser.moveToObject() doesn't work yet for Firefox.
-        // https://github.com/mozilla/geckodriver/issues/159
-        // TODO: After geckodriver implementation of Actions API is completed,
-        // remove this workaround.
-
-        browser.waitForExist( selectorArg );
-
-        browser.execute( function( selector ) {
-            document.querySelector( selector )
-                .dispatchEvent( new Event( 'click' ) );
-        }, selectorArg );
-    } else {
-        // Should never get here.
-    }
 }
 
 function getBookCoverImage( frameId, bookCoverImageType ) {
