@@ -181,7 +181,7 @@ exports.config = {
     // commands. Instead, they hook themselves up into the test process.
     services: ['selenium-standalone', 'chromedriver', 'screenshots-cleanup'],
     cleanScreenshotsFolder: {
-        folder: 'screenshots',
+        folder: 'test/browser/error-shots',
         pattern: '/**/ERROR_*',
     },
     // Framework you want to run your specs with.
