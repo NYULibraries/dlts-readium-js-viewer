@@ -119,24 +119,22 @@ suite( 'Settings', function() {
         let expectedSinglePageColumns;
         let expectedDoublePageColumns;
 
-        suiteSetup( function() {
-            let browserName = browser.options.desiredCapabilities.browserName;
+        let browserName = browser.options.desiredCapabilities.browserName;
 
-            if ( browserName === 'chrome' ) {
-                expectedDefaultColumns    = 'auto 2';
-                expectedSinglePageColumns = '550px auto';
-                expectedDoublePageColumns = 'auto 2';
+        if ( browserName === 'chrome' ) {
+            expectedDefaultColumns    = 'auto 2';
+            expectedSinglePageColumns = '550px auto';
+            expectedDoublePageColumns = 'auto 2';
 
-            } else if ( browserName === 'firefox' ) {
+        } else if ( browserName === 'firefox' ) {
 
-                expectedDefaultColumns    = '2';
-                expectedSinglePageColumns = 'auto';
-                expectedDoublePageColumns = '2';
+            expectedDefaultColumns    = '2';
+            expectedSinglePageColumns = 'auto';
+            expectedDoublePageColumns = '2';
 
-            } else {
-                // Should never get here.
-            }
-        } );
+        } else {
+            // Should never get here.
+        }
 
         test( 'Single column/page', function() {
             assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
