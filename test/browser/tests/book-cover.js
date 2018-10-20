@@ -10,8 +10,6 @@ const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=ep
 
 suite( 'Book cover', function() {
 
-    this.retries( 3 );
-
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
 

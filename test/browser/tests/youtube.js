@@ -10,8 +10,6 @@ const YOUTUBE_VIDEO_URL           = 'https://www.youtube.com/embed/FyQi79aYfxU';
 
 suite( 'YouTube', function() {
 
-    // this.retries( 3 );
-
     setup( function() {
         readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
     } );

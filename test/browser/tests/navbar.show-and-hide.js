@@ -20,8 +20,6 @@ const SHORT_DELAY_IN_SECONDS      = 3;
 
 suite( 'DLTS ReadiumJS viewer navbar', function() {
 
-    this.retries( 3 );
-
     test( 'initially visible long enough for the user to see it', function() {
         readium.open( DEFAULT_BOOK_PATH );
 

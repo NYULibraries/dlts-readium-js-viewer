@@ -12,8 +12,6 @@ const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle'
 
 suite( 'Reading area', function() {
 
-    this.retries( 3 );
-
     test( 'is low enough to clear the navbar', function() {
         readium.open( DEFAULT_BOOK_PATH );
 

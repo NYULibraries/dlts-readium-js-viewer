@@ -12,8 +12,6 @@ const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=ep
 // but doing it just in case.
 suite( 'TOC', function() {
 
-    this.retries( 3 );
-
     suite( 'Connected Youth TOC', function() {
 
         setup( function() {

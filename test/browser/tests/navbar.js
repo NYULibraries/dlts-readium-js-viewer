@@ -12,8 +12,6 @@ const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle'
 
 suite( 'Navbar', function() {
 
-    this.retries( 3 );
-
     let navbar, navbarRight;
 
     suiteSetup( function() {

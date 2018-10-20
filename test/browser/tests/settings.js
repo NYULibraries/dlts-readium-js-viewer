@@ -10,8 +10,6 @@ const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'Settings', function() {
 
-    this.retries( 3 );
-
     setup( function() {
         readium.open( DEFAULT_BOOK_PATH );
 
@@ -88,8 +86,6 @@ suite( 'Settings', function() {
 
     suite( 'Page width', function() {
 
-        this.retries( 3 );
-
         const PAGE_WIDTH_SLIDER_MIN = '500';
         const PAGE_WIDTH_SLIDER_MAX = '2000';
 
@@ -118,8 +114,6 @@ suite( 'Settings', function() {
     } );
 
     suite( 'Display format', function() {
-
-        this.retries( 3 );
 
         let expectedDefaultColumns;
         let expectedSinglePageColumns;
@@ -180,8 +174,6 @@ suite( 'Settings', function() {
     } );
 
     suite( 'Scroll mode', function() {
-
-        this.retries( 3 );
 
         test( 'Document mode', function() {
 
