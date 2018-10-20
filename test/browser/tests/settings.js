@@ -171,7 +171,7 @@ suite( 'Settings', function() {
             readium.selectSettingDoublePage();
             readium.saveSettings();
 
-            readium.waitForColumnsToBeEqualTo( expectedSinglePageColumns );
+            readium.waitForColumnsToBeEqualTo( expectedDoublePageColumns );
 
             assert.equal( readium.epubContentIframe.columns, expectedDoublePageColumns,
                           'Double-page layout'
