@@ -1479,7 +1479,7 @@ rgb2hex@^0.1.9:
   resolved "https://registry.yarnpkg.com/rgb2hex/-/rgb2hex-0.1.9.tgz#5d3e0e14b0177b568e6f0d5b43e34fbfdb670346"
   integrity sha512-32iuQzhOjyT+cv9aAFRBJ19JgHwzQwbjUhH3Fj2sWW2EEGAW8fpFrDFP5ndoKDxJaLO06x1hE3kyuIFrUQtybQ==
 
-rimraf@^2.2.8:
+rimraf@2.6.2, rimraf@^2.2.8:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   integrity sha512-lreewLK/BlghmxtfH36YYVg1i8IAce4TI7oao75I1g245+6BctqTVQiBP3YUJ9C6DQOXJmkYR9X9fCLtCOJc5w==
@@ -1854,6 +1854,13 @@ wdio-mocha-framework@0.6.3:
     babel-runtime "^6.23.0"
     mocha "^5.0.0"
     wdio-sync "0.7.2"
+
+wdio-screenshots-cleanup-service@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/wdio-screenshots-cleanup-service/-/wdio-screenshots-cleanup-service-0.0.7.tgz#39515fb6618d027ad255c85069fa45890955775e"
+  integrity sha512-h6rN7fvhHmU5QPzEbHQ52qRdSulau9imV1uqs9Rc4K7rvw2MUkeNCk73urpY/jbxxsrw7YNgkC6548B1uDDXFg==
+  dependencies:
+    rimraf "2.6.2"
 
 wdio-selenium-standalone-service@^0.0.10:
   version "0.0.10"
