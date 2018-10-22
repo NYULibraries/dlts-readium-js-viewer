@@ -78,6 +78,9 @@ let ReadiumPage = Object.create( Page, {
             } else {
                 // Should never get here.
             }
+            // Convert to string.  Sometimes the value is 2, which is not === '2',
+            // and so fails waitForColumnsToBeEqualTo( '2' ).
+            columns = columns.toString();
 
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
