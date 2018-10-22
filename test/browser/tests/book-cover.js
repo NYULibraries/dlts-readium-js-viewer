@@ -8,6 +8,9 @@ let readium = require( '../pageobjects/readium.page' );
 const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
 
+const VIEWPORT_HEIGHT = 889;
+const VIEWPORT_WIDTH = 1200;
+
 suite( 'Book cover', function() {
 
     // OA Book covers are <svg>, Connected Youth book covers are <img>
@@ -22,6 +25,15 @@ suite( 'Book cover', function() {
     } );
 
     suite( 'Connected Youth cover', function() {
+        // Sometimes height tests fail if running full set of tests concurrently.
+        // Set the dimensions to match what works on a successful test run.
+        readium.setViewportSize(
+            {
+                height: VIEWPORT_HEIGHT,
+                width: VIEWPORT_WIDTH,
+            }
+        );
+
         let bookCoverImage;
         let expectedValue = {
             height:    undefined,
