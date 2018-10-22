@@ -177,6 +177,8 @@ suite( 'Settings', function() {
 
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 
             readium.waitForExistInContentIframe(
@@ -205,6 +207,8 @@ suite( 'Settings', function() {
         test( 'Continuous mode', function() {
 
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 

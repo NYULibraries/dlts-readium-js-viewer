@@ -21,6 +21,8 @@ suite( 'TOC', function() {
         test( 'toggle TOC on', function() {
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             assert.equal( readium.toc.display, 'inline-block',
                           'display property is "inline-block"'
             );
@@ -28,6 +30,8 @@ suite( 'TOC', function() {
 
         test( 'toggle TOC off', function() {
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'TOC is on'
@@ -81,6 +85,8 @@ suite( 'TOC', function() {
 
         test( 'toggle TOC on', function() {
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'display property is "inline-block"'
