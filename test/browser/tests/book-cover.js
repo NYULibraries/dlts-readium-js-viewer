@@ -25,15 +25,6 @@ suite( 'Book cover', function() {
     } );
 
     suite( 'Connected Youth cover', function() {
-        // Sometimes height tests fail if running full set of tests concurrently.
-        // Set the dimensions to match what works on a successful test run.
-        readium.setViewportSize(
-            {
-                height: VIEWPORT_HEIGHT,
-                width: VIEWPORT_WIDTH,
-            }
-        );
-
         let bookCoverImage;
         let expectedValue = {
             height:    undefined,
@@ -44,6 +35,15 @@ suite( 'Book cover', function() {
 
         suiteSetup( function() {
             readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
+
+            // Sometimes height tests fail if running full set of tests concurrently.
+            // Set the dimensions to match what works on a successful test run.
+            readium.setViewportSize(
+                {
+                    height: VIEWPORT_HEIGHT,
+                    width: VIEWPORT_WIDTH,
+                }
+            );
 
             bookCoverImage = readium.bookCoverImageImg;
 
