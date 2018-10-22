@@ -180,7 +180,7 @@ suite( 'Settings', function() {
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 
             readium.waitForExistInContentIframe(
-                '.Sans-Medium=Youth Voice, Media, and Political Engagement'
+                'span', 'Youth Voice, Media, and Political Engagement'
             );
 
             // Default max-height usually "846px", but it seems to change sometimes,
