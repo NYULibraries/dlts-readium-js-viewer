@@ -5,14 +5,12 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
-const JAPANESE_LESSONS_PATH       = '/?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
 
 // Not sure if we need to test OA Books (EPUB 2, generally) and Connected Youth (EPUB 3),
 // but doing it just in case.
 suite( 'TOC', function() {
-
-    this.retries( 3 );
 
     suite( 'Connected Youth TOC', function() {
 
@@ -23,6 +21,8 @@ suite( 'TOC', function() {
         test( 'toggle TOC on', function() {
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             assert.equal( readium.toc.display, 'inline-block',
                           'display property is "inline-block"'
             );
@@ -30,6 +30,8 @@ suite( 'TOC', function() {
 
         test( 'toggle TOC off', function() {
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             assert.equal( readium.toc.display, 'inline-block',
                           'TOC is on'
@@ -43,7 +45,18 @@ suite( 'TOC', function() {
         } );
 
         test( 'navigate to chapter', function() {
+            // Sometimes the window isn't large enough to allow the TOC to display
+            // "About the Authors", which is the last TOC entry.
+            readium.setViewportSize(
+                {
+                    height: 920,
+                    width: 1150,
+                }
+            );
+
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             browser.click( '=About the Authors' );
 
@@ -73,8 +86,10 @@ suite( 'TOC', function() {
         test( 'toggle TOC on', function() {
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             assert.equal( readium.toc.display, 'inline-block',
-                          'display property is "inline-block"'
+                          'display property is not "inline-block"'
             );
         } );
 
@@ -82,28 +97,30 @@ suite( 'TOC', function() {
             readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
-                          'TOC is on'
+                          'TOC is not initially on'
             );
 
             readium.toggleToc();
 
             assert.equal( readium.toc.display, 'none',
-                          'TOC is off'
+                          'TOC is not off'
             );
         } );
 
         test( 'navigate to chapter', function() {
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             browser.click( '=3 Day-to-Day Routines' );
 
             assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
-                    'Found <small>AILY</small> on page'
+                    'Did not find <small>AILY</small> on page'
             );
 
             // Make sure the TOC hasn't disappeared.
             assert.equal( readium.toc.display, 'inline-block',
-                          'display property is "inline-block"'
+                          'display property is not "inline-block"'
             );
         } );
 

@@ -38,13 +38,13 @@ let ReadiumPage = Object.create( Page, {
 
     clickPageTurnerLeft: { value:
         function() {
-            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.left );
+            clickElement( Selectors.pageTurners.left );
         }
     },
 
     clickPageTurnerRight: { value:
         function() {
-            clickElementWithTemporaryFirefoxWorkaround( Selectors.pageTurners.right );
+            clickElement( Selectors.pageTurners.right );
         }
     },
 
@@ -78,6 +78,9 @@ let ReadiumPage = Object.create( Page, {
             } else {
                 // Should never get here.
             }
+            // Convert to string.  Sometimes the value is 2, which is not === '2',
+            // and so fails waitForColumnsToBeEqualTo( '2' ).
+            columns = columns.toString();
 
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
@@ -288,6 +291,17 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    setViewportSize: { value:
+        function( size) {
+            // size must be an object with width and height fields:
+            // {
+            //     width  : 500,
+            //     height : 500,
+            // }
+            browser.setViewportSize( size );
+        }
+    },
+
     scrolledContentFrame: { get:
         function() {
             let scrolledContentFrameElement = browser.element( Selectors.scrolledContentFrame );
@@ -342,20 +356,12 @@ let ReadiumPage = Object.create( Page, {
 
     toggleSettings : { value :
         function() {
-            // TODO:
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SELECTORS.settings.toggle );
             clickElement( Selectors.settings.toggle );
         }
     },
 
     toggleToc : { value :
         function() {
-            // TODO:
-            // browser.moveToObject() doesn't work yet for Firefox.
-            // https://github.com/mozilla/geckodriver/issues/159
-            // browser.moveToObject( SELECTORS.toc.toggle );
             clickElement( Selectors.toc.toggle );
         }
     },
@@ -374,11 +380,34 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    // On fast machines, sometimes need to pause a bit to allow settings change
+    // of columns to take effect.
+    waitForColumnsToBeEqualTo : { value :
+        function( columnsValue ) {
+            let that = this;
+            browser.waitUntil(
+                function() {
+                    return that.epubContentIframe.columns === columnsValue;
+                },
+                1000
+            );
+        }
+    },
+
     waitForExistInContentIframe : { value :
         function( selector, matchText ) {
+            let that = this;
             browser.waitUntil(
-                this.isExistingInContentIframe( selector, matchText )
+                function() {
+                    return that.isExistingInContentIframe( selector, matchText );
+                }
             );
+        }
+    },
+
+    waitForTocToBeVisible : { value :
+        function() {
+            return browser.waitForVisible( Selectors.toc.body );
         }
     }
 } );
@@ -386,28 +415,6 @@ let ReadiumPage = Object.create( Page, {
 function clickElement( selector ) {
     browser.waitForVisible( selector );
     browser.click( selector );
-}
-
-function clickElementWithTemporaryFirefoxWorkaround( selectorArg ) {
-    let browserName = browser.options.desiredCapabilities.browserName;
-
-    if ( browserName === 'chrome' ) {
-        clickElement( selectorArg );
-    } else if ( browserName === 'firefox' ) {
-        // browser.moveToObject() doesn't work yet for Firefox.
-        // https://github.com/mozilla/geckodriver/issues/159
-        // TODO: After geckodriver implementation of Actions API is completed,
-        // remove this workaround.
-
-        browser.waitForExist( selectorArg );
-
-        browser.execute( function( selector ) {
-            document.querySelector( selector )
-                .dispatchEvent( new Event( 'click' ) );
-        }, selectorArg );
-    } else {
-        // Should never get here.
-    }
 }
 
 function getBookCoverImage( frameId, bookCoverImageType ) {

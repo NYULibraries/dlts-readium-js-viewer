@@ -5,15 +5,22 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'Settings', function() {
 
-    this.retries( 3 );
-
     setup( function() {
         readium.open( DEFAULT_BOOK_PATH );
+
+        // It seems that setting width to higher than 1150 causes tests to hang
+        // in Firefox.  Cause currently unknown.
+        readium.setViewportSize(
+            {
+                height: 920,
+                width: 1150,
+            }
+        );
     } );
 
     teardown( function() {
@@ -79,41 +86,13 @@ suite( 'Settings', function() {
 
     suite( 'Page width', function() {
 
-        this.retries( 3 );
-
         const PAGE_WIDTH_SLIDER_MIN = '500';
         const PAGE_WIDTH_SLIDER_MAX = '2000';
 
-        let expectedDefaultPageWidth;
-        let expectedMaxPagewidth;
-        let expectedMinPagewidth;
-
-        suiteSetup( function() {
-            // Chrome and Firefox both seem to want to open at different sizes,
-            // and this determines the actual widths set by moving Page Width slider
-            // to the min and max.  Presumably screen resolution also influences
-            // the max.  For now, just expect what we've been seeing during
-            // development.  Later, we might need to tighten this up.
-            let browserName = browser.options.desiredCapabilities.browserName;
-
-            if ( browserName === 'chrome' ) {
-                expectedDefaultPageWidth = '550px';
-                expectedMaxPagewidth     = '846px';
-                expectedMinPagewidth     = '500px';
-            } else if ( browserName === 'firefox' ) {
-                expectedDefaultPageWidth = '1160px';
-                expectedMaxPagewidth     = '1200px';
-                expectedMinPagewidth     = '1060px';
-            } else {
-                // Should never get here.
-            }
-        } );
+        let expectedMaxPagewidth = '1070px';
+        let expectedMinPagewidth = '1060px';
 
         test( 'set to minimum', function() {
-            assert.equal( readium.epubContentIframe.htmlWidth,
-                          expectedDefaultPageWidth,
-                          'Page width at default' );
-
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MIN );
@@ -124,54 +103,42 @@ suite( 'Settings', function() {
         } );
 
         test( 'set to maximum', function() {
-            assert.equal( readium.epubContentIframe.htmlWidth,
-                          expectedDefaultPageWidth,
-                          'Page width at default' );
-
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();
             readium.setPageWidthSliderValue( PAGE_WIDTH_SLIDER_MAX );
             readium.saveSettings();
 
             assert.equal( readium.epubContentIframe.htmlWidth, expectedMaxPagewidth,
-                          'Page width has been changed to maximum' );
+                          'Page width has not been changed to maximum' );
         } );
     } );
 
     suite( 'Display format', function() {
 
-        this.retries( 3 );
-
         let expectedDefaultColumns;
         let expectedSinglePageColumns;
         let expectedDoublePageColumns;
 
-        suiteSetup( function() {
-            let browserName = browser.options.desiredCapabilities.browserName;
+        let browserName = browser.options.desiredCapabilities.browserName;
 
-            if ( browserName === 'chrome' ) {
+        if ( browserName === 'chrome' ) {
+            expectedDefaultColumns    = 'auto 2';
+            expectedSinglePageColumns = '550px auto';
+            expectedDoublePageColumns = 'auto 2';
 
-                // Chrome initially opens at a narrower width than Firefox, which
-                // might explain why it defaults to single-column format instead
-                // of double.
-                expectedDefaultColumns    = '550px auto';
-                expectedSinglePageColumns = '550px auto';
-                expectedDoublePageColumns = 'auto 2';
+        } else if ( browserName === 'firefox' ) {
 
-            } else if ( browserName === 'firefox' ) {
+            expectedDefaultColumns    = '2';
+            expectedSinglePageColumns = 'auto';
+            expectedDoublePageColumns = '2';
 
-                expectedDefaultColumns    = '2';
-                expectedSinglePageColumns = 'auto';
-                expectedDoublePageColumns = '2';
-
-            } else {
-                // Should never get here.
-            }
-        } );
+        } else {
+            // Should never get here.
+        }
 
         test( 'Single column/page', function() {
             assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
-                          'Columns at default'
+                          'Columns are not at default'
             );
 
             readium.toggleSettings();
@@ -179,14 +146,16 @@ suite( 'Settings', function() {
             readium.selectSettingSinglePage();
             readium.saveSettings();
 
+            readium.waitForColumnsToBeEqualTo( expectedSinglePageColumns );
+
             assert.equal( readium.epubContentIframe.columns, expectedSinglePageColumns,
-                          'Single-page layout'
+                          'Not in single-page layout'
             );
         } );
 
         test( 'Double column/page', function() {
             assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
-                          'Columns at default'
+                          'Columns are not at default'
             );
 
             readium.toggleSettings();
@@ -194,30 +163,32 @@ suite( 'Settings', function() {
             readium.selectSettingDoublePage();
             readium.saveSettings();
 
+            readium.waitForColumnsToBeEqualTo( expectedDoublePageColumns );
+
             assert.equal( readium.epubContentIframe.columns, expectedDoublePageColumns,
-                          'Double-page layout'
+                          'Not in double-page layout'
             );
         } );
     } );
 
     suite( 'Scroll mode', function() {
 
-        this.retries( 3 );
-
         test( 'Document mode', function() {
 
             readium.toggleToc();
 
+            readium.waitForTocToBeVisible();
+
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 
             readium.waitForExistInContentIframe(
-                '.Sans-Medium=Youth Voice, Media, and Political Engagement'
+                'span', 'Youth Voice, Media, and Political Engagement'
             );
 
             // Default max-height usually "846px", but it seems to change sometimes,
             // so just check for "px".
             assert.match( readium.epubContentIframe.maxHeight, /\d+px$/,
-                          'Content iframe <html> "max-height" set to default'
+                          'Content iframe <html> "max-height" not set to default'
             );
 
             readium.toggleSettings();
@@ -228,7 +199,7 @@ suite( 'Settings', function() {
             readium.toggleToc();
 
             assert.equal( readium.epubContentIframe.maxHeight, 'none',
-                          'Content iframe <html> "max-height" set to "none"'
+                          'Content iframe <html> "max-height" not set to "none"'
             );
 
         } );
@@ -236,6 +207,8 @@ suite( 'Settings', function() {
         test( 'Continuous mode', function() {
 
             readium.toggleToc();
+
+            readium.waitForTocToBeVisible();
 
             browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
 
@@ -247,7 +220,7 @@ suite( 'Settings', function() {
             readium.toggleToc();
 
             assert.equal( readium.scrolledContentFrame.overflowY, 'auto',
-                'ReadiumJS viewer scrolled content frame is present and has correct "overflow-y" value' );
+                'ReadiumJS viewer scrolled content frame is not present and/or does not have correct "overflow-y" value' );
 
         } );
 

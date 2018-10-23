@@ -1,7 +1,7 @@
 "use strict";
 
 exports.config = {
-    
+
     //
     // ==================
     // Specify Test Files
@@ -83,7 +83,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 2,
+    maxInstances: 9,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -94,17 +94,26 @@ exports.config = {
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
             // grid with only 5 firefox instance available you can make sure that not more than
             // 5 instance gets started at a time.
-            maxInstances: 2,
+            // maxInstances: 9,
             //
-            browserName: 'chrome'
+            browserName: 'chrome',
+            chromeOptions: {
+                // to run chrome headless the following flags are required
+                // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+                args: [ '--headless' ],
+            },
         },
         {
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
             // grid with only 5 firefox instance available you can make sure that not more than
             // 5 instance gets started at a time.
-            maxInstances: 2,
+            // maxInstances: 9,
             //
-            browserName: 'firefox'
+            browserName: 'firefox',
+            'moz:firefoxOptions': {
+                // flag to activate Firefox headless mode (see https://github.com/mozilla/geckodriver/blob/master/README.md#firefox-capabilities for more details about moz:firefoxOptions)
+                args: ['-headless'],
+            },
         },
     ],
     //
@@ -123,6 +132,13 @@ exports.config = {
     //
     // Enables colors for log output.
     coloredLogs: true,
+    //
+    // Warns when a deprecated command is used
+    deprecationWarnings: true,
+    //
+    // If you only want to run your tests until a specific amount of tests have failed use
+    // bail (default is 0 - don't bail, run all tests).
+    bail: 0,
     //
     // Saves a screenshot to a given path if a command fails.
     screenshotPath: 'test/browser/error-shots/',
@@ -163,7 +179,17 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    // services: [],//
+    services: ['selenium-standalone', 'chromedriver'],
+    // TODO: For now disable screenshots-cleanup service until can figure out how
+    // to make it so cleanup happens only once per test run instead of seemingly
+    // per test suite, which when multiple suites are run causes error shots to
+    // be lost.
+    // services: ['selenium-standalone', 'chromedriver', 'screenshots-cleanup'],
+    // cleanScreenshotsFolder: {
+    //     folder: 'test/browser/error-shots',
+    //     pattern: '/**/ERROR_*',
+    // },
+    //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: http://webdriver.io/guide/testrunner/frameworks.html
@@ -180,11 +206,11 @@ exports.config = {
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
+        retries: 5,
         // The navbar show/hide tests sometimes need more than the default 10 seconds.
         timeout: 15000,
         ui: 'tdd'
     },
-    debug: false,
     //
     // =====
     // Hooks
@@ -246,4 +272,4 @@ exports.config = {
     // possible to defer the end of the process using a promise.
     // onComplete: function(exitCode) {
     // }
-}
+};

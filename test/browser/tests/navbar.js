@@ -5,14 +5,12 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 const EXPECTED_NAVBAR_BUTTONS = [ 'tocButt', 'settbutt1', 'buttFullScreenToggle' ];
 
 suite( 'Navbar', function() {
-
-    this.retries( 3 );
 
     let navbar, navbarRight;
 
@@ -101,14 +99,14 @@ suite( 'Navbar', function() {
 
         test( 'Left side', function() {
             assert.equal( Object.keys( navbar.leftSideVisibleButtons ).length, 0,
-                          'Has no visible buttons' );
+                          'Buttons are visible instead of hidden' );
         } );
 
         test( 'Right side', function() {
             assert.sameDeepMembers(
                 Object.keys( navbar.rightSideVisibleButtons ),
                 EXPECTED_NAVBAR_BUTTONS,
-                'Has the correct visible buttons'
+                'Does not have the correct visible buttons'
             );
         } );
 

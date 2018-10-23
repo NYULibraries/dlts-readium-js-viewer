@@ -5,12 +5,13 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
-const JAPANESE_LESSONS_PATH       = '/?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
+
+const VIEWPORT_HEIGHT = 889;
+const VIEWPORT_WIDTH = 1200;
 
 suite( 'Book cover', function() {
-
-    this.retries( 3 );
 
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
@@ -20,7 +21,7 @@ suite( 'Book cover', function() {
 
         let bookCoverPosition = readium.bookCoverImageSvg.position;
 
-        assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
+        assert.equal( bookCoverPosition, 'absolute', '<svg> is not absolutely positioned' );
     } );
 
     suite( 'Connected Youth cover', function() {
@@ -34,6 +35,15 @@ suite( 'Book cover', function() {
 
         suiteSetup( function() {
             readium.open( BY_ANY_MEDIA_NECESSARY_PATH );
+
+            // Sometimes height tests fail if running full set of tests concurrently.
+            // Set the dimensions to match what works on a successful test run.
+            readium.setViewportSize(
+                {
+                    height: VIEWPORT_HEIGHT,
+                    width: VIEWPORT_WIDTH,
+                }
+            );
 
             bookCoverImage = readium.bookCoverImageImg;
 
