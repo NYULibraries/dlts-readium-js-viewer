@@ -179,11 +179,17 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone', 'chromedriver', 'screenshots-cleanup'],
-    cleanScreenshotsFolder: {
-        folder: 'test/browser/error-shots',
-        pattern: '/**/ERROR_*',
-    },
+    services: ['selenium-standalone', 'chromedriver'],
+    // TODO: For now disable screenshots-cleanup service until can figure out how
+    // to make it so cleanup happens only once per test run instead of seemingly
+    // per test suite, which when multiple suites are run causes error shots to
+    // be lost.
+    // services: ['selenium-standalone', 'chromedriver', 'screenshots-cleanup'],
+    // cleanScreenshotsFolder: {
+    //     folder: 'test/browser/error-shots',
+    //     pattern: '/**/ERROR_*',
+    // },
+    //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: http://webdriver.io/guide/testrunner/frameworks.html
