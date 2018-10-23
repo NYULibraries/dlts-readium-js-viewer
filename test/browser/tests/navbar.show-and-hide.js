@@ -25,7 +25,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         let navbarSelector = readium.navbar.selector;
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is initially visible' );
+        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -35,7 +35,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         while ( waitTill > new Date() ){}
 
         assert( browser.isVisible( navbarSelector ),
-            `Navbar is still visible after ${SHORT_DELAY_IN_SECONDS} seconds`
+            `Navbar is not still visible after ${SHORT_DELAY_IN_SECONDS} seconds`
         );
     } );
 
@@ -44,7 +44,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         let navbarSelector = readium.navbar.selector;
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is initially visible' );
+        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -54,7 +54,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         assert.isFalse(
             browser.isVisible( navbarSelector ),
-            `Navbar has been hidden after delay of ${DELAY_IN_SECONDS} seconds`
+            `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
     } );
 
@@ -73,12 +73,12 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         assert.isFalse(
             browser.isVisible( navbarSelector ),
-            `Navbar has been hidden after delay of ${DELAY_IN_SECONDS} seconds`
+            `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
 
         browser.moveToObject( navbarSelector );
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is visible again' );
+        assert( browser.isVisible( navbarSelector ), 'Navbar is has not become visible again' );
     } );
 
 } );

@@ -15,7 +15,7 @@ suite( 'Reading area', function() {
     test( 'is low enough to clear the navbar', function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        assert.equal( readium.readingArea.top, '78px', 'Top position is correct' );
+        assert.equal( readium.readingArea.top, '78px', 'Top position is not correct' );
     } );
 
 } );

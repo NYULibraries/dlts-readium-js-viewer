@@ -21,7 +21,7 @@ suite( 'Book cover', function() {
 
         let bookCoverPosition = readium.bookCoverImageSvg.position;
 
-        assert.equal( bookCoverPosition, 'absolute', '<svg> is absolutely positioned' );
+        assert.equal( bookCoverPosition, 'absolute', '<svg> is not absolutely positioned' );
     } );
 
     suite( 'Connected Youth cover', function() {

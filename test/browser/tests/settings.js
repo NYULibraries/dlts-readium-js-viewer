@@ -109,7 +109,7 @@ suite( 'Settings', function() {
             readium.saveSettings();
 
             assert.equal( readium.epubContentIframe.htmlWidth, expectedMaxPagewidth,
-                          'Page width has been changed to maximum' );
+                          'Page width has not been changed to maximum' );
         } );
     } );
 
@@ -138,7 +138,7 @@ suite( 'Settings', function() {
 
         test( 'Single column/page', function() {
             assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
-                          'Columns at default'
+                          'Columns are not at default'
             );
 
             readium.toggleSettings();
@@ -149,13 +149,13 @@ suite( 'Settings', function() {
             readium.waitForColumnsToBeEqualTo( expectedSinglePageColumns );
 
             assert.equal( readium.epubContentIframe.columns, expectedSinglePageColumns,
-                          'Single-page layout'
+                          'Not in single-page layout'
             );
         } );
 
         test( 'Double column/page', function() {
             assert.equal( readium.epubContentIframe.columns, expectedDefaultColumns,
-                          'Columns at default'
+                          'Columns are not at default'
             );
 
             readium.toggleSettings();
@@ -166,7 +166,7 @@ suite( 'Settings', function() {
             readium.waitForColumnsToBeEqualTo( expectedDoublePageColumns );
 
             assert.equal( readium.epubContentIframe.columns, expectedDoublePageColumns,
-                          'Double-page layout'
+                          'Not in double-page layout'
             );
         } );
     } );
@@ -188,7 +188,7 @@ suite( 'Settings', function() {
             // Default max-height usually "846px", but it seems to change sometimes,
             // so just check for "px".
             assert.match( readium.epubContentIframe.maxHeight, /\d+px$/,
-                          'Content iframe <html> "max-height" set to default'
+                          'Content iframe <html> "max-height" not set to default'
             );
 
             readium.toggleSettings();
@@ -199,7 +199,7 @@ suite( 'Settings', function() {
             readium.toggleToc();
 
             assert.equal( readium.epubContentIframe.maxHeight, 'none',
-                          'Content iframe <html> "max-height" set to "none"'
+                          'Content iframe <html> "max-height" not set to "none"'
             );
 
         } );
@@ -220,7 +220,7 @@ suite( 'Settings', function() {
             readium.toggleToc();
 
             assert.equal( readium.scrolledContentFrame.overflowY, 'auto',
-                'ReadiumJS viewer scrolled content frame is present and has correct "overflow-y" value' );
+                'ReadiumJS viewer scrolled content frame is not present and/or does not have correct "overflow-y" value' );
 
         } );
 

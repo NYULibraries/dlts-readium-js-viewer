@@ -21,15 +21,16 @@ suite( 'Fullscreen button', function() {
     test( 'toggle fullscreen on', function() {
         readium.toggleFullscreen();
 
-        assert( readium.isFullscreen, 'Fullscreen is on' );
+        assert( readium.isFullscreen, 'Fullscreen is not on' );
     } );
 
     test( 'toggle fullscreen off', function() {
         readium.toggleFullscreen();
-        assert( readium.isFullscreen, 'Fullscreen is initially on' );
+
+        assert( readium.isFullscreen, 'Fullscreen is not initially on' );
 
         readium.toggleFullscreen();
-        assert.isFalse( readium.isFullscreen, 'Fullscreen is off' );
+        assert.isFalse( readium.isFullscreen, 'Fullscreen is not off' );
     } );
 
 } );

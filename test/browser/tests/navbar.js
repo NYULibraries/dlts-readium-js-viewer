@@ -99,14 +99,14 @@ suite( 'Navbar', function() {
 
         test( 'Left side', function() {
             assert.equal( Object.keys( navbar.leftSideVisibleButtons ).length, 0,
-                          'Has no visible buttons' );
+                          'Buttons are visible instead of hidden' );
         } );
 
         test( 'Right side', function() {
             assert.sameDeepMembers(
                 Object.keys( navbar.rightSideVisibleButtons ),
                 EXPECTED_NAVBAR_BUTTONS,
-                'Has the correct visible buttons'
+                'Does not have the correct visible buttons'
             );
         } );
 

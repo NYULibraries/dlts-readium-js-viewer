@@ -89,7 +89,7 @@ suite( 'TOC', function() {
             readium.waitForTocToBeVisible();
 
             assert.equal( readium.toc.display, 'inline-block',
-                          'display property is "inline-block"'
+                          'display property is not "inline-block"'
             );
         } );
 
@@ -97,13 +97,13 @@ suite( 'TOC', function() {
             readium.toggleToc();
 
             assert.equal( readium.toc.display, 'inline-block',
-                          'TOC is on'
+                          'TOC is not initially on'
             );
 
             readium.toggleToc();
 
             assert.equal( readium.toc.display, 'none',
-                          'TOC is off'
+                          'TOC is not off'
             );
         } );
 
@@ -115,12 +115,12 @@ suite( 'TOC', function() {
             browser.click( '=3 Day-to-Day Routines' );
 
             assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
-                    'Found <small>AILY</small> on page'
+                    'Did not find <small>AILY</small> on page'
             );
 
             // Make sure the TOC hasn't disappeared.
             assert.equal( readium.toc.display, 'inline-block',
-                          'display property is "inline-block"'
+                          'display property is not "inline-block"'
             );
         } );
 

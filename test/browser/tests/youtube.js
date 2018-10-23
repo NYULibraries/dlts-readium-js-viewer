@@ -36,9 +36,9 @@ suite( 'YouTube', function() {
 
         browser.frameParent();
 
-        assert.equal( dataSrc, null, '<iframe> "data-src" attribute' );
+        assert.equal( dataSrc, null, '<iframe> "data-src" attribute is not null' );
 
-        assert.equal( src, YOUTUBE_VIDEO_URL, '<iframe> "src" attribute' );
+        assert.equal( src, YOUTUBE_VIDEO_URL, '<iframe> "src" attribute is not correct' );
     } );
 } );
 
