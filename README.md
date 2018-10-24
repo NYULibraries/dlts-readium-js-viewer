@@ -55,16 +55,7 @@ location on the host.
 #### Automated browser tests
 
 Selenium-driven UI tests of the DLTS build of ReadiumJS viewer are written using
-[webdriver.io](http://webdriver.io/) and [mocha](https://mochajs.org/).  To run
-them, first make sure Selenium is running on the default port with the paths to
-the Chrome and Firefox drivers set.
-
-```shell
- cd test/browser/selenium
- java -jar -Dwebdriver.gecko.driver=drivers/geckodriver/mac64/geckodriver \
-           -Dwebdriver.chrome.driver=drivers/chromedriver/mac64/chromedriver \
-           selenium-server-standalone.jar
-```
+[webdriver.io](http://webdriver.io/) and [mocha](https://mochajs.org/).
 
 * To run the full test suite against a local instance of DLTS ReadiumJS viewer
 in both Chrome and Firefox simultaneously:

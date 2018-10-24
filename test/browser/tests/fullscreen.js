@@ -5,12 +5,10 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '/?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
 const DEFAULT_BOOK_PATH           = BY_ANY_MEDIA_NECESSARY_PATH;
 
 suite( 'Fullscreen button', function() {
-
-    this.retries( 3 );
 
     setup( function() {
         readium.open( DEFAULT_BOOK_PATH );
@@ -23,15 +21,16 @@ suite( 'Fullscreen button', function() {
     test( 'toggle fullscreen on', function() {
         readium.toggleFullscreen();
 
-        assert( readium.isFullscreen, 'Fullscreen is on' );
+        assert( readium.isFullscreen, 'Fullscreen is not on' );
     } );
 
     test( 'toggle fullscreen off', function() {
         readium.toggleFullscreen();
-        assert( readium.isFullscreen, 'Fullscreen is initially on' );
+
+        assert( readium.isFullscreen, 'Fullscreen is not initially on' );
 
         readium.toggleFullscreen();
-        assert.isFalse( readium.isFullscreen, 'Fullscreen is off' );
+        assert.isFalse( readium.isFullscreen, 'Fullscreen is not off' );
     } );
 
 } );

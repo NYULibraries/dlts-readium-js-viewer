@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo >&2 'BROKEN: see https://jira.nyu.edu/jira/browse/NYUP-457'
-exit 1
-
 set -x
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
@@ -121,17 +118,6 @@ fi
 
 yarn
 
-cd readium-cfi-js/
-git checkout $READIUM_CFI_JS_COMMIT
-
-if [ $? -ne 0 ]
-then
-    echo >&2 "ERROR: \`git checkout ${READIUM_CFI_JS_COMMIT}\` failed."
-    exit 1
-fi
-
-yarn
-
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
 
@@ -175,13 +161,9 @@ EOF
 # upgrades and calls to `readium-cfi-js/readium-build-tools/gitHubForksUpdater.js`.
 #
 # See https://jira.nyu.edu/jira/browse/NYUP-298
-cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/readium-cfi-js/
-node readium-build-tools/patchRequireJS.js
 
-cd $READIUM_JS_VIEWER/readium-js/readium-shared-js/
-node ./readium-cfi-js/node_modules/rimraf/bin.js node_modules/eventemitter3/_rjs/** && \
-    node readium-cfi-js/node_modules/requirejs/bin/r.js \
-        -convert node_modules/eventemitter3/ node_modules/eventemitter3/_rjs/
+# There used to be manual steps here for readium-cfi-js, but now, nothing needs
+# to be done.
 
 # End `yarn run prepare:yarn:all` manual steps
 
