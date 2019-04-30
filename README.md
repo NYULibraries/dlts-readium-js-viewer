@@ -110,3 +110,11 @@ see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Mario
 As a result, there are a few tests that will always fail in Firefox
 until the `geckodriver` WebDriver <-> Marionette proxy is complete.  See
 [NYUP-206](https://jira.nyu.edu/jira/browse/NYUP-206) for more details.
+
+**Test flake**
+
+There is still a bit of test flake.  Note that Chrome fullscreen tests will always
+fail in headless mode.  Turning off headless mode allows them to run correctly.
+There are also a couple more tests that are flaking, that might need to be
+double-checked by manual testing until they are fixed.
+See [NYUP-466](https://jira.nyu.edu/jira/browse/NYUP-466) for details.
