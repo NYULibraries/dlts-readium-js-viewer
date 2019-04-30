@@ -40,8 +40,8 @@ READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
 TMP=${ROOT}/tmp
 
-DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOaBooks
-DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-oa-books.git'
+DLTS_PLUGIN_DIR=${READIUM_JS_VIEWER}/readium-js/readium-shared-js/plugins/dltsRjsPluginOpenSquare
+DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-open-square.git'
 
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
@@ -140,7 +140,7 @@ fi
 cat << EOF > $READIUM_JS_VIEWER/readium-js/readium-shared-js/plugins/plugins-override.cson
 plugins:
   include: [
-    'dltsRjsPluginOaBooks'
+    'dltsRjsPluginOpenSquare'
     ${EXTRA_PLUGINS}
   ]
   exclude: [
