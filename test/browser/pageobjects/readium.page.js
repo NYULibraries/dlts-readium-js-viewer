@@ -67,7 +67,7 @@ let ReadiumPage = Object.create( Page, {
             let backgroundColor = bodyElement.getCSSProperty( 'background-color' ).parsed.hex;
             let color           = bodyElement.getCSSProperty( 'color' ).parsed.hex;
 
-            let browserName = browser.options.desiredCapabilities.browserName;
+            let browserName = browser.options.capabilities.browserName;
             let columns;
             if ( browserName === 'chrome' ) {
                 columns = browser.execute( function() {

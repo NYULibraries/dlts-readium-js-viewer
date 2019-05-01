@@ -74,7 +74,7 @@ suite( 'Book cover', function() {
             expectedValue.maxHeight = Math.floor( expectedNumberOfVh * vh );
             expectedValue.maxWidth  = '98%';
 
-            let browserName = browser.options.desiredCapabilities.browserName;
+            let browserName = browser.options.capabilities.browserName;
             if ( browserName === 'chrome' ) {
                 // width: auto is broken in Chrome.  See comment in else if
                 // block.

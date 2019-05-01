@@ -119,7 +119,7 @@ suite( 'Settings', function() {
         let expectedSinglePageColumns;
         let expectedDoublePageColumns;
 
-        let browserName = browser.options.desiredCapabilities.browserName;
+        let browserName = browser.options.capabilities.browserName;
 
         if ( browserName === 'chrome' ) {
             expectedDefaultColumns    = 'auto 2';
