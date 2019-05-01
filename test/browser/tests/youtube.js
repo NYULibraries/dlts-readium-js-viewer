@@ -30,7 +30,7 @@ suite( 'YouTube', function() {
 
         browser.frame( readium.epubContentIframe.contentIframeElement.value );
 
-        let youtubeIframe = browser.element( 'iframe' );
+        let youtubeIframe = $( 'iframe' );
         let src           = youtubeIframe.getAttribute( 'src' );
         let dataSrc       = youtubeIframe.getAttribute( 'data-src' );
 

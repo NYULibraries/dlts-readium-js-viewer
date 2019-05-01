@@ -10,7 +10,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImg: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
 
@@ -20,7 +20,7 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageSvg: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
             let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
 
@@ -59,11 +59,11 @@ let ReadiumPage = Object.create( Page, {
     // property.
     epubContentIframe: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
-            let bodyElement = browser.element( 'body' );
+            let bodyElement = $( 'body' );
             let backgroundColor = bodyElement.getCssProperty( 'background-color' ).parsed.hex;
             let color           = bodyElement.getCssProperty( 'color' ).parsed.hex;
 
@@ -150,7 +150,7 @@ let ReadiumPage = Object.create( Page, {
 
             let isExistingResult;
 
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -187,17 +187,17 @@ let ReadiumPage = Object.create( Page, {
 
     navbar: { get:
         function() {
-            let element = browser.element( Selectors.navbar.main );
+            let element = $( Selectors.navbar.main );
 
             let navbarCss = getNavbarCss( element );
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = browser.elements( Selectors.navbar.leftSideButtons ).value;
+            let navbarLeftButtons = $$( Selectors.navbar.leftSideButtons ).value;
             let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
             let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
 
-            let navbarRightButtons = browser.elements( Selectors.navbar.rightSideButtons  ).value;
+            let navbarRightButtons = $$( Selectors.navbar.rightSideButtons  ).value;
             let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
             let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
 
@@ -223,7 +223,7 @@ let ReadiumPage = Object.create( Page, {
 
     readingArea: { get:
         function() {
-            let element = browser.element( Selectors.readingArea );
+            let element = $( Selectors.readingArea );
 
             return {
                 top: element.getCssProperty( 'top' ).value
@@ -304,7 +304,7 @@ let ReadiumPage = Object.create( Page, {
 
     scrolledContentFrame: { get:
         function() {
-            let scrolledContentFrameElement = browser.element( Selectors.scrolledContentFrame );
+            let scrolledContentFrameElement = $( Selectors.scrolledContentFrame );
 
             let overflowY = scrolledContentFrameElement.getCssProperty( 'overflow-y' ).value;
 
@@ -319,7 +319,7 @@ let ReadiumPage = Object.create( Page, {
         function() {
             $( Selectors.settings.style.preview ).waitForDisplayed();
 
-            let element = browser.element( Selectors.settings.style.preview );
+            let element = $( Selectors.settings.style.preview );
 
             let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
             let color           = element.getCssProperty( 'color' ).parsed.hex;
@@ -336,7 +336,7 @@ let ReadiumPage = Object.create( Page, {
 
     toc: { get:
         function() {
-            let element = browser.element( Selectors.toc.body );
+            let element = $( Selectors.toc.body );
 
             return {
                 element,
@@ -368,7 +368,7 @@ let ReadiumPage = Object.create( Page, {
 
     vh: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
             browser.frame( contentIframeElement.value );
 
@@ -426,11 +426,11 @@ function getBookCoverImage( frameId, bookCoverImageType ) {
     // We use different fixes for each.
 
     if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_SVG ) {
-        bookCoverImage.position = browser.element( 'svg' )
+        bookCoverImage.position = $( 'svg' )
             .getCssProperty( 'position' )
             .value;
     } else if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_IMG ) {
-        let bookCoverImageElement = browser.element( '.cover img' );
+        let bookCoverImageElement = $( '.cover img' );
 
         if ( bookCoverImageElement ) {
             bookCoverImage.height    = bookCoverImageElement.getCssProperty( 'height' ).value;
@@ -488,7 +488,7 @@ function getNavbarCss( navbarElement ) {
 }
 
 function getNavbarRightCss() {
-    let navbarRight = browser.element( '.navbar-right' );
+    let navbarRight = $( '.navbar-right' );
 
     let backgroundColor = navbarRight.getCssProperty( 'background-color' ).parsed.hex;
     let height          = navbarRight.getCssProperty( 'height' ).value;
@@ -520,8 +520,8 @@ function getVisibleElementIds( elements ) {
     elements.forEach( function( element ) {
         let id = element.ELEMENT;
         if (
-            browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
-            browser.elementIdCssProperty( id, 'display' ).value != 'none'
+            $IdCssProperty( id, 'visibility' ).value != 'hidden' &&
+            $IdCssProperty( id, 'display' ).value != 'none'
         ) {
             visibleChildElementIds.push( id );
         }
@@ -534,7 +534,7 @@ function getVisibleButtons( elementIds ) {
     let buttons = {};
 
     elementIds.forEach( function( elementId ) {
-        let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
+        let idAttribute = $IdAttribute( elementId, 'id' ).value;
         buttons[ idAttribute ] = {
             css: getNavbarButtonCss( idAttribute ),
         };
@@ -544,7 +544,7 @@ function getVisibleButtons( elementIds ) {
 }
 
 function getNavbarButtonCss( buttonIdAttribute ) {
-    let button = browser.element( `#${buttonIdAttribute}` );
+    let button = $( `#${buttonIdAttribute}` );
 
     return {
         backgroundColor    : button.getCssProperty( 'background-color' ).parsed.hex,
