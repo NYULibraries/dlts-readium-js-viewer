@@ -25,7 +25,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         let navbarSelector = readium.navbar.selector;
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
+        assert( browser.isDisplayed( navbarSelector ), 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -34,7 +34,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
                 new Date( new Date().getTime() + SHORT_DELAY_IN_SECONDS * 1000 );
         while ( waitTill > new Date() ){}
 
-        assert( browser.isVisible( navbarSelector ),
+        assert( browser.isDisplayed( navbarSelector ),
             `Navbar is not still visible after ${SHORT_DELAY_IN_SECONDS} seconds`
         );
     } );
@@ -44,7 +44,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         let navbarSelector = readium.navbar.selector;
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
+        assert( browser.isDisplayed( navbarSelector ), 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -53,7 +53,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         while ( waitTill > new Date() ){}
 
         assert.isFalse(
-            browser.isVisible( navbarSelector ),
+            browser.isDisplayed( navbarSelector ),
             `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
     } );
@@ -72,13 +72,13 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         while ( waitTill > new Date() ){}
 
         assert.isFalse(
-            browser.isVisible( navbarSelector ),
+            browser.isDisplayed( navbarSelector ),
             `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
 
         browser.moveToObject( navbarSelector );
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is has not become visible again' );
+        assert( browser.isDisplayed( navbarSelector ), 'Navbar is has not become visible again' );
     } );
 
 } );
