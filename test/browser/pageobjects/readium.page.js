@@ -317,7 +317,7 @@ let ReadiumPage = Object.create( Page, {
 
     stylePreview: { get:
         function() {
-            browser.waitForVisible( Selectors.settings.style.preview );
+            browser.waitForDisplayed( Selectors.settings.style.preview );
 
             let element = browser.element( Selectors.settings.style.preview );
 
@@ -407,13 +407,13 @@ let ReadiumPage = Object.create( Page, {
 
     waitForTocToBeVisible : { value :
         function() {
-            return browser.waitForVisible( Selectors.toc.body );
+            return browser.waitForDisplayed( Selectors.toc.body );
         }
     }
 } );
 
 function clickElement( selector ) {
-    browser.waitForVisible( selector );
+    browser.waitForDisplayed( selector );
     browser.click( selector );
 }
 
@@ -558,7 +558,7 @@ function getNavbarButtonCss( buttonIdAttribute ) {
 }
 
 function setSliderValue( sliderSelector, value ) {
-    browser.waitForVisible( sliderSelector );
+    browser.waitForDisplayed( sliderSelector );
 
     browser.execute( function( selector, newValue ) {
         $( selector ).val( newValue );
