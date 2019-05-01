@@ -38,7 +38,7 @@ suite( 'Book cover', function() {
 
             // Sometimes height tests fail if running full set of tests concurrently.
             // Set the dimensions to match what works on a successful test run.
-            readium.setViewportSize(
+            readium.setWindowSize(
                 {
                     height: VIEWPORT_HEIGHT,
                     width: VIEWPORT_WIDTH,

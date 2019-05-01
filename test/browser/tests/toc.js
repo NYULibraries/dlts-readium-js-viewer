@@ -47,7 +47,7 @@ suite( 'TOC', function() {
         test( 'navigate to chapter', function() {
             // Sometimes the window isn't large enough to allow the TOC to display
             // "About the Authors", which is the last TOC entry.
-            readium.setViewportSize(
+            readium.setWindowSize(
                 {
                     height: 920,
                     width: 1150,

@@ -291,14 +291,14 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    setViewportSize: { value:
+    setWindowSize : { value :
         function( size) {
             // size must be an object with width and height fields:
             // {
             //     width  : 500,
             //     height : 500,
             // }
-            browser.setViewportSize( size );
+            browser.setWindowSize( size.width, size.height );
         }
     },
 

@@ -15,7 +15,7 @@ suite( 'Settings', function() {
 
         // It seems that setting width to higher than 1150 causes tests to hang
         // in Firefox.  Cause currently unknown.
-        readium.setViewportSize(
+        readium.setWindowSize(
             {
                 height: 920,
                 width: 1150,
