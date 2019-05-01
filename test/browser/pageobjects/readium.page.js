@@ -157,7 +157,7 @@ let ReadiumPage = Object.create( Page, {
             // Make race condition less likely.
             $( selector ).waitForDisplayed();
 
-            let text = browser.getText( selector );
+            let text = $( selector ).getText();
 
             if ( matchText ) {
                 isExistingResult = text.includes( matchText );
