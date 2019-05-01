@@ -12,7 +12,7 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let contentIframeElement = $( Selectors.epubContentIframe );
 
-            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement, BOOK_COVER_IMAGE_TYPE_IMG );
 
             return bookCoverImage;
         }
@@ -22,7 +22,7 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let contentIframeElement = $( Selectors.epubContentIframe );
 
-            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement, BOOK_COVER_IMAGE_TYPE_SVG );
 
             return bookCoverImage;
         }
@@ -417,10 +417,10 @@ function clickElement( selector ) {
     $( selector ).click();
 }
 
-function getBookCoverImage( frameId, bookCoverImageType ) {
+function getBookCoverImage( frameElement, bookCoverImageType ) {
     let bookCoverImage = {};
 
-    browser.switchToFrame( frameId );
+    browser.switchToFrame( frameElement );
 
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
