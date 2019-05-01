@@ -218,7 +218,7 @@ let ReadiumPage = Object.create( Page, {
     open: { value: function( path ) {
         Page.open.call( this, path );
 
-        browser.waitForExist( Selectors.epubContentIframe );
+        $( Selectors.epubContentIframe ).waitForExist();
     } },
 
     readingArea: { get:
