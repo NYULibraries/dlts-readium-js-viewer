@@ -372,7 +372,7 @@ let ReadiumPage = Object.create( Page, {
 
             browser.frame( contentIframeElement.value );
 
-            let vh = browser.getViewportSize().height / 100;
+            let vh = browser.getWindowSize().height / 100;
 
             browser.frameParent();
 
