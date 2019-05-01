@@ -23,7 +23,7 @@ suite( 'YouTube', function() {
 
         readium.waitForTocToBeVisible();
 
-        browser.click( '=3. “Decreasing World Suck”: Harnessing Popular Culture for Fan Activism' );
+        $( '=3. “Decreasing World Suck”: Harnessing Popular Culture for Fan Activism' ).click();
 
         readium.clickPageTurnerRight();
         readium.clickPageTurnerRight();

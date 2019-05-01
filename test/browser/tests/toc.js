@@ -58,7 +58,7 @@ suite( 'TOC', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=About the Authors' );
+            $( '=About the Authors' ).click();
 
             // "span.Sans-SC=About the Authors" selector doesn't work.
             assert( readium.isExistingInContentIframe( 'span', 'About the Authors' ),
@@ -112,7 +112,7 @@ suite( 'TOC', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=3 Day-to-Day Routines' );
+            $( '=3 Day-to-Day Routines' ).click();
 
             assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
                     'Did not find <small>AILY</small> on page'

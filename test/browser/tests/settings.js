@@ -179,7 +179,7 @@ suite( 'Settings', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+            $( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' ).click();
 
             readium.waitForExistInContentIframe(
                 'span', 'Youth Voice, Media, and Political Engagement'
@@ -210,7 +210,7 @@ suite( 'Settings', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+            $( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' ).click();
 
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();

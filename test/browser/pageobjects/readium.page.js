@@ -414,7 +414,7 @@ let ReadiumPage = Object.create( Page, {
 
 function clickElement( selector ) {
     $( selector ).waitForDisplayed();
-    browser.click( selector );
+    $( selector ).click();
 }
 
 function getBookCoverImage( frameId, bookCoverImageType ) {
