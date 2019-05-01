@@ -64,8 +64,8 @@ let ReadiumPage = Object.create( Page, {
             browser.frame( contentIframeElement.value );
 
             let bodyElement = $( 'body' );
-            let backgroundColor = bodyElement.getCssProperty( 'background-color' ).parsed.hex;
-            let color           = bodyElement.getCssProperty( 'color' ).parsed.hex;
+            let backgroundColor = bodyElement.getCSSProperty( 'background-color' ).parsed.hex;
+            let color           = bodyElement.getCSSProperty( 'color' ).parsed.hex;
 
             let browserName = browser.options.desiredCapabilities.browserName;
             let columns;
@@ -226,7 +226,7 @@ let ReadiumPage = Object.create( Page, {
             let element = $( Selectors.readingArea );
 
             return {
-                top: element.getCssProperty( 'top' ).value
+                top: element.getCSSProperty( 'top' ).value
             };
         }
     },
@@ -306,7 +306,7 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let scrolledContentFrameElement = $( Selectors.scrolledContentFrame );
 
-            let overflowY = scrolledContentFrameElement.getCssProperty( 'overflow-y' ).value;
+            let overflowY = scrolledContentFrameElement.getCSSProperty( 'overflow-y' ).value;
 
             return {
                 scrolledContentFrameElement,
@@ -321,9 +321,9 @@ let ReadiumPage = Object.create( Page, {
 
             let element = $( Selectors.settings.style.preview );
 
-            let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
-            let color           = element.getCssProperty( 'color' ).parsed.hex;
-            let fontSize        = element.getCssProperty( 'font-size' ).value;
+            let backgroundColor = element.getCSSProperty( 'background-color' ).parsed.hex;
+            let color           = element.getCSSProperty( 'color' ).parsed.hex;
+            let fontSize        = element.getCSSProperty( 'font-size' ).value;
 
             return {
                 element,
@@ -340,7 +340,7 @@ let ReadiumPage = Object.create( Page, {
 
             return {
                 element,
-                display: element.getCssProperty( 'display' ).value,
+                display: element.getCSSProperty( 'display' ).value,
             }
         }
     },
@@ -427,16 +427,16 @@ function getBookCoverImage( frameId, bookCoverImageType ) {
 
     if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_SVG ) {
         bookCoverImage.position = $( 'svg' )
-            .getCssProperty( 'position' )
+            .getCSSProperty( 'position' )
             .value;
     } else if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_IMG ) {
         let bookCoverImageElement = $( '.cover img' );
 
         if ( bookCoverImageElement ) {
-            bookCoverImage.height    = bookCoverImageElement.getCssProperty( 'height' ).value;
-            bookCoverImage.maxHeight = bookCoverImageElement.getCssProperty( 'max-height' ).value;
-            bookCoverImage.maxWidth  = bookCoverImageElement.getCssProperty( 'max-width' ).value;
-            bookCoverImage.width     = bookCoverImageElement.getCssProperty( 'width' ).value;
+            bookCoverImage.height    = bookCoverImageElement.getCSSProperty( 'height' ).value;
+            bookCoverImage.maxHeight = bookCoverImageElement.getCSSProperty( 'max-height' ).value;
+            bookCoverImage.maxWidth  = bookCoverImageElement.getCSSProperty( 'max-width' ).value;
+            bookCoverImage.width     = bookCoverImageElement.getCSSProperty( 'width' ).value;
         }
     } else {
         console.log( 'Should never get here.' );
@@ -448,11 +448,11 @@ function getBookCoverImage( frameId, bookCoverImageType ) {
 }
 
 function getNavbarCss( navbarElement ) {
-    let backgroundColor = navbarElement.getCssProperty( 'background-color' ).parsed.hex;
+    let backgroundColor = navbarElement.getCSSProperty( 'background-color' ).parsed.hex;
 
     // Build the convenient testing string.
     // Need this for the dimensional/spatial information in (for example) "rgb(51,51,51)0px1px5px0px"
-    let boxShadowUnparsedValue = navbarElement.getCssProperty( 'box-shadow' ).value;
+    let boxShadowUnparsedValue = navbarElement.getCSSProperty( 'box-shadow' ).value;
     let boxShadowParseOffsetAndRadiusRegex =
             /^rgb\(\d{1,3},\d{1,3},\d{1,3}\)(\d+px)(\d+px)(\d+px)\d+px$/;
     let boxShadowOffsetAndRadiusParts = boxShadowParseOffsetAndRadiusRegex
@@ -463,17 +463,17 @@ function getNavbarCss( navbarElement ) {
                     ' '                                +
                     boxShadowOffsetAndRadiusParts[ 3 ] +
                     ' '                                +
-                    navbarElement.getCssProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
+                    navbarElement.getCSSProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
 
     // Our plugin sets "border-radius", but Firefox currently uses the broken-out
     // properties.
-    let borderBottomLeftRadius  = navbarElement.getCssProperty( 'border-bottom-left-radius' ).value;
-    let borderBottomRightRadius = navbarElement.getCssProperty( 'border-bottom-right-radius' ).value;
-    let borderTopLeftRadius     = navbarElement.getCssProperty( 'border-top-left-radius' ).value;
-    let borderTopRightRadius    = navbarElement.getCssProperty( 'border-top-right-radius' ).value;
+    let borderBottomLeftRadius  = navbarElement.getCSSProperty( 'border-bottom-left-radius' ).value;
+    let borderBottomRightRadius = navbarElement.getCSSProperty( 'border-bottom-right-radius' ).value;
+    let borderTopLeftRadius     = navbarElement.getCSSProperty( 'border-top-left-radius' ).value;
+    let borderTopRightRadius    = navbarElement.getCSSProperty( 'border-top-right-radius' ).value;
 
-    let minHeight       = navbarElement.getCssProperty( 'min-height' ).value;
-    let marginBottom    = navbarElement.getCssProperty( 'margin-bottom' ).value;
+    let minHeight       = navbarElement.getCSSProperty( 'min-height' ).value;
+    let marginBottom    = navbarElement.getCSSProperty( 'margin-bottom' ).value;
 
     return {
         backgroundColor,
@@ -490,17 +490,17 @@ function getNavbarCss( navbarElement ) {
 function getNavbarRightCss() {
     let navbarRight = $( '.navbar-right' );
 
-    let backgroundColor = navbarRight.getCssProperty( 'background-color' ).parsed.hex;
-    let height          = navbarRight.getCssProperty( 'height' ).value;
+    let backgroundColor = navbarRight.getCSSProperty( 'background-color' ).parsed.hex;
+    let height          = navbarRight.getCSSProperty( 'height' ).value;
     // Our plugin sets "margin", but Firefox currently uses the broken-out
     // properties.
-    let marginBottom    = navbarRight.getCssProperty( 'margin-bottom' ).value;
-    let marginLeft      = navbarRight.getCssProperty( 'margin-left' ).value;
-    let marginRight     = navbarRight.getCssProperty( 'margin-right' ).value;
-    let marginTop       = navbarRight.getCssProperty( 'margin-top' ).value;
+    let marginBottom    = navbarRight.getCSSProperty( 'margin-bottom' ).value;
+    let marginLeft      = navbarRight.getCSSProperty( 'margin-left' ).value;
+    let marginRight     = navbarRight.getCSSProperty( 'margin-right' ).value;
+    let marginTop       = navbarRight.getCSSProperty( 'margin-top' ).value;
 
-    let minHeight       = navbarRight.getCssProperty( 'min-height' ).value;
-    let overflow        = navbarRight.getCssProperty( 'overflow' ).value;
+    let minHeight       = navbarRight.getCSSProperty( 'min-height' ).value;
+    let overflow        = navbarRight.getCSSProperty( 'overflow' ).value;
 
     return {
         backgroundColor,
@@ -547,13 +547,13 @@ function getNavbarButtonCss( buttonIdAttribute ) {
     let button = $( `#${buttonIdAttribute}` );
 
     return {
-        backgroundColor    : button.getCssProperty( 'background-color' ).parsed.hex,
-        backgroundPosition : button.getCssProperty( 'background-position' ).value,
-        backgroundRepeat   : button.getCssProperty( 'background-repeat' ).value,
-        color              : button.getCssProperty( 'color' ).parsed.hex,
-        fontSize           : button.getCssProperty( 'font-size' ).value,
-        height             : button.getCssProperty( 'height' ).value,
-        width              : button.getCssProperty( 'width' ).value,
+        backgroundColor    : button.getCSSProperty( 'background-color' ).parsed.hex,
+        backgroundPosition : button.getCSSProperty( 'background-position' ).value,
+        backgroundRepeat   : button.getCSSProperty( 'background-repeat' ).value,
+        color              : button.getCSSProperty( 'color' ).parsed.hex,
+        fontSize           : button.getCSSProperty( 'font-size' ).value,
+        height             : button.getCSSProperty( 'height' ).value,
+        width              : button.getCSSProperty( 'width' ).value,
     }
 }
 
