@@ -4,7 +4,6 @@
   "description": "DLTS ReadiumJS viewer",
   "dependencies": {
     "chai": "4.2.0",
-    "chromedriver": "2.43.0",
     "js-beautify": "1.6.4",
     "mocha": "5.2.0",
     "wdio": "2.0.2",
