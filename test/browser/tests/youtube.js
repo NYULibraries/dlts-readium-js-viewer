@@ -28,13 +28,13 @@ suite( 'YouTube', function() {
         readium.clickPageTurnerRight();
         readium.clickPageTurnerRight();
 
-        browser.frame( readium.epubContentIframe.contentIframeElement.value );
+        browser.switchToFrame( readium.epubContentIframe.contentIframeElement );
 
         let youtubeIframe = $( 'iframe' );
         let src           = youtubeIframe.getAttribute( 'src' );
         let dataSrc       = youtubeIframe.getAttribute( 'data-src' );
 
-        browser.frameParent();
+        browser.switchToParentFrame();
 
         assert.equal( dataSrc, null, '<iframe> "data-src" attribute is not null' );
 

@@ -61,7 +61,7 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
+            browser.switchToFrame( contentIframeElement );
 
             let bodyElement = $( 'body' );
             let backgroundColor = bodyElement.getCSSProperty( 'background-color' ).parsed.hex;
@@ -92,7 +92,7 @@ let ReadiumPage = Object.create( Page, {
 
             let maxHeight = $( 'html' ).getCSSProperty( 'max-height' ).value;
 
-            browser.frameParent();
+            browser.switchToParentFrame();
 
             return {
                 contentIframeElement,
@@ -152,7 +152,7 @@ let ReadiumPage = Object.create( Page, {
 
             let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
+            browser.switchToFrame( contentIframeElement );
 
             // Make race condition less likely.
             browser.waitForText( selector );
@@ -165,7 +165,7 @@ let ReadiumPage = Object.create( Page, {
                 isExistingResult = ( text !== '' );
             }
 
-            browser.frameParent();
+            browser.switchToParentFrame();
 
             return isExistingResult;
         }
@@ -370,11 +370,11 @@ let ReadiumPage = Object.create( Page, {
         function() {
             let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
+            browser.switchToFrame( contentIframeElement );
 
             let vh = browser.getWindowSize().height / 100;
 
-            browser.frameParent();
+            browser.switchToParentFrame();
 
             return vh;
         }
@@ -420,7 +420,7 @@ function clickElement( selector ) {
 function getBookCoverImage( frameId, bookCoverImageType ) {
     let bookCoverImage = {};
 
-    browser.frame( frameId );
+    browser.switchToFrame( frameId );
 
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
@@ -442,7 +442,7 @@ function getBookCoverImage( frameId, bookCoverImageType ) {
         console.log( 'Should never get here.' );
     }
 
-    browser.frameParent();
+    browser.switchToParentFrame();
 
     return bookCoverImage;
 }
