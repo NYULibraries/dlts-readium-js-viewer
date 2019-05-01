@@ -74,7 +74,7 @@ let ReadiumPage = Object.create( Page, {
                     return document.querySelector( 'html' ).style.columns;
                 } ).value;
             } else if ( browserName === 'firefox' ) {
-                columns = browser.getCssProperty( 'html', '-moz-column-count' ).value
+                columns = $( 'html' ).getCSSProperty( '-moz-column-count' ).value
             } else {
                 // Should never get here.
             }
@@ -90,7 +90,7 @@ let ReadiumPage = Object.create( Page, {
                 return document.querySelector( 'html' ).style.width;
             } ).value;
 
-            let maxHeight = browser.getCssProperty( 'html', 'max-height' ).value;
+            let maxHeight = $( 'html' ).getCSSProperty( 'max-height' ).value;
 
             browser.frameParent();
 
