@@ -5,14 +5,7 @@
   "dependencies": {
     "chai": "4.2.0",
     "js-beautify": "1.6.4",
-    "mocha": "5.2.0",
-    "wdio": "2.0.2",
-    "wdio-chromedriver-service": "0.1.3",
-    "wdio-mocha-framework": "0.6.3",
-    "wdio-screenshots-cleanup-service": "^0.0.7",
-    "wdio-selenium-standalone-service": "^0.0.10",
-    "wdio-spec-reporter": "0.1.5",
-    "webdriverio": "4.13.2"
+    "mocha": "5.2.0"
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
