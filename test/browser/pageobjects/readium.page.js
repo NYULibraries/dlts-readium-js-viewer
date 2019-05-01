@@ -155,7 +155,7 @@ let ReadiumPage = Object.create( Page, {
             browser.switchToFrame( contentIframeElement );
 
             // Make race condition less likely.
-            browser.waitForText( selector );
+            $( selector ).waitForDisplayed();
 
             let text = browser.getText( selector );
 
