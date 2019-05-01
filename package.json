@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "description": "DLTS ReadiumJS viewer",
   "dependencies": {
+    "@wdio/cli": "^5.8.0",
     "chai": "4.2.0",
     "js-beautify": "1.6.4",
-    "mocha": "5.2.0"
+    "mocha": "5.2.0",
+    "webdriverio": "^5.8.0"
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
