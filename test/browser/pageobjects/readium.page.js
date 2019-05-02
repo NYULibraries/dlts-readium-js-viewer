@@ -520,8 +520,8 @@ function getVisibleElementIds( elements ) {
     elements.forEach( function( element ) {
         let id = element.ELEMENT;
         if (
-            $IdCssProperty( id, 'visibility' ).value != 'hidden' &&
-            $IdCssProperty( id, 'display' ).value != 'none'
+            browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
+            browser.elementIdCssProperty( id, 'display' ).value != 'none'
         ) {
             visibleChildElementIds.push( id );
         }
@@ -534,7 +534,7 @@ function getVisibleButtons( elementIds ) {
     let buttons = {};
 
     elementIds.forEach( function( elementId ) {
-        let idAttribute = $IdAttribute( elementId, 'id' ).value;
+        let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
         buttons[ idAttribute ] = {
             css: getNavbarButtonCss( idAttribute ),
         };
