@@ -519,7 +519,7 @@ function getVisibleButtons( elements ) {
             element.getCSSProperty( 'display' ).value != 'none'
         ) {
             buttons[ element.getAttribute( 'id' ) ] = {
-                css: getNavbarButtonCss( idAttribute ),
+                css: getNavbarButtonCss( element ),
             };
         }
     } );
@@ -527,9 +527,7 @@ function getVisibleButtons( elements ) {
     return buttons;
 }
 
-function getNavbarButtonCss( buttonIdAttribute ) {
-    let button = $( `#${buttonIdAttribute}` );
-
+function getNavbarButtonCss( button ) {
     return {
         backgroundColor    : button.getCSSProperty( 'background-color' ).parsed.hex,
         backgroundPosition : button.getCSSProperty( 'background-position' ).value,
