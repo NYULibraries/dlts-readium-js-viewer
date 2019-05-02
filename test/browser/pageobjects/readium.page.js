@@ -28,6 +28,12 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
+    browserName: { get:
+        function() {
+            return browser.options.capabilities.browserName;
+        }
+    },
+
     clearLocalStorage: { value:
         function() {
             browser.execute( function() {
@@ -67,13 +73,12 @@ let ReadiumPage = Object.create( Page, {
             let backgroundColor = bodyElement.getCSSProperty( 'background-color' ).parsed.hex;
             let color           = bodyElement.getCSSProperty( 'color' ).parsed.hex;
 
-            let browserName = browser.options.capabilities.browserName;
             let columns;
-            if ( browserName === 'chrome' ) {
+            if ( this.browserName === 'chrome' ) {
                 columns = browser.execute( function() {
                     return document.querySelector( 'html' ).style.columns;
                 } ).value;
-            } else if ( browserName === 'firefox' ) {
+            } else if ( this.browserName === 'firefox' ) {
                 columns = $( 'html' ).getCSSProperty( '-moz-column-count' ).value
             } else {
                 // Should never get here.
@@ -369,10 +374,10 @@ let ReadiumPage = Object.create( Page, {
             browser.switchToFrame( contentIframeElement );
 
             let vh;
-            if ( browser.options.capabilities.browserName === 'chrome' ) {
+            if ( this.browserName === 'chrome' ) {
                 // JSON Wire Protocol
                 vh = browser.getWindowSize().height / 100;
-            } else if ( browser.options.capabilities.browserName === 'firefox' ) {
+            } else if ( this.browserName === 'firefox' ) {
                 // Webdriver Protocol
                 vh = browser.getWindowRect().height / 100;
             }

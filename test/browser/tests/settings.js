@@ -119,14 +119,12 @@ suite( 'Settings', function() {
         let expectedSinglePageColumns;
         let expectedDoublePageColumns;
 
-        let browserName = browser.options.capabilities.browserName;
-
-        if ( browserName === 'chrome' ) {
+        if ( readium.browserName === 'chrome' ) {
             expectedDefaultColumns    = 'auto 2';
             expectedSinglePageColumns = '550px auto';
             expectedDoublePageColumns = 'auto 2';
 
-        } else if ( browserName === 'firefox' ) {
+        } else if ( readium.browserName === 'firefox' ) {
 
             expectedDefaultColumns    = '2';
             expectedSinglePageColumns = 'auto';

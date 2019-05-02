@@ -74,12 +74,11 @@ suite( 'Book cover', function() {
             expectedValue.maxHeight = Math.floor( expectedNumberOfVh * vh );
             expectedValue.maxWidth  = '98%';
 
-            let browserName = browser.options.capabilities.browserName;
-            if ( browserName === 'chrome' ) {
+            if ( readium.browserName === 'chrome' ) {
                 // width: auto is broken in Chrome.  See comment in else if
                 // block.
                 expectedValue.width = undefined;
-            } else if ( browserName = 'firefox' ) {
+            } else if ( readium.browserName === 'firefox' ) {
                 // Aspect ratio for the cover being tested is 2:3 (600px x 900px).
                 // width: auto for <img> tags indicates that width should be
                 // set so that aspect ratio is maintained.
