@@ -77,7 +77,7 @@ let ReadiumPage = Object.create( Page, {
             if ( this.browserName === 'chrome' ) {
                 columns = browser.execute( function() {
                     return document.querySelector( 'html' ).style.columns;
-                } ).value;
+                } );
             } else if ( this.browserName === 'firefox' ) {
                 columns = $( 'html' ).getCSSProperty( '-moz-column-count' ).value
             } else {
@@ -89,11 +89,11 @@ let ReadiumPage = Object.create( Page, {
 
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
-            } ).value;
+            } );
 
             let htmlWidth = browser.execute( function() {
                 return document.querySelector( 'html' ).style.width;
-            } ).value;
+            } );
 
             let maxHeight = $( 'html' ).getCSSProperty( 'max-height' ).value;
 
@@ -184,7 +184,7 @@ let ReadiumPage = Object.create( Page, {
                 } else {
                     return false;
                 }
-            } ).value;
+            } );
 
             return fullscreenEnabled;
         }
