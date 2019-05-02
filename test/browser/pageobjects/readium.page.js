@@ -373,14 +373,9 @@ let ReadiumPage = Object.create( Page, {
 
             browser.switchToFrame( contentIframeElement );
 
-            let vh;
-            if ( this.browserName === 'chrome' ) {
-                // JSON Wire Protocol
-                vh = browser.getWindowSize().height / 100;
-            } else if ( this.browserName === 'firefox' ) {
-                // Webdriver Protocol
-                vh = browser.getWindowRect().height / 100;
-            }
+            const htmlHeight = parseInt( $( 'html' ).getCSSProperty( 'height' ).value );
+
+            const vh = htmlHeight / 100;
 
             browser.switchToParentFrame();
 
