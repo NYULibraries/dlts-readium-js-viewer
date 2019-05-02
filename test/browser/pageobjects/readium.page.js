@@ -518,8 +518,7 @@ function getVisibleButtons( elements ) {
             element.getCSSProperty( 'visibility' ).value != 'hidden' &&
             element.getCSSProperty( 'display' ).value != 'none'
         ) {
-            let idAttribute = element.getAttribute( 'id' );
-            buttons[ idAttribute ] = {
+            buttons[ element.getAttribute( 'id' ) ] = {
                 css: getNavbarButtonCss( idAttribute ),
             };
         }
