@@ -193,11 +193,11 @@ let ReadiumPage = Object.create( Page, {
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = $$( Selectors.navbar.leftSideButtons ).value;
+            let navbarLeftButtons = $$( Selectors.navbar.leftSideButtons );
             let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
             let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
 
-            let navbarRightButtons = $$( Selectors.navbar.rightSideButtons  ).value;
+            let navbarRightButtons = $$( Selectors.navbar.rightSideButtons  );
             let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
             let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
 
