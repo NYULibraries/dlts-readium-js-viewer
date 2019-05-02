@@ -368,7 +368,14 @@ let ReadiumPage = Object.create( Page, {
 
             browser.switchToFrame( contentIframeElement );
 
-            let vh = browser.getWindowSize().height / 100;
+            let vh;
+            if ( browser.options.capabilities.browserName === 'chrome' ) {
+                // JSON Wire Protocol
+                vh = browser.getWindowSize().height / 100;
+            } else if ( browser.options.capabilities.browserName === 'firefox' ) {
+                // Webdriver Protocol
+                vh = browser.getWindowRect().height / 100;
+            }
 
             browser.switchToParentFrame();
 
