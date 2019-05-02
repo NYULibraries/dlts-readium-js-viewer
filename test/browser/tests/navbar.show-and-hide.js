@@ -76,7 +76,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
             `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
 
-        browser.moveToObject( navbarSelector );
+        readium.navbar.hover();
 
         assert( browser.isDisplayed( navbarSelector ), 'Navbar is has not become visible again' );
     } );
