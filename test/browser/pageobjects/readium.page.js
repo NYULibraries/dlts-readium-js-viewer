@@ -205,6 +205,7 @@ let ReadiumPage = Object.create( Page, {
             let navbar = {
                 element,
                 hover : () => { element.moveTo(); },
+                isDisplayed : element.isDisplayed(),
                 leftSideVisibleButtons,
                 navbarRight,
                 selector : Selectors.navbar.main,
