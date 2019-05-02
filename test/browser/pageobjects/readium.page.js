@@ -193,13 +193,9 @@ let ReadiumPage = Object.create( Page, {
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = $$( Selectors.navbar.leftSideButtons );
-            let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
-            let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
+            let leftSideVisibleButtons = getVisibleButtons( $$( Selectors.navbar.leftSideButtons ) );
 
-            let navbarRightButtons = $$( Selectors.navbar.rightSideButtons  );
-            let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
-            let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
+            let rightSideVisibleButtons = getVisibleButtons( $$( Selectors.navbar.rightSideButtons ) );
 
             let navbar = {
                 element,
@@ -514,29 +510,19 @@ function getNavbarRightCss() {
     }
 }
 
-function getVisibleElementIds( elements ) {
-    let visibleChildElementIds = [];
+function getVisibleButtons( elements ) {
+    let buttons = {};
 
     elements.forEach( function( element ) {
         if (
             element.getCSSProperty( 'visibility' ).value != 'hidden' &&
             element.getCSSProperty( 'display' ).value != 'none'
         ) {
-            visibleChildElementIds.push( id );
+            let idAttribute = element.getAttribute( 'id' ).value;
+            buttons[ idAttribute ] = {
+                css: getNavbarButtonCss( idAttribute ),
+            };
         }
-    } );
-
-    return visibleChildElementIds;
-}
-
-function getVisibleButtons( elements ) {
-    let buttons = {};
-
-    elements.forEach( function( element ) {
-        let idAttribute = element.getAttribute( 'id' ).value;
-        buttons[ idAttribute ] = {
-            css: getNavbarButtonCss( idAttribute ),
-        };
     } );
 
     return buttons;
