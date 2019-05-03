@@ -205,7 +205,11 @@ let ReadiumPage = Object.create( Page, {
             let navbar = {
                 element,
                 hover : () => { element.moveTo(); },
-                isDisplayed : element.isDisplayed(),
+                // Currently element.isDisplayed() does not appear to work correctly
+                // with Firefox.  For details, see https://jira.nyu.edu/jira/browse/NYUP-647?focusedCommentId=117270&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-117270
+                isDisplayed : this.browserName === 'firefox'  ?
+                              element.getCSSProperty( 'opacity' ).value !== 0 :
+                              element.isDisplayed(),
                 leftSideVisibleButtons,
                 navbarRight,
                 selector : Selectors.navbar.main,
