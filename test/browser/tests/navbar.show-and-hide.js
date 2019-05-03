@@ -73,7 +73,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
 
         readium.navbar.hover();
 
-        assert( readium.navbar.isDisplayed, 'Navbar is has not become visible again' );
+        assert( readium.navbar.isDisplayed, 'Navbar has not become visible again' );
     } );
 
 } );
