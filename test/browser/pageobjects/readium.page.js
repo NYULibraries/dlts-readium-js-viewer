@@ -159,15 +159,27 @@ let ReadiumPage = Object.create( Page, {
 
             browser.switchToFrame( contentIframeElement );
 
-            // Make race condition less likely.
-            $( selector ).waitForDisplayed();
-
-            let text = $( selector ).getText();
-
             if ( matchText ) {
-                isExistingResult = text.includes( matchText );
+                // Make race condition less likely.
+                browser.waitUntil(
+                    function() {
+                        return $$( selector ).length > 0;
+                    }
+                );
+
+                const elements = $$( selector );
+                const numElements = elements.length;
+
+                for ( let i = 0; i < numElements; i++ ) {
+                    if ( elements[ i ].getText().includes( matchText ) ) {
+                        isExistingResult = true;
+                        break;
+                    }
+                }
             } else {
-                isExistingResult = ( text !== '' );
+                // Make race condition less likely.
+                $( selector ).waitForDisplayed();
+                isExistingResult = ( $( selector ).getText() !== '' );
             }
 
             browser.switchToParentFrame();
