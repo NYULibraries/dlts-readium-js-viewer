@@ -114,9 +114,7 @@ suite( 'TOC', function() {
 
             $( '=3 Day-to-Day Routines' ).click();
 
-            assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
-                    'Did not find <small>AILY</small> on page'
-            );
+            readium.waitForExistInContentIframe( 'small', 'AILY' );
 
             // Make sure the TOC hasn't disappeared.
             assert.equal( readium.toc.display, 'inline-block',
