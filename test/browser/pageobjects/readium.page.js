@@ -179,7 +179,7 @@ let ReadiumPage = Object.create( Page, {
     isFullscreen : { get:
         function() {
             let fullscreenEnabled = browser.execute( function() {
-                if ( document.mozFullscreenElement || document.webkitFullscreenElement ) {
+                if ( document.mozFullScreenElement || document.webkitFullscreenElement ) {
                     return true;
                 } else {
                     return false;
