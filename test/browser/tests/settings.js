@@ -15,7 +15,7 @@ suite( 'Settings', function() {
 
         // It seems that setting width to higher than 1150 causes tests to hang
         // in Firefox.  Cause currently unknown.
-        readium.setViewportSize(
+        readium.setWindowSize(
             {
                 height: 920,
                 width: 1150,
@@ -119,14 +119,12 @@ suite( 'Settings', function() {
         let expectedSinglePageColumns;
         let expectedDoublePageColumns;
 
-        let browserName = browser.options.desiredCapabilities.browserName;
-
-        if ( browserName === 'chrome' ) {
+        if ( readium.browserName === 'chrome' ) {
             expectedDefaultColumns    = 'auto 2';
             expectedSinglePageColumns = '550px auto';
             expectedDoublePageColumns = 'auto 2';
 
-        } else if ( browserName === 'firefox' ) {
+        } else if ( readium.browserName === 'firefox' ) {
 
             expectedDefaultColumns    = '2';
             expectedSinglePageColumns = 'auto';
@@ -179,7 +177,7 @@ suite( 'Settings', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+            $( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' ).click();
 
             readium.waitForExistInContentIframe(
                 'span', 'Youth Voice, Media, and Political Engagement'
@@ -210,7 +208,7 @@ suite( 'Settings', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' );
+            $( '=1. Youth Voice, Media, and Political Engagement: Introducing the Core Concepts' ).click();
 
             readium.toggleSettings();
             readium.selectSettingsLayoutTab();

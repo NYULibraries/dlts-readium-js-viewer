@@ -23,9 +23,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
     test( 'initially visible long enough for the user to see it', function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        let navbarSelector = readium.navbar.selector;
-
-        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
+        assert( readium.navbar.isDisplayed, 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -34,7 +32,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
                 new Date( new Date().getTime() + SHORT_DELAY_IN_SECONDS * 1000 );
         while ( waitTill > new Date() ){}
 
-        assert( browser.isVisible( navbarSelector ),
+        assert( readium.navbar.isDisplayed,
             `Navbar is not still visible after ${SHORT_DELAY_IN_SECONDS} seconds`
         );
     } );
@@ -42,9 +40,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
     test( `disappears after ${DELAY_IN_SECONDS} seconds`, function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        let navbarSelector = readium.navbar.selector;
-
-        assert( browser.isVisible( navbarSelector ), 'Navbar is not initially visible' );
+        assert( readium.navbar.isDisplayed, 'Navbar is not initially visible' );
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -53,7 +49,7 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         while ( waitTill > new Date() ){}
 
         assert.isFalse(
-            browser.isVisible( navbarSelector ),
+            readium.navbar.isDisplayed,
             `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
     } );
@@ -63,7 +59,6 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
     test( 're-appears when user hovers over it', function() {
         readium.open( DEFAULT_BOOK_PATH );
 
-        let navbarSelector = readium.navbar.selector;
 
         // Apparently can't use setTimeout() -- probably because asynchronously runs
         // the callback.  Had trouble installing the NPM `sleep` module, and anyway
@@ -72,13 +67,13 @@ suite( 'DLTS ReadiumJS viewer navbar', function() {
         while ( waitTill > new Date() ){}
 
         assert.isFalse(
-            browser.isVisible( navbarSelector ),
+            readium.navbar.isDisplayed,
             `Navbar has not been hidden after delay of ${DELAY_IN_SECONDS} seconds`
         );
 
-        browser.moveToObject( navbarSelector );
+        readium.navbar.hover();
 
-        assert( browser.isVisible( navbarSelector ), 'Navbar is has not become visible again' );
+        assert( readium.navbar.isDisplayed, 'Navbar has not become visible again' );
     } );
 
 } );

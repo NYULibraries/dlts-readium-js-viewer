@@ -47,7 +47,7 @@ suite( 'TOC', function() {
         test( 'navigate to chapter', function() {
             // Sometimes the window isn't large enough to allow the TOC to display
             // "About the Authors", which is the last TOC entry.
-            readium.setViewportSize(
+            readium.setWindowSize(
                 {
                     height: 920,
                     width: 1150,
@@ -58,7 +58,7 @@ suite( 'TOC', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=About the Authors' );
+            $( '=About the Authors' ).click();
 
             // "span.Sans-SC=About the Authors" selector doesn't work.
             assert( readium.isExistingInContentIframe( 'span', 'About the Authors' ),
@@ -112,11 +112,9 @@ suite( 'TOC', function() {
 
             readium.waitForTocToBeVisible();
 
-            browser.click( '=3 Day-to-Day Routines' );
+            $( '=3 Day-to-Day Routines' ).click();
 
-            assert( readium.isExistingInContentIframe( 'small', 'AILY' ),
-                    'Did not find <small>AILY</small> on page'
-            );
+            readium.waitForExistInContentIframe( 'small', 'AILY' );
 
             // Make sure the TOC hasn't disappeared.
             assert.equal( readium.toc.display, 'inline-block',
