@@ -10,9 +10,9 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageImg: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
-            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_IMG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement, BOOK_COVER_IMAGE_TYPE_IMG );
 
             return bookCoverImage;
         }
@@ -20,11 +20,17 @@ let ReadiumPage = Object.create( Page, {
 
     bookCoverImageSvg: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
-            let bookCoverImage = getBookCoverImage( contentIframeElement.value, BOOK_COVER_IMAGE_TYPE_SVG );
+            let bookCoverImage = getBookCoverImage( contentIframeElement, BOOK_COVER_IMAGE_TYPE_SVG );
 
             return bookCoverImage;
+        }
+    },
+
+    browserName: { get:
+        function() {
+            return browser.options.capabilities.browserName;
         }
     },
 
@@ -59,22 +65,21 @@ let ReadiumPage = Object.create( Page, {
     // property.
     epubContentIframe: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
+            browser.switchToFrame( contentIframeElement );
 
-            let bodyElement = browser.element( 'body' );
-            let backgroundColor = bodyElement.getCssProperty( 'background-color' ).parsed.hex;
-            let color           = bodyElement.getCssProperty( 'color' ).parsed.hex;
+            let bodyElement = $( 'body' );
+            let backgroundColor = bodyElement.getCSSProperty( 'background-color' ).parsed.hex;
+            let color           = bodyElement.getCSSProperty( 'color' ).parsed.hex;
 
-            let browserName = browser.options.desiredCapabilities.browserName;
             let columns;
-            if ( browserName === 'chrome' ) {
+            if ( this.browserName === 'chrome' ) {
                 columns = browser.execute( function() {
                     return document.querySelector( 'html' ).style.columns;
-                } ).value;
-            } else if ( browserName === 'firefox' ) {
-                columns = browser.getCssProperty( 'html', '-moz-column-count' ).value
+                } );
+            } else if ( this.browserName === 'firefox' ) {
+                columns = $( 'html' ).getCSSProperty( '-moz-column-count' ).value
             } else {
                 // Should never get here.
             }
@@ -84,15 +89,15 @@ let ReadiumPage = Object.create( Page, {
 
             let fontSize = browser.execute( function() {
                 return document.querySelector( 'html' ).style.fontSize;
-            } ).value;
+            } );
 
             let htmlWidth = browser.execute( function() {
                 return document.querySelector( 'html' ).style.width;
-            } ).value;
+            } );
 
-            let maxHeight = browser.getCssProperty( 'html', 'max-height' ).value;
+            let maxHeight = $( 'html' ).getCSSProperty( 'max-height' ).value;
 
-            browser.frameParent();
+            browser.switchToParentFrame();
 
             return {
                 contentIframeElement,
@@ -150,22 +155,34 @@ let ReadiumPage = Object.create( Page, {
 
             let isExistingResult;
 
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
-
-            // Make race condition less likely.
-            browser.waitForText( selector );
-
-            let text = browser.getText( selector );
+            browser.switchToFrame( contentIframeElement );
 
             if ( matchText ) {
-                isExistingResult = text.includes( matchText );
+                // Make race condition less likely.
+                browser.waitUntil(
+                    function() {
+                        return $$( selector ).length > 0;
+                    }
+                );
+
+                const elements = $$( selector );
+                const numElements = elements.length;
+
+                for ( let i = 0; i < numElements; i++ ) {
+                    if ( elements[ i ].getText().includes( matchText ) ) {
+                        isExistingResult = true;
+                        break;
+                    }
+                }
             } else {
-                isExistingResult = ( text !== '' );
+                // Make race condition less likely.
+                $( selector ).waitForDisplayed();
+                isExistingResult = ( $( selector ).getText() !== '' );
             }
 
-            browser.frameParent();
+            browser.switchToParentFrame();
 
             return isExistingResult;
         }
@@ -174,12 +191,12 @@ let ReadiumPage = Object.create( Page, {
     isFullscreen : { get:
         function() {
             let fullscreenEnabled = browser.execute( function() {
-                if ( document.mozFullscreenElement || document.webkitFullscreenElement ) {
+                if ( document.mozFullScreenElement || document.webkitFullscreenElement ) {
                     return true;
                 } else {
                     return false;
                 }
-            } ).value;
+            } );
 
             return fullscreenEnabled;
         }
@@ -187,22 +204,24 @@ let ReadiumPage = Object.create( Page, {
 
     navbar: { get:
         function() {
-            let element = browser.element( Selectors.navbar.main );
+            let element = $( Selectors.navbar.main );
 
             let navbarCss = getNavbarCss( element );
 
             let navbarRight = getNavbarRightCss();
 
-            let navbarLeftButtons = browser.elements( Selectors.navbar.leftSideButtons ).value;
-            let navbarLeftVisibleButtonIds = getVisibleElementIds( navbarLeftButtons );
-            let leftSideVisibleButtons = getVisibleButtons( navbarLeftVisibleButtonIds );
+            let leftSideVisibleButtons = getVisibleButtons( $$( Selectors.navbar.leftSideButtons ) );
 
-            let navbarRightButtons = browser.elements( Selectors.navbar.rightSideButtons  ).value;
-            let navbarRightVisibleButtonIds = getVisibleElementIds( navbarRightButtons );
-            let rightSideVisibleButtons = getVisibleButtons( navbarRightVisibleButtonIds );
+            let rightSideVisibleButtons = getVisibleButtons( $$( Selectors.navbar.rightSideButtons ) );
 
             let navbar = {
                 element,
+                hover : () => { element.moveTo(); },
+                // Currently element.isDisplayed() does not appear to work correctly
+                // with Firefox.  For details, see https://jira.nyu.edu/jira/browse/NYUP-647?focusedCommentId=117270&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-117270
+                isDisplayed : this.browserName === 'firefox'  ?
+                              element.getCSSProperty( 'opacity' ).value !== 0 :
+                              element.isDisplayed(),
                 leftSideVisibleButtons,
                 navbarRight,
                 selector : Selectors.navbar.main,
@@ -218,15 +237,15 @@ let ReadiumPage = Object.create( Page, {
     open: { value: function( path ) {
         Page.open.call( this, path );
 
-        browser.waitForExist( Selectors.epubContentIframe );
+        $( Selectors.epubContentIframe ).waitForExist();
     } },
 
     readingArea: { get:
         function() {
-            let element = browser.element( Selectors.readingArea );
+            let element = $( Selectors.readingArea );
 
             return {
-                top: element.getCssProperty( 'top' ).value
+                top: element.getCSSProperty( 'top' ).value
             };
         }
     },
@@ -291,22 +310,22 @@ let ReadiumPage = Object.create( Page, {
         }
     },
 
-    setViewportSize: { value:
+    setWindowSize : { value :
         function( size) {
             // size must be an object with width and height fields:
             // {
             //     width  : 500,
             //     height : 500,
             // }
-            browser.setViewportSize( size );
+            browser.setWindowSize( size.width, size.height );
         }
     },
 
     scrolledContentFrame: { get:
         function() {
-            let scrolledContentFrameElement = browser.element( Selectors.scrolledContentFrame );
+            let scrolledContentFrameElement = $( Selectors.scrolledContentFrame );
 
-            let overflowY = scrolledContentFrameElement.getCssProperty( 'overflow-y' ).value;
+            let overflowY = scrolledContentFrameElement.getCSSProperty( 'overflow-y' ).value;
 
             return {
                 scrolledContentFrameElement,
@@ -317,13 +336,13 @@ let ReadiumPage = Object.create( Page, {
 
     stylePreview: { get:
         function() {
-            browser.waitForVisible( Selectors.settings.style.preview );
+            $( Selectors.settings.style.preview ).waitForDisplayed();
 
-            let element = browser.element( Selectors.settings.style.preview );
+            let element = $( Selectors.settings.style.preview );
 
-            let backgroundColor = element.getCssProperty( 'background-color' ).parsed.hex;
-            let color           = element.getCssProperty( 'color' ).parsed.hex;
-            let fontSize        = element.getCssProperty( 'font-size' ).value;
+            let backgroundColor = element.getCSSProperty( 'background-color' ).parsed.hex;
+            let color           = element.getCSSProperty( 'color' ).parsed.hex;
+            let fontSize        = element.getCSSProperty( 'font-size' ).value;
 
             return {
                 element,
@@ -336,11 +355,11 @@ let ReadiumPage = Object.create( Page, {
 
     toc: { get:
         function() {
-            let element = browser.element( Selectors.toc.body );
+            let element = $( Selectors.toc.body );
 
             return {
                 element,
-                display: element.getCssProperty( 'display' ).value,
+                display: element.getCSSProperty( 'display' ).value,
             }
         }
     },
@@ -368,13 +387,15 @@ let ReadiumPage = Object.create( Page, {
 
     vh: { get:
         function() {
-            let contentIframeElement = browser.element( Selectors.epubContentIframe );
+            let contentIframeElement = $( Selectors.epubContentIframe );
 
-            browser.frame( contentIframeElement.value );
+            browser.switchToFrame( contentIframeElement );
 
-            let vh = browser.getViewportSize().height / 100;
+            const htmlHeight = parseInt( $( 'html' ).getCSSProperty( 'height' ).value );
 
-            browser.frameParent();
+            const vh = htmlHeight / 100;
+
+            browser.switchToParentFrame();
 
             return vh;
         }
@@ -407,52 +428,52 @@ let ReadiumPage = Object.create( Page, {
 
     waitForTocToBeVisible : { value :
         function() {
-            return browser.waitForVisible( Selectors.toc.body );
+            return $( Selectors.toc.body ).waitForDisplayed();
         }
     }
 } );
 
 function clickElement( selector ) {
-    browser.waitForVisible( selector );
-    browser.click( selector );
+    $( selector ).waitForDisplayed();
+    $( selector ).click();
 }
 
-function getBookCoverImage( frameId, bookCoverImageType ) {
+function getBookCoverImage( frameElement, bookCoverImageType ) {
     let bookCoverImage = {};
 
-    browser.frame( frameId );
+    browser.switchToFrame( frameElement );
 
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
 
     if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_SVG ) {
-        bookCoverImage.position = browser.element( 'svg' )
-            .getCssProperty( 'position' )
+        bookCoverImage.position = $( 'svg' )
+            .getCSSProperty( 'position' )
             .value;
     } else if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_IMG ) {
-        let bookCoverImageElement = browser.element( '.cover img' );
+        let bookCoverImageElement = $( '.cover img' );
 
         if ( bookCoverImageElement ) {
-            bookCoverImage.height    = bookCoverImageElement.getCssProperty( 'height' ).value;
-            bookCoverImage.maxHeight = bookCoverImageElement.getCssProperty( 'max-height' ).value;
-            bookCoverImage.maxWidth  = bookCoverImageElement.getCssProperty( 'max-width' ).value;
-            bookCoverImage.width     = bookCoverImageElement.getCssProperty( 'width' ).value;
+            bookCoverImage.height    = bookCoverImageElement.getCSSProperty( 'height' ).value;
+            bookCoverImage.maxHeight = bookCoverImageElement.getCSSProperty( 'max-height' ).value;
+            bookCoverImage.maxWidth  = bookCoverImageElement.getCSSProperty( 'max-width' ).value;
+            bookCoverImage.width     = bookCoverImageElement.getCSSProperty( 'width' ).value;
         }
     } else {
         console.log( 'Should never get here.' );
     }
 
-    browser.frameParent();
+    browser.switchToParentFrame();
 
     return bookCoverImage;
 }
 
 function getNavbarCss( navbarElement ) {
-    let backgroundColor = navbarElement.getCssProperty( 'background-color' ).parsed.hex;
+    let backgroundColor = navbarElement.getCSSProperty( 'background-color' ).parsed.hex;
 
     // Build the convenient testing string.
     // Need this for the dimensional/spatial information in (for example) "rgb(51,51,51)0px1px5px0px"
-    let boxShadowUnparsedValue = navbarElement.getCssProperty( 'box-shadow' ).value;
+    let boxShadowUnparsedValue = navbarElement.getCSSProperty( 'box-shadow' ).value;
     let boxShadowParseOffsetAndRadiusRegex =
             /^rgb\(\d{1,3},\d{1,3},\d{1,3}\)(\d+px)(\d+px)(\d+px)\d+px$/;
     let boxShadowOffsetAndRadiusParts = boxShadowParseOffsetAndRadiusRegex
@@ -463,17 +484,17 @@ function getNavbarCss( navbarElement ) {
                     ' '                                +
                     boxShadowOffsetAndRadiusParts[ 3 ] +
                     ' '                                +
-                    navbarElement.getCssProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
+                    navbarElement.getCSSProperty( 'box-shadow' ).parsed.hex.substring( 0, 4 );
 
     // Our plugin sets "border-radius", but Firefox currently uses the broken-out
     // properties.
-    let borderBottomLeftRadius  = navbarElement.getCssProperty( 'border-bottom-left-radius' ).value;
-    let borderBottomRightRadius = navbarElement.getCssProperty( 'border-bottom-right-radius' ).value;
-    let borderTopLeftRadius     = navbarElement.getCssProperty( 'border-top-left-radius' ).value;
-    let borderTopRightRadius    = navbarElement.getCssProperty( 'border-top-right-radius' ).value;
+    let borderBottomLeftRadius  = navbarElement.getCSSProperty( 'border-bottom-left-radius' ).value;
+    let borderBottomRightRadius = navbarElement.getCSSProperty( 'border-bottom-right-radius' ).value;
+    let borderTopLeftRadius     = navbarElement.getCSSProperty( 'border-top-left-radius' ).value;
+    let borderTopRightRadius    = navbarElement.getCSSProperty( 'border-top-right-radius' ).value;
 
-    let minHeight       = navbarElement.getCssProperty( 'min-height' ).value;
-    let marginBottom    = navbarElement.getCssProperty( 'margin-bottom' ).value;
+    let minHeight       = navbarElement.getCSSProperty( 'min-height' ).value;
+    let marginBottom    = navbarElement.getCSSProperty( 'margin-bottom' ).value;
 
     return {
         backgroundColor,
@@ -488,19 +509,19 @@ function getNavbarCss( navbarElement ) {
 }
 
 function getNavbarRightCss() {
-    let navbarRight = browser.element( '.navbar-right' );
+    let navbarRight = $( '.navbar-right' );
 
-    let backgroundColor = navbarRight.getCssProperty( 'background-color' ).parsed.hex;
-    let height          = navbarRight.getCssProperty( 'height' ).value;
+    let backgroundColor = navbarRight.getCSSProperty( 'background-color' ).parsed.hex;
+    let height          = navbarRight.getCSSProperty( 'height' ).value;
     // Our plugin sets "margin", but Firefox currently uses the broken-out
     // properties.
-    let marginBottom    = navbarRight.getCssProperty( 'margin-bottom' ).value;
-    let marginLeft      = navbarRight.getCssProperty( 'margin-left' ).value;
-    let marginRight     = navbarRight.getCssProperty( 'margin-right' ).value;
-    let marginTop       = navbarRight.getCssProperty( 'margin-top' ).value;
+    let marginBottom    = navbarRight.getCSSProperty( 'margin-bottom' ).value;
+    let marginLeft      = navbarRight.getCSSProperty( 'margin-left' ).value;
+    let marginRight     = navbarRight.getCSSProperty( 'margin-right' ).value;
+    let marginTop       = navbarRight.getCSSProperty( 'margin-top' ).value;
 
-    let minHeight       = navbarRight.getCssProperty( 'min-height' ).value;
-    let overflow        = navbarRight.getCssProperty( 'overflow' ).value;
+    let minHeight       = navbarRight.getCSSProperty( 'min-height' ).value;
+    let overflow        = navbarRight.getCSSProperty( 'overflow' ).value;
 
     return {
         backgroundColor,
@@ -514,51 +535,37 @@ function getNavbarRightCss() {
     }
 }
 
-function getVisibleElementIds( elements ) {
-    let visibleChildElementIds = [];
-
-    elements.forEach( function( element ) {
-        let id = element.ELEMENT;
-        if (
-            browser.elementIdCssProperty( id, 'visibility' ).value != 'hidden' &&
-            browser.elementIdCssProperty( id, 'display' ).value != 'none'
-        ) {
-            visibleChildElementIds.push( id );
-        }
-    } );
-
-    return visibleChildElementIds;
-}
-
-function getVisibleButtons( elementIds ) {
+function getVisibleButtons( elements ) {
     let buttons = {};
 
-    elementIds.forEach( function( elementId ) {
-        let idAttribute = browser.elementIdAttribute( elementId, 'id' ).value;
-        buttons[ idAttribute ] = {
-            css: getNavbarButtonCss( idAttribute ),
-        };
+    elements.forEach( function( element ) {
+        if (
+            element.getCSSProperty( 'visibility' ).value != 'hidden' &&
+            element.getCSSProperty( 'display' ).value != 'none'
+        ) {
+            buttons[ element.getAttribute( 'id' ) ] = {
+                css: getNavbarButtonCss( element ),
+            };
+        }
     } );
 
     return buttons;
 }
 
-function getNavbarButtonCss( buttonIdAttribute ) {
-    let button = browser.element( `#${buttonIdAttribute}` );
-
+function getNavbarButtonCss( button ) {
     return {
-        backgroundColor    : button.getCssProperty( 'background-color' ).parsed.hex,
-        backgroundPosition : button.getCssProperty( 'background-position' ).value,
-        backgroundRepeat   : button.getCssProperty( 'background-repeat' ).value,
-        color              : button.getCssProperty( 'color' ).parsed.hex,
-        fontSize           : button.getCssProperty( 'font-size' ).value,
-        height             : button.getCssProperty( 'height' ).value,
-        width              : button.getCssProperty( 'width' ).value,
+        backgroundColor    : button.getCSSProperty( 'background-color' ).parsed.hex,
+        backgroundPosition : button.getCSSProperty( 'background-position' ).value,
+        backgroundRepeat   : button.getCSSProperty( 'background-repeat' ).value,
+        color              : button.getCSSProperty( 'color' ).parsed.hex,
+        fontSize           : button.getCSSProperty( 'font-size' ).value,
+        height             : button.getCSSProperty( 'height' ).value,
+        width              : button.getCSSProperty( 'width' ).value,
     }
 }
 
 function setSliderValue( sliderSelector, value ) {
-    browser.waitForVisible( sliderSelector );
+    $( sliderSelector ).waitForDisplayed();
 
     browser.execute( function( selector, newValue ) {
         $( selector ).val( newValue );

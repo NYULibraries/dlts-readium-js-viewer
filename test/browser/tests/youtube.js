@@ -23,18 +23,18 @@ suite( 'YouTube', function() {
 
         readium.waitForTocToBeVisible();
 
-        browser.click( '=3. “Decreasing World Suck”: Harnessing Popular Culture for Fan Activism' );
+        $( '=3. “Decreasing World Suck”: Harnessing Popular Culture for Fan Activism' ).click();
 
         readium.clickPageTurnerRight();
         readium.clickPageTurnerRight();
 
-        browser.frame( readium.epubContentIframe.contentIframeElement.value );
+        browser.switchToFrame( readium.epubContentIframe.contentIframeElement );
 
-        let youtubeIframe = browser.element( 'iframe' );
+        let youtubeIframe = $( 'iframe' );
         let src           = youtubeIframe.getAttribute( 'src' );
         let dataSrc       = youtubeIframe.getAttribute( 'data-src' );
 
-        browser.frameParent();
+        browser.switchToParentFrame();
 
         assert.equal( dataSrc, null, '<iframe> "data-src" attribute is not null' );
 
