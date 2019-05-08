@@ -88,6 +88,10 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
+    // NOTE: The above description of maxInstances from WebdriverIO does not appear to be correct.
+    // maxInstances seems to determine how many total browser instances can be open at once.
+    // If there are for example 9 test files and 2 capabilities (Firefox and Chrome, say) and
+    // maxInstances is set to 9, webdriverio will open 5 Chrome windows and 4 Firefox windows.
     maxInstances: 8,
     //
     // If you have trouble getting all important capabilities together, check out the
