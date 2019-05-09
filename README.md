@@ -97,6 +97,14 @@ These debug `wdio` configuration files set the test timeout to an extremely
 high value to allow for pausing at breakpoints and other line-debugging operations
 that would not be possible under normal timeout conditions.
 
+* To run the tests against the dev, stage, and prod server application instances:
+
+`npm run test:browser:dev`
+
+`npm run test:browser:stage`
+
+`npm run test:browser:prod`
+
 * To run specific test suites, pass in the `--suite` option as specified in
 [Group Test Specs](http://webdriver.io/guide/testrunner/organizesuite.html):
 
