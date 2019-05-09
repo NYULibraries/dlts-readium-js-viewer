@@ -17,6 +17,8 @@ the built ReadiumJS viewer instance to do the NPM tasks specified by Readium's
 repos, check the *Prerequisites*  section of the ReadiumJS viewer
 [README.md](https://github.com/readium/readium-js-viewer/blob/master/README.md)
 for information about which Node and NPM versions are recommended.
+* [Expect](https://core.tcl.tk/expect/index) (if using the deploy shell scripts)
+
 
 * [yarn](https://yarnpkg.com/): see [readium-js-viewer/package.json](https://github.com/readium/readium-js-viewer/blob/master/package.json)
 for required minimum version.
@@ -51,6 +53,21 @@ location on the host.
   `npm run test:dist`
 
   This runs `npm run dist` followed by `npm run dist:verify`.
+  
+#### Deploy
+
+Deploy only after first running the [build task](#build).  These deploy tasks by
+design do not include a build step.  The commands for deploying to the dev, stage,
+and prod servers:
+
+  `npm run deploy:dev`
+
+  `npm run deploy:stage` 
+
+  `npm run deploy:prod`
+  
+These tasks run the deploy scripts in `scripts/` and then run the tests against
+the target server instance after the application has been deployed.
 
 #### Automated browser tests
 
