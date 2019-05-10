@@ -123,23 +123,25 @@ contains the definitions for the available test suites.
  
 **Note on Firefox testing**
 
-Mozilla is in the process of transitioning to their next generation of automation
-driver, [Marionette](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette).
-Marionette is not yet complete.  Selenium is no longer able to automate Firefox
-without the aid of a 3rd-party driver.  It is now necessary to provide to
-Selenium the external driver currently still under development by Mozilla:
-[geckodriver](https://github.com/mozilla/geckodriver).  `geckodriver` does not
-yet fully implement the WebDriver protocol --
-see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status).
-
-As a result, there are a few tests that will always fail in Firefox
-until the `geckodriver` WebDriver <-> Marionette proxy is complete.  See
-[NYUP-206](https://jira.nyu.edu/jira/browse/NYUP-206) for more details.
+Mozilla uses automation protocol [Marionette](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette).
+Selenium being WebDriver-based needs to use the WebDriver <-> Marionette proxy
+[geckodriver](https://github.com/mozilla/geckodriver) which is not yet feature
+complete -- see [WebDriver Status](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status).
+As a result, Firefox testing tends to be a bit trickier.
 
 **Test flake**
 
-There is still a bit of test flake.  Note that Chrome fullscreen tests will always
-fail in headless mode.  Turning off headless mode allows them to run correctly.
-There are also a couple more tests that are flaking, that might need to be
-double-checked by manual testing until they are fixed.
-See [NYUP-466](https://jira.nyu.edu/jira/browse/NYUP-466) for details.
+Note that Chrome fullscreen tests will always fail in headless mode.
+This command can be used to run properly test fullscreen functionality:
+
+`npm run test:browser:local:debug:chrome -- --suite fullscreen`
+
+The is also a non-deterministic error that can pop up when running the YouTube video
+tests in Firefox: "TypeError: can't access dead object".  This could be the result
+of an outstanding geckodriver bug: ["TypeError: can't access dead object" if the frame is removed from under us \#614](https://github.com/mozilla/geckodriver/issues/614).
+
+If experiencing flake while running tests other than these, try lowering the value
+of `maxInstances` in `wdio.main.conf.js` to reduce concurrency.  In theory there
+shouldn't be any interference caused by running the test suites concurrently in
+many browser instances, but in practice it does seem to reduce test flake,
+particularly on less powerful machines.
