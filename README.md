@@ -53,7 +53,7 @@ location on the host.
   `npm run test:dist`
 
   This runs `npm run dist` followed by `npm run dist:verify`.
-  
+
 #### Deploy
 
 Deploy only after first running the [build task](#build).  These deploy tasks by
@@ -62,10 +62,10 @@ and prod servers:
 
   `npm run deploy:dev`
 
-  `npm run deploy:stage` 
+  `npm run deploy:stage`
 
   `npm run deploy:prod`
-  
+
 These tasks run the deploy scripts in `scripts/` and then run the tests against
 the target server instance after the application has been deployed.
 
