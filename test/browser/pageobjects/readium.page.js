@@ -443,12 +443,12 @@ function getBookCoverImage( frameElement, bookCoverImageType ) {
 
     browser.switchToFrame( frameElement );
 
-    // OA Book covers are <svg>, Connected Youth book covers are <img>
+    // Book covers can be either <svg> are <img>.
     // We use different fixes for each.
 
     if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_SVG ) {
-        bookCoverImage.position = $( 'svg' )
-            .getCSSProperty( 'position' )
+        bookCoverImage.maxHeight = $( 'svg' )
+            .getCSSProperty( 'max-height' )
             .value;
     } else if ( bookCoverImageType === BOOK_COVER_IMAGE_TYPE_IMG ) {
         let bookCoverImageElement = $( '.cover img' );
