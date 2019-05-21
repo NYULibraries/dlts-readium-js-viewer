@@ -16,12 +16,26 @@ suite( 'Book cover', function() {
     // OA Book covers are <svg>, Connected Youth book covers are <img>
     // We use different fixes for each.
 
-    test( 'OA Books cover should be absolutely positioned to prevent splitting', function() {
+    test( 'SVG cover image should have max-height set to prevent splitting', function() {
         readium.open( JAPANESE_LESSONS_PATH );
 
-        let bookCoverPosition = readium.bookCoverImageSvg.position;
+        // We've specified the properties mostly using proportions, but
+        // WebdriverIO in almost all cases returns calculated pixel values
+        // which differ depending on the browser.  Furthermore, the values
+        // seem to change depending on where the tests are run from.
+        // For example, running the tests from the Mac OS X Terminal
+        // program and running them from the terminal panel in Intellij
+        // produced different values.
+        //
+        // So need to calculate the expected values anew for each test run.
+        // This is what we specify in our CSS:
+        //
+        //     maxHeight: '95vh'
+        const expectedMaxHeight = Math.floor( 95 * readium.vh );
 
-        assert.equal( bookCoverPosition, 'absolute', '<svg> is not absolutely positioned' );
+        let bookCoverMaxHeight = readium.bookCoverImageSvg.maxHeight;
+
+        assert.equal( bookCoverMaxHeight.substring( 0, 3 ), expectedMaxHeight );
     } );
 
     suite( 'Connected Youth cover', function() {
