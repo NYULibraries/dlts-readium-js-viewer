@@ -1,7 +1,7 @@
 # DLTS ReadiumJS viewer
 
 Main repo for the building and testing of the DLTS [ReadiumJS viewer](https://github.com/readium/readium-js-viewer)
-used by NYU Press websites [Open Access Books](https://github.com/NYULibraries/dlts-open-access-books)
+used by NYU Press websites [Open Square](https://github.com/NYULibraries/dlts-open-square)
 and [Connected Youth](https://github.com/NYULibraries/dlts-connected-youth).
 
 See also: [dlts-readium-cloud-reader-archive](https://github.com/NYULibraries/dlts-readium-cloud-reader-archive).
