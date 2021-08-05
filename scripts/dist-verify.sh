@@ -132,7 +132,7 @@ function verify_readium_js_source_map_file() {
 
 function verify_epub_content_symlink() {
     expected_epub_content_link=$( readlink $CLOUD_READER_EXPECTED/epub_content )
-    got_epub_content_link=$( readlink $CLOUD_READER_EXPECTED/epub_content )
+    got_epub_content_link=$( readlink $CLOUD_READER_GOT/epub_content )
 
     if [ "$expected_epub_content_link" != "$got_epub_content_link" ]
     then
