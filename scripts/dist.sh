@@ -178,6 +178,5 @@ then
 fi
 
 cd $CLOUD_READER
-ln -s ../epub_content .
 
 cp -p $DIST/cloud-reader_sourcemap/readium-js-viewer_all.js.map $CLOUD_READER/scripts/
