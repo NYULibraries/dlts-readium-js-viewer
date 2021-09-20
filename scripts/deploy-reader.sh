@@ -60,9 +60,10 @@ function get_s3_bucket() {
 function sync_s3_bucket() {
     local s3_bucket=$1
 
-    aws s3 sync $CLOUD_READER_DIST s3://${s3_bucket}/open-square-reader/cloud-reader/ \
-        --delete \
-        --exact-timestamps
+    # Need to do a full rm followed by a sync from scratch because `aws s3 sync ... --exact-timestamps`
+    # only works for downloads from S3, not uploads: https://github.com/aws/aws-cli/issues/4460
+    aws s3 rm s3://${s3_bucket}/open-square-reader/cloud-reader --recursive
+    aws s3 sync $CLOUD_READER_DIST s3://${s3_bucket}/open-square-reader/cloud-reader/
 }
 
 function validate_environment_arg() {
