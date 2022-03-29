@@ -46,6 +46,9 @@ DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-open-square
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
 
+# Clean
+rm -fr $READIUM_JS_VIEWER
+
 git clone --recursive -b master https://github.com/readium/readium-js-viewer.git $READIUM_JS_VIEWER
 
 if [ ! -d $READIUM_JS_VIEWER/.git ]
