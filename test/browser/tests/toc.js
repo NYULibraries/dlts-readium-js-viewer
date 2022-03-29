@@ -5,8 +5,8 @@ let assert = require( 'chai' ).assert;
 let readium = require( '../pageobjects/readium.page' );
 
 // The trailing "&" is often put there by Readium and browser, so using it here, too.
-const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479899982&epubs=epub_content%2Fepub_library.json&';
-const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814712917&epubs=epub_content%2Fepub_library.json&';
+const BY_ANY_MEDIA_NECESSARY_PATH = '?epub=epub_content%2F9781479829712&epubs=epub_content%2Fepub_library.json&';
+const JAPANESE_LESSONS_PATH       = '?epub=epub_content%2F9780814786123&epubs=epub_content%2Fepub_library.json&';
 
 // Not sure if we need to test OA Books (EPUB 2, generally) and Connected Youth (EPUB 3),
 // but doing it just in case.
