@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo 'Suspending use of the builder -- see https://jira.nyu.edu/browse/NYUP-821?focusedCommentId=1552852&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-1552852 for details.'
-exit 1
-
 set -x
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
