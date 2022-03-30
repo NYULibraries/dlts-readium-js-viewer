@@ -16,9 +16,9 @@
   },
   "scripts": {
     "clean": "rm -fr readium-js-viewer/ tmp/*",
-    "deploy:dev": "scripts/deploy-reader_expect.sh dev; yarn test:browser:dev",
-    "deploy:stage": "scripts/deploy-reader_expect.sh stage; yarn test:browser:stage",
-    "deploy:prod": "scripts/deploy-reader_expect.sh prod; yarn test:browser:prod",
+    "deploy:dev": "scripts/deploy-reader.sh dev; yarn test:browser:dev",
+    "deploy:stage": "scripts/deploy-reader.sh stage; yarn test:browser:stage",
+    "deploy:prod": "scripts/deploy-reader.sh prod; yarn test:browser:prod",
     "dist:hypothesis": "npm run clean && scripts/dist.sh hypothesis",
     "dist:prod": "npm run clean && scripts/dist.sh prod",
     "dist:prod:verify": "scripts/dist-verify.sh",

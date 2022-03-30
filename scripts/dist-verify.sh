@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'Suspending use of the builder -- see https://jira.nyu.edu/browse/NYUP-821?focusedCommentId=1552852&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-1552852 for details.'
+exit 1
+
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
 
 TMP=$ROOT/tmp
@@ -132,7 +135,7 @@ function verify_readium_js_source_map_file() {
 
 function verify_epub_content_symlink() {
     expected_epub_content_link=$( readlink $CLOUD_READER_EXPECTED/epub_content )
-    got_epub_content_link=$( readlink $CLOUD_READER_EXPECTED/epub_content )
+    got_epub_content_link=$( readlink $CLOUD_READER_GOT/epub_content )
 
     if [ "$expected_epub_content_link" != "$got_epub_content_link" ]
     then
