@@ -160,35 +160,11 @@ plugins:
   ]
 EOF
 
-
-# We can't run Readium's `yarn run prepare:yarn:all` because it will force updates
-# of the
-# node modules due to this command in package.json:
-#
-#     "prepare:yarn:local": "yarn outdated || echo outdated && yarn install && yarn upgrade && yarn run prepare:local:common",
-#
-# `yarn outdated` often returns true for many packages, causing `yarn upgrade` to
-# run, which updates the modules and rewrites yarn.lock.
-#
-# So, we run everything from Readium's prepare task ourselves, minus the yarn
-# upgrades and calls to `readium-cfi-js/readium-build-tools/gitHubForksUpdater.js`.
-#
-# See https://jira.nyu.edu/jira/browse/NYUP-298
-
-# There used to be manual steps here for readium-cfi-js, but now, nothing needs
-# to be done.
-
-# End `yarn run prepare:yarn:all` manual steps
-
 cd $READIUM_JS_VIEWER
 
-npm run dist
+yarn run prepare:yarn:all
 
-if [ $? -ne 0 ]
-then
-    echo >&2 'ERROR: readium-js-viewer `npm run dist` failed.'
-    exit 1
-fi
+yarn run dist
 
 cd $CLOUD_READER
 
