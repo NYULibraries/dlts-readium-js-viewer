@@ -36,6 +36,13 @@ then
     exit 1
 fi
 
+LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
+if [ ! -d $LOCKFILES_DIR ]
+then
+    echo >&2 "ERROR: ${LOCKFILES_DIR} does not exist.  Please specify a valid version to build."
+    exit 1
+fi
+
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
 TMP=${ROOT}/tmp
@@ -95,7 +102,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/yarn.lock .
+yarn install --frozen-lockfile
 
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
 # to get exact match with expected cloud-reader version info.
@@ -108,7 +116,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
+yarn install --frozen-lockfile
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
@@ -119,7 +128,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
+yarn install --frozen-lockfile
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
