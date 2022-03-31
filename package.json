@@ -1,6 +1,6 @@
 {
   "name": "dlts-readium-js-viewer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "DLTS ReadiumJS viewer",
   "dependencies": {
     "@wdio/cli": "^5.8.0",
