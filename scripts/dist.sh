@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo 'Suspending use of the builder -- see https://jira.nyu.edu/browse/NYUP-821?focusedCommentId=1552852&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-1552852 for details.'
-exit 1
-
 set -x
 
 ROOT=$(cd "$(dirname "$0")" ; cd ..; pwd -P )
@@ -39,6 +36,13 @@ then
     exit 1
 fi
 
+LOCKFILES_DIR=${ROOT}/lockfiles/${READIUM_JS_VIEWER_VERSION}
+if [ ! -d $LOCKFILES_DIR ]
+then
+    echo >&2 "ERROR: ${LOCKFILES_DIR} does not exist.  Please specify a valid version to build."
+    exit 1
+fi
+
 READIUM_JS_VIEWER=${ROOT}/readium-js-viewer
 
 TMP=${ROOT}/tmp
@@ -48,6 +52,9 @@ DLTS_PLUGIN_GITHUB_REPO='git@github.com:NYULibraries/dlts-rjs-plugin-open-square
 
 DIST=$READIUM_JS_VIEWER/dist
 CLOUD_READER=$DIST/cloud-reader
+
+# Clean
+rm -fr $READIUM_JS_VIEWER
 
 git clone --recursive -b master https://github.com/readium/readium-js-viewer.git $READIUM_JS_VIEWER
 
@@ -95,7 +102,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/yarn.lock .
+yarn install --frozen-lockfile
 
 # Set up submodules.  Note that branches for sub-modules need to be detached HEADs
 # to get exact match with expected cloud-reader version info.
@@ -108,7 +116,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/readium-js/yarn.lock .
+yarn install --frozen-lockfile
 
 cd readium-shared-js/
 git checkout $READIUM_SHARED_JS_COMMIT
@@ -119,7 +128,8 @@ then
     exit 1
 fi
 
-yarn
+cp -p ${LOCKFILES_DIR}/readium-js/readium-shared-js/yarn.lock .
+yarn install --frozen-lockfile
 
 # Clone DLTS plugin
 git clone $DLTS_PLUGIN_GITHUB_REPO $DLTS_PLUGIN_DIR
@@ -150,35 +160,11 @@ plugins:
   ]
 EOF
 
-
-# We can't run Readium's `yarn run prepare:yarn:all` because it will force updates
-# of the
-# node modules due to this command in package.json:
-#
-#     "prepare:yarn:local": "yarn outdated || echo outdated && yarn install && yarn upgrade && yarn run prepare:local:common",
-#
-# `yarn outdated` often returns true for many packages, causing `yarn upgrade` to
-# run, which updates the modules and rewrites yarn.lock.
-#
-# So, we run everything from Readium's prepare task ourselves, minus the yarn
-# upgrades and calls to `readium-cfi-js/readium-build-tools/gitHubForksUpdater.js`.
-#
-# See https://jira.nyu.edu/jira/browse/NYUP-298
-
-# There used to be manual steps here for readium-cfi-js, but now, nothing needs
-# to be done.
-
-# End `yarn run prepare:yarn:all` manual steps
-
 cd $READIUM_JS_VIEWER
 
-npm run dist
+yarn run prepare:yarn:all
 
-if [ $? -ne 0 ]
-then
-    echo >&2 'ERROR: readium-js-viewer `npm run dist` failed.'
-    exit 1
-fi
+yarn run dist
 
 cd $CLOUD_READER
 
